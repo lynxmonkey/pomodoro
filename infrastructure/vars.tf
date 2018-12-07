@@ -3,7 +3,7 @@ variable "domain" {
 }
 
 variable "bucket_name" {
-  default = "pomodoro"
+  default = "tf-pomodoro"
 }
 
 variable "region" { }

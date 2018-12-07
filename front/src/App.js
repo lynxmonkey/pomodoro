@@ -1,11 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
+import styled from 'styled-components'
 
-class App extends Component {
-  render() {
-    return (
-      <h1>Pomodoro timer will be here</h1>
-    )
-  }
-}
-
-export default App
+const Container = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+export default () => (
+  <Container>
+    <h1>Pomodoro timer will be here</h1>
+  </Container>
+)

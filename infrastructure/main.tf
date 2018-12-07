@@ -6,6 +6,27 @@ provider "aws" {
   alias = "virginia"
 }
 
+data "terraform_remote_state" "global_route" {
+  backend = "s3"
+
+  config {
+    bucket = "infrastructure-remote-state"
+    key    = "increaser/global/route.tfstate"
+    region = "eu-central-1"
+  }
+}
+
+data "terraform_remote_state" "certificates" {
+  backend = "s3"
+
+  config {
+    bucket = "infrastructure-remote-state"
+    key    = "increaser/global/certificates.tfstate"
+    region = "eu-central-1"
+  }
+}
+
+
 terraform {
   backend "s3" {
     bucket = "infrastructure-remote-state"
@@ -15,27 +36,21 @@ terraform {
 }
 
 resource "aws_route53_zone" "route_zone" {
-  name = "${var.domain}"
+  name    = "${var.domain}"
 }
 
-resource "aws_acm_certificate" "domain_virginia" {
-  provider = "aws.virginia"
-  domain_name = "${var.domain}"
-  validation_method = "DNS"
-}
+resource "aws_route53_record" "ns" {
+  zone_id = "${data.terraform_remote_state.global_route.prod_zone_id}"
+  name    = "${var.domain}"
+  type    = "NS"
+  ttl     = "30"
 
-resource "aws_route53_record" "cert_validation_virginia" {
-  name = "${aws_acm_certificate.domain_virginia.domain_validation_options.0.resource_record_name}"
-  type = "${aws_acm_certificate.domain_virginia.domain_validation_options.0.resource_record_type}"
-  records = ["${aws_acm_certificate.domain_virginia.domain_validation_options.0.resource_record_value}"]
-  zone_id = "${aws_route53_zone.route_zone.zone_id}"
-  ttl = 60
-}
-
-resource "aws_acm_certificate_validation" "cert_validation_virginia" {
-  provider = "aws.virginia"
-  certificate_arn = "${aws_acm_certificate.domain_virginia.arn}"
-  validation_record_fqdns = ["${aws_route53_record.cert_validation_virginia.fqdn}"]
+  records = [
+    "${aws_route53_zone.route_zone.name_servers.0}",
+    "${aws_route53_zone.route_zone.name_servers.1}",
+    "${aws_route53_zone.route_zone.name_servers.2}",
+    "${aws_route53_zone.route_zone.name_servers.3}",
+  ]
 }
 
 resource "aws_s3_bucket" "frontend" {
@@ -65,7 +80,6 @@ EOF
 }
 
 resource "aws_cloudfront_distribution" "frontend" {
-  depends_on = ["aws_acm_certificate_validation.cert_validation_virginia"]
   origin {
     domain_name = "${aws_s3_bucket.frontend.bucket_domain_name}"
     origin_id   = "${var.bucket_name}"
@@ -94,7 +108,7 @@ resource "aws_cloudfront_distribution" "frontend" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = "${aws_acm_certificate.domain_virginia.arn}"
+    acm_certificate_arn = "${data.terraform_remote_state.certificates.certificate_arn_virginia_star}"
     ssl_support_method = "sni-only"
   }
 
