@@ -1,15 +1,31 @@
 import React from 'react'
-import styled from 'styled-components'
+import { Provider } from 'react-redux'
+import { YMInitializer } from 'react-yandex-metrika'
 
-const Container = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
+import saga from './sagas'
+import store from './store'
+import { sagaMiddleware } from './middleware'
+import Layout from './components/layout'
+
 export default () => (
-  <Container>
-    <h1>Pomodoro timer will be here</h1>
-  </Container>
+  <>
+    <Provider store={store}>
+      <Layout/>
+    </Provider>
+    {process.env.NODE_ENV === 'production' && (
+      <YMInitializer
+        accounts={[51491761]}
+        version="2"
+        options={{
+          id: 51491761,
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true,
+          webvisor: true
+        }}
+      />
+    )}
+  </>
 )
+
+sagaMiddleware.run(saga)

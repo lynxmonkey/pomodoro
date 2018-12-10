@@ -5,22 +5,42 @@
   "dependencies": {
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-redux": "^6.0.0",
     "react-scripts": "2.1.1",
+    "redux": "^4.0.1",
+    "redux-act": "^1.7.4",
+    "redux-saga": "^0.16.2",
     "styled-components": "^4.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build  && cra-append-sw ./custom-sw.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "precommit": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "semi": false
   },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "cra-append-sw": "^2.6.0",
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.15.3",
+    "react-yandex-metrika": "^2.4.2"
+  }
 }
