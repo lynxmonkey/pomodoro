@@ -16,8 +16,7 @@ export default () =>
       [a.tick]: state => ({ ...state, timeNow: Date.now() }),
       [a.finish]: state => ({
         ...getDefaultState(),
-        duration: state.duration,
-        lastSetTotal: (state.timeNow - state.startTime) / 1000
+        duration: state.duration
       }),
       [a.stop]: state => ({ ...state, stopped: true }),
       [a.start]: state => ({

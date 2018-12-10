@@ -1,0 +1,1 @@
+export const TICK_FREQUENCY = 300
