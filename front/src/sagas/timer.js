@@ -1,7 +1,7 @@
 import { select, put, call } from 'redux-saga/effects'
 
 import { tick, finish as finishTimer } from '../actions/timer'
-import { TICK_FREQUENCY } from '../constants/timer'
+import { TICK_FREQUENCY, NOTIFICATION_TEXT } from '../constants/timer'
 import { delay } from 'redux-saga'
 import { to } from '../actions/navigation'
 
@@ -29,16 +29,15 @@ export function* finish({ payload : { stopped } }) {
       document.webkitHidden) &&
     Notification.permission === 'granted'
   ) {
-    const notificationText = 'Good job, you finished the set'
     try {
-      const notification = new Notification(notificationText)
+      const notification = new Notification(NOTIFICATION_TEXT)
       notification.onclick = function() {
         window.focus()
         notification.close()
       }
     } catch (_) {
       navigator.serviceWorker.getRegistration().then(registration => {
-        registration.showNotification(notificationText, {
+        registration.showNotification(NOTIFICATION_TEXT, {
           vibrate: [200, 100, 200, 100, 200, 100, 200],
           requireInteraction: true
         })
