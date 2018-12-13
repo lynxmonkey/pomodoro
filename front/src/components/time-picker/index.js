@@ -4,6 +4,7 @@ import TimePicker from 'increaser-timepicker'
 import * as actions from '../../actions/timer'
 import { connectTo } from '../../utils/generic'
 import Page from '../page'
+import Time from '../time'
 import Wrapper from '../wrapper'
 
 export default connectTo(
@@ -11,6 +12,7 @@ export default connectTo(
   actions,
   ({ changeDuration, start, duration }) => (
     <Page>
+      <Time/>
       <TimePicker
         wrapper={Wrapper}
         duration={duration}

@@ -8,6 +8,7 @@ const getDefaultState = () => ({
   lastSetEnd: takeIfExists('lastSetEnd'),
   mounted: false,
   ticking: false,
+  timeNow: Date.now()
 })
 
 export default () =>
@@ -20,7 +21,8 @@ export default () =>
         
         return { ...state, lastSetEnd }
       },
-      [a.mount]: state => ({ ...state, mounted: true, ticking: true }),
+      [a.mount]: state => ({ ...state, mounted: true }),
+      [a.startTicking]: state => ({ ...state, ticking: true }),
       [a.unmount]: state => ({ ...state, mounted: false }),
       [a.stopTicking]: state => ({ ...state, ticking: false })
     },

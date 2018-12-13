@@ -3,9 +3,13 @@ import { takeLatest } from 'redux-saga/effects'
 import * as timerActions from '../actions/timer'
 import * as timerSagas from './timer'
 
+import * as timeActions from '../actions/time'
+import * as timeSagas from './time'
+
 export default function* saga() {
   const relations = [
-    [timerActions, timerSagas]
+    [timerActions, timerSagas],
+    [timeActions, timeSagas]
   ]
 
   for (const [actions, sagas] of relations) {
