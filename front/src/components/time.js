@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { connectTo, takeFromState } from '../utils/generic'
 import { mount, unmount } from '../actions/time'
+import LastSetEnd from './last-set-end'
 
 const Container = styled.div`
   position: absolute;
@@ -15,28 +16,32 @@ const Container = styled.div`
   padding: 20px;
   color: ${props => props.theme.color.text};
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
+  @media (max-width: 1220px) {
+    background-color: transparent;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 120px;
+  }
 `
 
 const TimeNow = styled.p`
   font-size: ${props => props.large ? 40 : 34}px;
 `
 
+
 class Time extends React.Component {
   render() {
-    const {
-      timeNow,
-      lastSetEnd,
-      page
-    } = this.props
+    const { lastSetEnd, page } = this.props
 
     const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
     const showLastEnd = page !== 'timer' && lastSetEnd
     return (
       <Container>
         <TimeNow large={!showLastEnd}>{time}</TimeNow>
-        
+        {showLastEnd && <LastSetEnd lastSetEnd={lastSetEnd} />}
       </Container>
     )
   }
