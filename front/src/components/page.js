@@ -7,5 +7,5 @@ export default styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.theme.color.background};
+  background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%);
 `

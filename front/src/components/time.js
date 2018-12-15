@@ -9,7 +9,7 @@ const Container = styled.div`
   position: absolute;
   top: 5%;
   right: 5%;
-  width: 300px;
+  width: 320px;
   height: 100px;
   background-color: ${props => props.theme.color.glass};
   border-radius: 5px;
@@ -34,10 +34,10 @@ const TimeNow = styled.p`
 
 class Time extends React.Component {
   render() {
-    const { lastSetEnd, page } = this.props
+    const { lastSetEnd, page, showLastSet } = this.props
 
     const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-    const showLastEnd = page !== 'timer' && lastSetEnd
+    const showLastEnd = page !== 'timer' && lastSetEnd && showLastSet
     return (
       <Container>
         <TimeNow large={!showLastEnd}>{time}</TimeNow>

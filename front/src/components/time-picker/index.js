@@ -6,19 +6,23 @@ import { connectTo } from '../../utils/generic'
 import Page from '../page'
 import Time from '../time'
 import Wrapper from '../wrapper'
+import Logo from '../logo'
 
 export default connectTo(
   state => state.timer,
   actions,
-  ({ changeDuration, start, duration }) => (
-    <Page>
-      <Time/>
-      <TimePicker
-        wrapper={Wrapper}
-        duration={duration}
-        onDurationChange={changeDuration}
-        onStart={start}
-      />
-    </Page>
-  )
+  ({ changeDuration, start, duration }) => {
+    return (
+      <Page>
+        <Time showLastSet />
+        <TimePicker
+          wrapper={Wrapper}
+          duration={duration}
+          onDurationChange={changeDuration}
+          onStart={start}
+        />
+        <Logo/>
+      </Page>
+    )
+  }
 )

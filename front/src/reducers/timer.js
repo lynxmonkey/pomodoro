@@ -6,9 +6,12 @@ import { DEFAULT_DURATION } from '../constants/timer';
 
 
 const getDefaultState = () => {
-  const averageDuration = takeIfExists('averageDuration', Number)
+  const durationsSum = takeIfExists('durationsSum', Number)
+  const startsNumber = takeIfExists('startsNumber', Number)
+  const averageDuration = durationsSum / startsNumber
+  
   return {
-    duration: averageDuration ? Math.round(averageDuration / 5) * 5 : DEFAULT_DURATION,
+    duration: durationsSum ? Math.round(averageDuration / 5) * 5 : DEFAULT_DURATION,
     startTime: undefined,
     timeNow: undefined,
     stopped: false
@@ -28,14 +31,14 @@ export default () =>
       [a.start]: state => {
         const startsNumber = takeIfExists('startsNumber', Number)
         if (startsNumber) {
-          const averageDuration = takeIfExists('averageDuration', Number)
+          const durationsSum = takeIfExists('durationsSum', Number)
           const newStartsNumber = startsNumber + 1
           localStorage.setItem('startsNumber', newStartsNumber)
-          localStorage.setItem('averageDuration', (averageDuration + state.duration) / newStartsNumber)
+          localStorage.setItem('durationsSum', durationsSum + state.duration)
         }
         else {
           localStorage.setItem('startsNumber', 1)
-          localStorage.setItem('averageDuration', state.duration)
+          localStorage.setItem('durationsSum', state.duration)
         }
 
         return {

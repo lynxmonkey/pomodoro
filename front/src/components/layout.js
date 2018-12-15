@@ -2,7 +2,7 @@ import React from 'react'
 
 import * as pages from '../pages'
 import { connectTo } from '../utils/generic'
-import { saveInstallProposalEvent } from '../actions/generic'
+import * as actions from '../actions/generic'
 
 class Layout extends React.Component {
   render () {
@@ -15,10 +15,16 @@ class Layout extends React.Component {
   }
 
   componentDidMount() {
+    const { saveInstallProposalEvent, changePageSize } = this.props
+
     window.addEventListener('beforeinstallprompt', e => {
       e.preventDefault()
-      this.props.saveInstallProposalEvent(e)
+      saveInstallProposalEvent(e)
     })
+    window.addEventListener('resize', () => changePageSize({
+      width: window.innerWidth,
+      height: window.innerHeight
+    }))
   }
 }
 
@@ -28,6 +34,6 @@ export default connectTo(
     lastSetEnd: state.time.lastSetEnd,
     proposalEvent: state.generic.proposalEvent
   }),
-  { saveInstallProposalEvent },
+  actions,
   Layout
 )
