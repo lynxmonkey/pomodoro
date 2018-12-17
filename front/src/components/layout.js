@@ -8,7 +8,13 @@ class Layout extends React.Component {
   render () {
     const { page, lastSetEnd, proposalEvent } = this.props
 
-    if (lastSetEnd && proposalEvent) proposalEvent.prompt()
+    if (lastSetEnd && proposalEvent) {
+      try {
+        proposalEvent.prompt()
+      } catch(err) {
+        console.info('fail to prompt')
+      }
+    }
 
     const Page = pages[page]
     return <Page />
