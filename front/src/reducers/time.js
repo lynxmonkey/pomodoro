@@ -23,8 +23,7 @@ export default () =>
       },
       [a.mount]: state => ({ ...state, mounted: true }),
       [a.startTicking]: state => ({ ...state, ticking: true }),
-      [a.unmount]: state => ({ ...state, mounted: false }),
-      [a.stopTicking]: state => ({ ...state, ticking: false })
+      [a.unmount]: state => ({ ...state, mounted: false, ticking: false }),
     },
     getDefaultState()
   )

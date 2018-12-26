@@ -6,6 +6,7 @@
     "increaser-timepicker": "^1.0.10",
     "increaser-timer": "^1.0.4",
     "react": "^16.6.3",
+    "react-document-title": "^2.0.3",
     "react-dom": "^16.6.3",
     "react-redux": "^6.0.0",
     "react-scripts": "2.1.1",

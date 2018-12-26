@@ -1,7 +1,7 @@
 import { select, put, call } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 
-import { stopTicking, tick, startTicking } from '../actions/time'
+import { tick, startTicking } from '../actions/time'
 import { TICK_FREQUENCY } from '../constants/timer'
 
 
@@ -12,7 +12,7 @@ export function* mount() {
   yield put(startTicking())
   while(true) {
     const { time: { mounted } } = yield select()
-    if (!mounted) return yield put(stopTicking())
+    if (!mounted) return
 
     yield put(tick())
     yield call(delay, TICK_FREQUENCY)
