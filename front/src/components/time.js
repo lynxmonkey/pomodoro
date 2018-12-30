@@ -41,7 +41,7 @@ const getHumanTime = () => {
     return hours12 ? hours : 12
   }
   const hourView = getHour()
-  const minuteView = minutes < 12 ? `0${minutes}` : minutes
+  const minuteView = minutes < 10 ? `0${minutes}` : minutes
   return `${hourView}:${minuteView} ${part}`
 }
 

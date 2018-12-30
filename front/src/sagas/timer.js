@@ -27,6 +27,7 @@ export function* finish({ payload : { stopped } }) {
     (document.hidden === undefined ||
       document.hidden ||
       document.webkitHidden) &&
+    Notification &&
     Notification.permission === 'granted'
   ) {
     try {

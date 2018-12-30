@@ -74,7 +74,7 @@ const InnerTimer = connectTo(
     }
 
     componentDidMount() {
-      if (Notification.permission !== 'granted') {
+      if (Notification && Notification.permission !== 'granted') {
         Notification.requestPermission()
       }
     }
