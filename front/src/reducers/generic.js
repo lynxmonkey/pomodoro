@@ -16,7 +16,7 @@ export default () =>
         ...state,
         pageWidth: width,
         pageHeight: height
-      }),
+      })
     },
     getDefaultState()
   )

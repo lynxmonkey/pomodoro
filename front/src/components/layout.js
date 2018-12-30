@@ -7,7 +7,6 @@ import * as actions from '../actions/generic'
 class Layout extends React.Component {
   render () {
     const { page, lastSetEnd, proposalEvent } = this.props
-
     if (lastSetEnd && proposalEvent) {
       try {
         proposalEvent.prompt()
@@ -31,6 +30,10 @@ class Layout extends React.Component {
       width: window.innerWidth,
       height: window.innerHeight
     }))
+  }
+
+  componentDidCatch(error, errorInfo) {
+    this.props.fail({ error, errorInfo })
   }
 }
 

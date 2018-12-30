@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@sentry/browser": "^4.4.2",
     "increaser-timepicker": "^1.0.10",
     "increaser-timer": "^1.0.4",
     "react": "^16.6.3",

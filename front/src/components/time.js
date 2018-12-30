@@ -31,12 +31,25 @@ const TimeNow = styled.p`
   font-size: ${props => props.large ? 40 : 34}px;
 `
 
+const getHumanTime = () => {
+  const date = new Date()
+  const hours = date.getHours()
+  const minutes = date.getMinutes()
+  const part = hours >= 12 ? 'PM' : 'AM'
+  const getHour = () => {
+    const hours12 = hours % 12
+    return hours12 ? hours : 12
+  }
+  const hourView = getHour()
+  const minuteView = minutes < 12 ? `0${minutes}` : minutes
+  return `${hourView}:${minuteView} ${part}`
+}
 
 class Time extends React.Component {
   render() {
     const { lastSetEnd, page, showLastSet } = this.props
 
-    const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+    const time = getHumanTime()
     const showLastEnd = page !== 'timer' && lastSetEnd && showLastSet
     return (
       <Container>
