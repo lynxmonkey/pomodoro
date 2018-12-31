@@ -6,15 +6,7 @@ import * as actions from '../actions/generic'
 
 class Layout extends React.Component {
   render () {
-    const { page, lastSetEnd, proposalEvent } = this.props
-    if (lastSetEnd && proposalEvent) {
-      try {
-        proposalEvent.prompt()
-      } catch(err) {
-        console.info('fail to prompt')
-      }
-    }
-
+    const { page } = this.props
     const Page = pages[page]
     return <Page />
   }
@@ -39,9 +31,7 @@ class Layout extends React.Component {
 
 export default connectTo(
   state => ({
-    page: state.navigation.page,
-    lastSetEnd: state.time.lastSetEnd,
-    proposalEvent: state.generic.proposalEvent
+    page: state.navigation.page
   }),
   actions,
   Layout

@@ -1,6 +1,8 @@
+import * as Sentry from '@sentry/browser'
 import { select, put, call } from 'redux-saga/effects'
 
 import { tick, finish as finishTimer } from '../actions/timer'
+import { promptToAddToHomeScreen } from '../actions/generic'
 import { TICK_FREQUENCY, NOTIFICATION_TEXT } from '../constants/timer'
 import { delay } from 'redux-saga'
 import { to } from '../actions/navigation'
@@ -22,14 +24,9 @@ export function* start() {
 }
 
 export function* finish({ payload : { stopped } }) {
-  if (
-    !stopped &&
-    (document.hidden === undefined ||
-      document.hidden ||
-      document.webkitHidden) &&
-    Notification &&
-    Notification.permission === 'granted'
-  ) {
+  const documentHidden = document.hidden === undefined || document.hidden || document.webkitHidden
+  const notificationAllowed = Notification && Notification.permission === 'granted'
+  if (!stopped && documentHidden && notificationAllowed) {
     try {
       const notification = new Notification(NOTIFICATION_TEXT)
       notification.onclick = function() {
@@ -46,4 +43,13 @@ export function* finish({ payload : { stopped } }) {
     }
   }
   yield put(to('timePicker'))
+  const { generic: { proposalEvent } } = yield select()
+  if (!proposalEvent) return
+  
+  try {
+    proposalEvent.prompt()
+    yield put(promptToAddToHomeScreen())
+  } catch(err) {
+    Sentry.captureException(err)
+  }
 }

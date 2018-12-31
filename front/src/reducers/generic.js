@@ -16,7 +16,8 @@ export default () =>
         ...state,
         pageWidth: width,
         pageHeight: height
-      })
+      }),
+      [a.promptToAddToHomeScreen]: (state) => ({ ...state, proposalEvent: undefined})
     },
     getDefaultState()
   )
