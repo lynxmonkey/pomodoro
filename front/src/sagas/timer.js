@@ -25,10 +25,10 @@ export function* start() {
 
 export function* finish({ payload : { stopped } }) {
   const documentHidden = document.hidden === undefined || document.hidden || document.webkitHidden
-  const notificationAllowed = Notification && Notification.permission === 'granted'
+  const notificationAllowed = window.Notification && window.Notification.permission === 'granted'
   if (!stopped && documentHidden && notificationAllowed) {
     try {
-      const notification = new Notification(NOTIFICATION_TEXT)
+      const notification = new window.Notification(NOTIFICATION_TEXT)
       notification.onclick = function() {
         window.focus()
         notification.close()
