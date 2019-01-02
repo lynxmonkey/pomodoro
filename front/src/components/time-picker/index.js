@@ -5,6 +5,7 @@ import * as actions from '../../actions/timer'
 import { connectTo } from '../../utils/generic'
 import Page from '../page'
 import Time from '../time'
+import Timeline from '../timeline'
 import Wrapper from '../wrapper'
 import Logo from '../logo'
 
@@ -21,6 +22,7 @@ export default connectTo(
           onDurationChange={changeDuration}
           onStart={start}
         />
+        <Timeline/>
         <Logo/>
       </Page>
     )

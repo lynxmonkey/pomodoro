@@ -3,6 +3,7 @@ import { combineReducers, createStore } from 'redux'
 import generic from './generic'
 import timer from './timer'
 import time from './time'
+import timeline from './timeline'
 import navigation from './navigation'
 import { fail } from '../actions/generic'
 
@@ -12,7 +13,8 @@ const getNewReducer = _ =>
       generic,
       timer,
       navigation,
-      time
+      time,
+      timeline
     }).reduce(
       (acc, [key, createReducer]) => ({ ...acc, [key]: createReducer() }),
       {}
