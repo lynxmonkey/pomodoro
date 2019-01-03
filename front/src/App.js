@@ -26,6 +26,8 @@ if (process.env.NODE_ENV === 'production') {
     dsn: "https://0dc467f02c2a46c9bfaacff3bab0b6ef@sentry.io/1362069"
   })
   ReactGA.initialize('UA-131566304-1')
+  ReactGA.pageview(window.location.pathname + window.location.search)
+  console.log('start app, version 1.0.0')
 }
 
 
