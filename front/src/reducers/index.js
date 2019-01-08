@@ -5,6 +5,7 @@ import timer from './timer'
 import time from './time'
 import timeline from './timeline'
 import navigation from './navigation'
+import settings from './settings'
 import { fail } from '../actions/generic'
 
 const getNewReducer = _ =>
@@ -14,7 +15,8 @@ const getNewReducer = _ =>
       timer,
       navigation,
       time,
-      timeline
+      timeline,
+      settings
     }).reduce(
       (acc, [key, createReducer]) => ({ ...acc, [key]: createReducer() }),
       {}
