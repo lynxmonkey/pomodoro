@@ -13,16 +13,25 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-const Panel = ({ sound, toggleSound }) => {
+const Panel = ({ sound, toggleSound, pageWidth }) => {
+  if (pageWidth < 1220) return null
+
   return (
     <Container>
-      <Item onClick={toggleSound} icon={sound ? 'volume-up' : 'volume-mute'} />
+      <Item
+        onClick={toggleSound}
+        icon={sound ? 'volume-up' : 'volume-mute'}
+        hint={'sound after the end of set'}
+      />
     </Container>
   )
 }
 
 export default connectTo(
-  state => state.settings,
+  state => ({
+    ...state.settings,
+    ...state.generic
+  }),
   actions,
   Panel
 )

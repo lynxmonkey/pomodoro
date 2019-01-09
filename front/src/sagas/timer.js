@@ -6,6 +6,7 @@ import { delay } from 'redux-saga'
 import { to } from '../actions/navigation'
 import { getTodaySets } from '../utils/time';
 import { updateSets } from '../actions/timeline';
+import { SET_FINISHED } from '../constants/sounds';
 
 export function* start() {
   yield put(to('timer'))
@@ -30,7 +31,7 @@ export function* finish({ payload : { start, stopped } }) {
     start,
     end: Date.now()
   }
-  const { timeline: { sets } } = yield select()
+  const { timeline: { sets }, settings: { sound } } = yield select()
   const newSets = getTodaySets([ ...sets, set ])
   yield put(updateSets(newSets))
 
@@ -51,6 +52,10 @@ export function* finish({ payload : { start, stopped } }) {
         })
       })
     }
+  }
+  if (!stopped && sound) {
+    const sound = new Audio(SET_FINISHED)
+    sound.play()
   }
   yield put(to('timePicker'))
 }
