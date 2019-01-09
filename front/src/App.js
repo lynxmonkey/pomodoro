@@ -3,12 +3,16 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { Provider } from 'react-redux'
 import ReactGA from 'react-ga'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faVolumeUp, faVolumeMute } from '@fortawesome/free-solid-svg-icons'
 
 import saga from './sagas'
 import store from './store'
 import { sagaMiddleware } from './middleware'
 import Layout from './components/layout'
 import { THEME } from './constants/theme'
+
+library.add(faVolumeUp, faVolumeMute)
 
 export default () => (
   <Provider store={store}>

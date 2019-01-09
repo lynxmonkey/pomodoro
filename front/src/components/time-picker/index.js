@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser'
 import React from 'react'
 import TimePicker from 'increaser-timepicker'
 
@@ -7,6 +6,7 @@ import { promptToAddToHomeScreen } from '../../actions/generic'
 import { connectTo, takeFromState } from '../../utils/generic'
 import Page from '../page'
 import Time from '../time'
+import Panel from '../panel'
 import Timeline from '../timeline'
 import Wrapper from '../wrapper'
 import Logo from '../logo'
@@ -25,16 +25,12 @@ export default connectTo(
     const onStart = () => {
       start()
       if (proposalEvent && sets.length) {
-        try {
-          proposalEvent.prompt()
-          promptToAddToHomeScreen()
-        } catch(err) {
-          Sentry.captureException(err)
-        }
+        promptToAddToHomeScreen()
       }
     }
     return (
       <Page>
+        <Panel/>
         <Time showLastSet />
         <TimePicker
           wrapper={Wrapper}
