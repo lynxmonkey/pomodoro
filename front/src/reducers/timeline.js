@@ -15,8 +15,5 @@ const getDefaultState = () => {
 }
 
 export default () => createReducer({
-  [a.updateSets]: (state, sets) => {
-    localStorage.setItem('sets', JSON.stringify(sets))
-    return ({ ...state, sets })
-  }
+  [a.updateSets]: (state, sets) => ({ ...state, sets })
 }, getDefaultState())

@@ -3,29 +3,64 @@
   "name": "Pomodoro - Boost Your productivity",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+        "src": "favicon.ico",
+        "type": "image/x-icon",
+        "sizes": "64x64 32x32 24x24 16x16"
     },
     {
-      "src": "images/launcher-icon-2x.png",
-      "sizes": "96x96",
-      "type": "image/png"
+        "src": "images/48x48.png",
+        "type": "image/png",
+        "sizes": "48x48"
     },
     {
-      "src": "images/launcher-icon-3x.png",
-      "sizes": "144x144",
-      "type": "image/png"
+        "src": "images/72x72.png",
+        "type": "image/png",
+        "sizes": "72x72"
     },
     {
-      "src": "images/launcher-icon-4x.png",
-      "sizes": "192x192",
-      "type": "image/png"
+        "src": "images/76x76.png",
+        "type": "image/png",
+        "sizes": "76x76"
     },
     {
-      "src": "images/launcher-icon-4x.png",
-      "sizes": "512x512",
-      "type": "image/png"
+        "src": "images/96x96.png",
+        "type": "image/png",
+        "sizes": "96x96"
+    },
+    {
+        "src": "images/120x120.png",
+        "type": "image/png",
+        "sizes": "120x120"
+    },
+    {
+        "src": "images/144x144.png",
+        "type": "image/png",
+        "sizes": "144x144"
+    },
+    {
+        "src": "images/152x152.png",
+        "type": "image/png",
+        "sizes": "152x152"
+    },
+    {
+        "src": "images/180x180.png",
+        "type": "image/png",
+        "sizes": "180x180"
+    },
+    {
+        "src": "images/192x192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+    },
+    {
+        "src": "images/512x512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+    },
+    {
+        "src": "images/1024x1024.png",
+        "type": "image/png",
+        "sizes": "1024x1024"
     }
   ],
   "start_url": "./index.html",

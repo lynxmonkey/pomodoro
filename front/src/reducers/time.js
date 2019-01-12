@@ -17,7 +17,6 @@ export default () =>
       [a.tick]: state => ({ ...state, timeNow: Date.now() }),
       [finish]: state => {
         const lastSetEnd = Date.now()
-        localStorage.setItem('lastSetEnd', Date.now())
         
         return { ...state, lastSetEnd }
       },

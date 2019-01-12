@@ -29,18 +29,6 @@ export default () =>
       }),
       [a.stop]: state => ({ ...state, stopped: true }),
       [a.start]: state => {
-        const startsNumber = takeIfExists('startsNumber', Number)
-        if (startsNumber) {
-          const durationsSum = takeIfExists('durationsSum', Number)
-          const newStartsNumber = startsNumber + 1
-          localStorage.setItem('startsNumber', newStartsNumber)
-          localStorage.setItem('durationsSum', durationsSum + state.duration)
-        }
-        else {
-          localStorage.setItem('startsNumber', 1)
-          localStorage.setItem('durationsSum', state.duration)
-        }
-
         return {
           ...state,
           startTime: Date.now(),

@@ -27,7 +27,6 @@ const reducer = getNewReducer()
 
 export default (state, action) => {
   if (action.type === fail.getType()) {
-    localStorage.clear()
     return reducer(createStore(getNewReducer()).getState())
   }
 
