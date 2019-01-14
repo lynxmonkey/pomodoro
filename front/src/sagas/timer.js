@@ -55,7 +55,11 @@ export function* finish({ payload : { start, stopped } }) {
   }
   if (!stopped && sound) {
     const sound = new Audio(SET_FINISHED)
-    sound.play()
+    try {
+      yield sound.play()
+    } catch (err) {
+      console.log('fail to play sound')
+    }
   }
   yield put(to('timePicker'))
 }
