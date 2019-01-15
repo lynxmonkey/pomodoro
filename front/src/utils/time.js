@@ -1,9 +1,8 @@
 import { DateTime } from 'luxon'
 
-export const toTime = timestamp =>
-  DateTime.fromMillis(timestamp, {
-    zone: -new Date().getTimezoneOffset()
-  })
+export const toTime = timestamp => {
+  return DateTime.fromMillis(timestamp).toLocal()
+}
 
 export const getTodaySets = (sets) => {
   const now = DateTime.local()
