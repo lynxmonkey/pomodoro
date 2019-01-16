@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import * as actions from '../actions/settings'
 import { connectTo } from '../utils/generic'
 import Item from './panel-item'
+import { AUTHOR_SITE } from '../constants/links';
 
 const Container = styled.div`
   position: absolute;
@@ -21,7 +22,12 @@ const Panel = ({ sound, toggleSound, pageWidth }) => {
       <Item
         onClick={toggleSound}
         icon={sound ? 'volume-up' : 'volume-mute'}
-        hint={'sound after the end of set'}
+        hint={`${sound ? '' : 'no'} sound after the end of set`}
+      />
+      <Item
+        icon={'comment'}
+        hint={'contact the author'}
+        linkTo={AUTHOR_SITE}
       />
     </Container>
   )
