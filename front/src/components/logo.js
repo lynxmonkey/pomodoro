@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { INCREASER } from '../constants/links';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -19,7 +20,7 @@ const Link = styled.a`
 
 export default () => (
   <Wrapper>
-    <Link target="_blank" href="https://increaser.org">
+    <Link target="_blank" href={INCREASER}>
       Pomodoro by Increaser
     </Link>
   </Wrapper>

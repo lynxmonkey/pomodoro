@@ -6,6 +6,7 @@ const Container = styled.div`
   position: relative;
   border-radius: 50%;
   border: none;
+  margin: 10px 0;
   background-color: ${props => props.theme.color.glass};
   width: 50px;
   height: 50px;
@@ -39,7 +40,7 @@ const Hint = styled.div`
   display: none;
   animation: ${animation} .35s ease-in-out;
   animation-fill-mode: both;
-  width: 220px;
+  width: 240px;
   border-radius: 5px;
   padding: 10px;
   background-color: ${props => props.theme.color.glass};
@@ -51,13 +52,24 @@ const Hint = styled.div`
   }
 `
 
-export default ({ icon, onClick, hint }) => {
+export default ({ icon, onClick, hint, linkTo }) => {
+  const Link = ({ children }) => {
+    if (linkTo) return (
+      <a target="_blank" rel="noopener noreferrer" href={linkTo}>
+        {children}
+      </a>
+    )
+
+    return children
+  }
   return (
-    <Container onClick={onClick}>
-      <FontAwesomeIcon size={'lg'} icon={icon}/>
-      <Hint>
-        <p>{hint}</p>
-      </Hint>
-    </Container>
+    <Link>
+      <Container onClick={onClick}>
+        <FontAwesomeIcon size={'lg'} icon={icon}/>
+        <Hint>
+          <p>{hint}</p>
+        </Hint>
+      </Container>
+    </Link>
   )
 }
