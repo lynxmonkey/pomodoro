@@ -26,6 +26,9 @@ const localStorageMiddleware = store => next => action => {
   if (prevState.timeline.sets !== nextState.timeline.sets) {
     localStorage.setItem('sets', JSON.stringify(nextState.timeline.sets))
   }
+  if (prevState.timeline.setsSum !== nextState.timeline.setsSum) {
+    localStorage.setItem('setsSum', nextState.timeline.setsSum)
+  }
   if (prevState.timer.startTime !== nextState.timer.startTime) {
     const startsNumber = takeIfExists('startsNumber', Number)
     if (startsNumber) {

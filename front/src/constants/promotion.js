@@ -1,0 +1,1 @@
+export const PROMOTE_AFTER_HOURS = [4, 16, 32, 64, 128]

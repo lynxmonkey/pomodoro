@@ -5,7 +5,8 @@ import * as a from '../actions/generic'
 const getDefaultState = () => ({
   proposalEvent: undefined,
   pageWidth: window.innerWidth,
-  pageHeight: window.innerWidth
+  pageHeight: window.innerWidth,
+  promoting: false
 })
 
 export default () =>
@@ -17,7 +18,8 @@ export default () =>
         pageWidth: width,
         pageHeight: height
       }),
-      [a.promptToAddToHomeScreen]: (state) => ({ ...state, proposalEvent: undefined})
+      [a.promptToAddToHomeScreen]: (state) => ({ ...state, proposalEvent: undefined }),
+      [a.togglePromote]: (state) => ({ ...state, promoting: !state.promoting })
     },
     getDefaultState()
   )

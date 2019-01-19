@@ -1,17 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
 import Timeline from 'increaser-timeline'
 
 import { connectTo } from '../utils/generic'
 import { THEME } from '../constants/theme'
-
-const Wrapper = styled.div`
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
-  width: 320px;
-  height: 100px;
-`
+import Wrapper from './timeline-wrapper'
 
 export default connectTo(
   state => ({

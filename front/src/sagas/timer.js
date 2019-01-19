@@ -4,9 +4,11 @@ import { tick, finish as finishTimer } from '../actions/timer'
 import { TICK_FREQUENCY, NOTIFICATION_TEXT } from '../constants/timer'
 import { delay } from 'redux-saga'
 import { to } from '../actions/navigation'
-import { getTodaySets } from '../utils/time';
-import { updateSets } from '../actions/timeline';
-import { SET_FINISHED } from '../constants/sounds';
+import { receiveSet } from '../actions/timeline'
+import { SET_FINISHED } from '../constants/sounds'
+import { getHours } from '../utils/time';
+import { PROMOTE_AFTER_HOURS } from '../constants/promotion';
+import { togglePromote } from '../actions/generic';
 
 export function* start() {
   yield put(to('timer'))
@@ -31,10 +33,15 @@ export function* finish({ payload : { start, stopped } }) {
     start,
     end: Date.now()
   }
-  const { timeline: { sets }, settings: { sound } } = yield select()
-  const newSets = getTodaySets([ ...sets, set ])
-  yield put(updateSets(newSets))
-
+  const { timeline: { setsSum }, settings: { sound } } = yield select()
+  yield put(receiveSet(set))
+  const newSetsSum = (yield select()).timeline.setsSum
+  const hoursBefore = getHours(setsSum)
+  const hoursAfter = getHours(newSetsSum)
+  const promote = PROMOTE_AFTER_HOURS.includes(hoursBefore) && !PROMOTE_AFTER_HOURS.includes(hoursAfter)
+  if (promote) {
+    yield put(togglePromote())
+  }
   const documentHidden = document.hidden === undefined || document.hidden || document.webkitHidden
   const notificationAllowed = window.Notification && window.Notification.permission === 'granted'
   if (!stopped && documentHidden && notificationAllowed) {

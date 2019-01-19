@@ -5,15 +5,19 @@ import { takeIfExists } from '../utils/localStorage';
 import { getTodaySets } from '../utils/time';
 
 const getDefaultState = () => {
-  const sets = takeIfExists('sets', Array)
-  if(!sets) return {
-    sets: []
-  }
+  const setsSum = takeIfExists('setsSum', Number) || 0
+  const sets = takeIfExists('sets', Array) || []
   return {
-    sets: getTodaySets(sets)
+    sets: getTodaySets(sets),
+    setsSum
   }
 }
 
 export default () => createReducer({
-  [a.updateSets]: (state, sets) => ({ ...state, sets })
+  [a.receiveSet]: (state, set) => {
+    return {
+      setsSum: state.setsSum + set.end - set.start,
+      sets: getTodaySets([ ...state.sets, set ])
+    }
+  }
 }, getDefaultState())
