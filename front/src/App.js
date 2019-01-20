@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components'
 import { Provider } from 'react-redux'
 import ReactGA from 'react-ga'
 import { library } from '@fortawesome/fontawesome-svg-core'
+import { THEME as ICTHEME } from 'increaser-components'
 import { faVolumeUp, faVolumeMute, faComment } from '@fortawesome/free-solid-svg-icons'
 
 import saga from './sagas'
@@ -12,11 +13,28 @@ import { sagaMiddleware } from './middleware'
 import Layout from './components/layout'
 import { THEME } from './constants/theme'
 
+const MERGED_THEME = {
+  ...THEME,
+  ...ICTHEME,
+  color: {
+    ...THEME.color,
+    ...ICTHEME.color
+  },
+  shadow: {
+    ...THEME.shadow,
+    ...ICTHEME.shadow
+  },
+  transition: {
+    ...THEME.transition,
+    ...ICTHEME.transition
+  }
+}
+
 library.add(faVolumeUp, faVolumeMute, faComment)
 
 export default () => (
   <Provider store={store}>
-    <ThemeProvider theme={THEME}>
+    <ThemeProvider theme={MERGED_THEME}>
       <Layout/>
     </ThemeProvider>
   </Provider>

@@ -1,24 +1,11 @@
 import React from 'react'
-import styled,{ keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { RoundButton } from 'increaser-components'
 
 const Container = styled.div`
   position: relative;
-  border-radius: 50%;
-  border: none;
   margin: 10px 0;
-  background-color: ${props => props.theme.color.glass};
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: ${props => props.theme.color.text};
-  :hover {
-    transition: .35s ease-in-out;
-    color: ${props => props.theme.color.gold};
-  }
 `
 
 const animation = keyframes`
@@ -64,8 +51,10 @@ export default ({ icon, onClick, hint, linkTo }) => {
   }
   return (
     <Link>
-      <Container onClick={onClick}>
-        <FontAwesomeIcon size={'lg'} icon={icon}/>
+      <Container>
+        <RoundButton onClick={onClick} size='m' type='default'>
+          <FontAwesomeIcon size={'lg'} icon={icon}/>
+        </RoundButton>
         <Hint>
           <p>{hint}</p>
         </Hint>
