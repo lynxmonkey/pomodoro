@@ -1,33 +1,13 @@
 import React from 'react'
 import Timer from 'increaser-timer'
 import styled from 'styled-components'
+import { TimerButton } from 'increaser-components'
 
 import Wrapper from '../wrapper'
 import { stop } from '../../actions/timer'
 import { connectTo } from '../../utils/generic'
 import Time from '../time'
 import Page from '../page'
-
-const StopButton = styled.button`
-  color: #FFFFFF;
-  position: absolute;
-  top: ${props => props.insideTimer ? '62.8%' : undefined};
-  bottom: ${props => props.insideTimer ? undefined : '5%'};
-  height: ${props => props.insideTimer ? '8%' : '60px'};
-  width: ${props => props.insideTimer ? '24%' : '160px'};
-  font-size: ${props => props.insideTimer ? '2.6vmin' : '24px'};
-
-  background-color: rgba(255, 255, 255, 0.15);
-  cursor: pointer;
-  border-width: 0;
-  border-radius: 5px;
-  outline: none;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
-  &:hover {
-    background-color: rgba(52, 152, 219,0.2);
-    transition: .35s ease-in-out;
-  }
-`
 
 const Container = styled(Wrapper)`
   position: absolute;
@@ -46,9 +26,9 @@ const TimerWrapper = connectTo(
         <Time/>
         <Container>
           {children}
-          {stopInsideTimer && <StopButton insideTimer onClick={stop}>STOP</StopButton>}
+          {stopInsideTimer && <TimerButton onClick={stop}>STOP</TimerButton>}
         </Container>
-        {!stopInsideTimer && <StopButton onClick={stop}>STOP</StopButton>}
+        {!stopInsideTimer && <TimerButton onClick={stop}>STOP</TimerButton>}
       </Page>
     )
   }

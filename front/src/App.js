@@ -51,5 +51,3 @@ if (process.env.NODE_ENV === 'production') {
   ReactGA.pageview(window.location.pathname + window.location.search)
   console.log('start app, version 1.0.0')
 }
-
-
