@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { connectTo, takeFromState } from '../utils/generic'
 import { mount, unmount } from '../actions/time'
 import LastSetEnd from './last-set-end'
+import { getHumanTime } from '../utils/time';
 
 const Container = styled.div`
   position: absolute;
@@ -30,20 +31,6 @@ const Container = styled.div`
 const TimeNow = styled.p`
   font-size: ${props => props.large ? 40 : 34}px;
 `
-
-const getHumanTime = () => {
-  const date = new Date()
-  const hours = date.getHours()
-  const minutes = date.getMinutes()
-  const part = hours >= 12 ? 'PM' : 'AM'
-  const getHour = () => {
-    const hours12 = hours % 12
-    return hours12 ? hours : 12
-  }
-  const hourView = getHour()
-  const minuteView = minutes < 10 ? `0${minutes}` : minutes
-  return `${hourView}:${minuteView} ${part}`
-}
 
 class Time extends React.Component {
   render() {

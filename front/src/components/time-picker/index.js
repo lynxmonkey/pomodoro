@@ -7,14 +7,13 @@ import { connectTo, takeFromState } from '../../utils/generic'
 import Page from '../page'
 import Time from '../time'
 import Panel from '../panel'
-import Timeline from '../timeline'
-import Promotion from '../promotion'
 import Wrapper from '../wrapper'
 import Logo from '../logo'
+import StatisticsPanel from '../statistics-panel'
 
 class Component extends React.Component {
   render() {
-    const { changeDuration, start, duration, proposalEvent, promptToAddToHomeScreen, sets, promoting } = this.props
+    const { changeDuration, start, duration, proposalEvent, promptToAddToHomeScreen, sets } = this.props
     const onStart = () => {
       start()
       if (proposalEvent && sets.length) {
@@ -32,7 +31,7 @@ class Component extends React.Component {
           onDurationChange={changeDuration}
           onStart={onStart}
         />
-        {promoting ? <Promotion/> : <Timeline/>}
+        <StatisticsPanel/>
       </Page>
     )
   }
