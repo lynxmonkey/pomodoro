@@ -1,4 +1,5 @@
 import { select, put, call } from 'redux-saga/effects'
+import * as Sentry from '@sentry/browser'
 
 import { tick, finish as finishTimer } from '../actions/timer'
 import { TICK_FREQUENCY, NOTIFICATION_TEXT } from '../constants/timer'
@@ -43,21 +44,48 @@ export function* finish({ payload : { start, stopped } }) {
     yield put(togglePromote())
   }
   const documentHidden = document.hidden === undefined || document.hidden || document.webkitHidden
-  const notificationAllowed = window.Notification && window.Notification.permission === 'granted'
-  if (!stopped && documentHidden && notificationAllowed) {
-    try {
-      const notification = new window.Notification(NOTIFICATION_TEXT)
-      notification.onclick = function() {
-        window.focus()
-        notification.close()
+  if (!stopped && documentHidden) {
+    if (window.Windows) {
+      try {
+        const imageUrl = window.location.protocol + '//' + window.location.host + '/images/1024x1024.png'
+        const toastXml = new window.Windows.Data.Xml.Dom.XmlDocument()
+        const toastNotificationXmlTemplate =
+        `<toast>
+            <visual>
+                <binding template="ToastGeneric">
+                    <text hint-maxLines="1"></text>
+                    <text></text>
+                    <image placement="" src=""/>
+                </binding>
+            </visual>
+        </toast>`
+        toastXml.loadXml(toastNotificationXmlTemplate)
+  
+        const images = toastXml.getElementsByTagName('image')
+        images[0].setAttribute('src', imageUrl)
+        const textNodes = toastXml.getElementsByTagName('text');
+        textNodes[0].innerText = 'Pomodoro by Increaser'
+        textNodes[1].innerText = NOTIFICATION_TEXT
+        const toast = new window.Windows.UI.Notifications.ToastNotification(toastXml)
+        window.Windows.UI.Notifications.ToastNotificationManager.createToastNotifier().show(toast)
+      } catch(error) {
+        Sentry.captureException(error)
       }
-    } catch (_) {
-      navigator.serviceWorker.getRegistration().then(registration => {
-        registration.showNotification(NOTIFICATION_TEXT, {
-          vibrate: [200, 100, 200, 100, 200, 100, 200],
-          requireInteraction: true
+    } else if ( window.Notification && window.Notification.permission === 'granted') {
+      try {
+        const notification = new window.Notification(NOTIFICATION_TEXT)
+        notification.onclick = function() {
+          window.focus()
+          notification.close()
+        }
+      } catch (_) {
+        navigator.serviceWorker.getRegistration().then(registration => {
+          registration.showNotification(NOTIFICATION_TEXT, {
+            vibrate: [200, 100, 200, 100, 200, 100, 200],
+            requireInteraction: true
+          })
         })
-      })
+      }
     }
   }
   if (!stopped && sound) {
