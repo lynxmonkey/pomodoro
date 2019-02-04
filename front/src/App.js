@@ -3,10 +3,9 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { Provider } from 'react-redux'
 import ReactGA from 'react-ga'
-import { library } from '@fortawesome/fontawesome-svg-core'
 import { THEME as ICTHEME } from 'increaser-components'
-import { faVolumeUp, faVolumeMute, faComment } from '@fortawesome/free-solid-svg-icons'
 
+import './utils/init-fa'
 import saga from './sagas'
 import store from './store'
 import { sagaMiddleware } from './middleware'
@@ -30,7 +29,6 @@ const MERGED_THEME = {
   }
 }
 
-library.add(faVolumeUp, faVolumeMute, faComment)
 
 export default () => (
   <Provider store={store}>

@@ -2,8 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 import * as actions from '../actions/settings'
-import { connectTo } from '../utils/generic'
+import { connectTo, takeFromState } from '../utils/generic'
 import Item from './panel-item'
+import Help from './help'
 import { AUTHOR_SITE } from '../constants/links';
 
 const Container = styled.div`
@@ -14,9 +15,8 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-const Panel = ({ sound, toggleSound, pageWidth }) => {
+const Panel = ({ sound, toggleSound, pageWidth, setsSum }) => {
   if (pageWidth < 1220) return null
-
   return (
     <Container>
       <Item
@@ -29,6 +29,11 @@ const Panel = ({ sound, toggleSound, pageWidth }) => {
         hint={'contact the author'}
         linkTo={AUTHOR_SITE}
       />
+      <Item
+        calling={setsSum === 0}
+        icon={'question'}
+        customHint={Help}
+      />
     </Container>
   )
 }
@@ -36,7 +41,8 @@ const Panel = ({ sound, toggleSound, pageWidth }) => {
 export default connectTo(
   state => ({
     ...state.settings,
-    ...state.generic
+    ...state.generic,
+    ...takeFromState(state, 'timeline', ['setsSum'])
   }),
   actions,
   Panel

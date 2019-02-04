@@ -20,26 +20,30 @@ const animation = keyframes`
   }
 `
 
-const Hint = styled.div`
+const GenericHintContainer = styled.div`
   left: 70px;
   top: 5px;
   position: absolute;
   display: none;
   animation: ${animation} .35s ease-in-out;
   animation-fill-mode: both;
-  width: 240px;
-  border-radius: 5px;
-  padding: 10px;
-  background-color: ${props => props.theme.color.glass};
   ${Container}:hover & {
+    display: block;
     color: ${props => props.theme.color.text};
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 `
 
-export default ({ icon, onClick, hint, linkTo }) => {
+const Hint = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  width: 240px;
+  padding: 10px;
+  background-color: ${props => props.theme.color.glass};
+`
+
+export default ({ icon, onClick, hint, linkTo, customHint, calling }) => {
   const Link = ({ children }) => {
     if (linkTo) return (
       <a target="_blank" rel="noopener noreferrer" href={linkTo}>
@@ -52,12 +56,16 @@ export default ({ icon, onClick, hint, linkTo }) => {
   return (
     <Link>
       <Container>
-        <RoundButton onClick={onClick} size='m' type='default'>
+        <RoundButton calling={calling} onClick={onClick} size='m' type='default'>
           <FontAwesomeIcon size={'lg'} icon={icon}/>
         </RoundButton>
-        <Hint>
-          <p>{hint}</p>
-        </Hint>
+        <GenericHintContainer>
+          {customHint ? customHint() : (
+            <Hint>
+              <p>{hint}</p>
+            </Hint>
+          )}
+        </GenericHintContainer>
       </Container>
     </Link>
   )
