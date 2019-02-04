@@ -14,7 +14,8 @@ const getDefaultState = () => {
     duration: durationsSum ? Math.round(averageDuration / 5) * 5 : DEFAULT_DURATION,
     startTime: undefined,
     timeNow: undefined,
-    stopped: false
+    stopped: false,
+    willNotifyAfter: false
   }
 }
 
@@ -28,6 +29,8 @@ export default () =>
         duration: state.duration
       }),
       [a.stop]: state => ({ ...state, stopped: true }),
+      [a.notifyAfter]: state => ({ ...state, willNotifyAfter: true }),
+      [a.doNotNotifyAfter]: state => ({ ...state, notifyAfter: false }),
       [a.start]: state => {
         return {
           ...state,

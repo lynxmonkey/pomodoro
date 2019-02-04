@@ -1,9 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { connectTo, takeFromState } from '../utils/generic';
+import { RerenderWithTime } from 'increaser-components'
 
+import { connectTo, takeFromState } from '../utils/generic'
+import NotifyAfter from './notify-after'
 import Promotion from './promotion'
 import Timeline from './timeline'
+import { notificationAllowed } from '../utils/notification'
 
 const Container = styled.div`
   position: absolute;
@@ -14,10 +17,19 @@ const Container = styled.div`
   align-items: center;
 `
 
-const StatisticsPanel = ({ pageWidth, promoting, sets }) => {
-  if (pageWidth < 1220 || sets.length < 1) return null
+const StatisticsPanel = ({ pageWidth, promoting, sets, willNotifyAfter }) => {
+  if (pageWidth < 1540 || sets.length < 1) return null
+  const renderNotify = () => {
+    if (willNotifyAfter || !notificationAllowed()) return null
+    const lastSetEnd = sets[sets.length - 1].end
+    const secondsPassed = (Date.now() - lastSetEnd) / 1000
+    if (secondsPassed > 60) return null
+
+    return <NotifyAfter/>
+  }
   return (
     <Container>
+      <RerenderWithTime renderComponent={renderNotify} milliseconds={2000} />
       {promoting ? <Promotion/> : <Timeline/>}
     </Container>
   )
@@ -25,6 +37,7 @@ const StatisticsPanel = ({ pageWidth, promoting, sets }) => {
 
 export default connectTo(
   state => ({
+    ...takeFromState(state, 'timer', ['willNotifyAfter']),
     ...takeFromState(state, 'generic', ['pageWidth', 'promoting']),
     ...takeFromState(state, 'timeline', ['sets']),
   }),

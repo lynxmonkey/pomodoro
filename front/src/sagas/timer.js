@@ -1,7 +1,7 @@
 import { select, put, call } from 'redux-saga/effects'
-import * as Sentry from '@sentry/browser'
+import ReactGA from 'react-ga'
 
-import { tick, finish as finishTimer } from '../actions/timer'
+import { tick, finish as finishTimer, doNotNotifyAfter } from '../actions/timer'
 import { TICK_FREQUENCY, NOTIFICATION_TEXT } from '../constants/timer'
 import { delay } from 'redux-saga'
 import { to } from '../actions/navigation'
@@ -10,6 +10,7 @@ import { SET_FINISHED } from '../constants/sounds'
 import { getHours } from '../utils/time';
 import { PROMOTE_AFTER_HOURS } from '../constants/promotion';
 import { togglePromote } from '../actions/generic';
+import { showNotification } from '../utils/notification';
 
 export function* start() {
   yield put(to('timer'))
@@ -29,12 +30,35 @@ export function* start() {
   }
 }
 
-export function* finish({ payload : { start, stopped } }) {
-  const set = {
-    start,
-    end: Date.now()
+function* soundNotification () {
+  const { settings: { sound } } = yield select()
+  console.log(sound)
+  if (sound) {
+    const audio = new Audio(SET_FINISHED)
+    try {
+      yield audio.play()
+    } catch (err) {
+      console.log('fail to play sound')
+    }
   }
-  const { timeline: { setsSum }, settings: { sound } } = yield select()
+}
+
+export function* finish({ payload : { start, stopped } }) {
+  const end = Date.now()
+  const set = { start, end }
+  // ga: start
+  if (process.env.NODE_ENV === 'production') {
+    const minutes = Math.round((end - start) / 1000 / 60)
+    if (minutes > 0) {
+      ReactGA.event({
+        category: 'Timer',
+        action: 'Finished Set',
+        value: minutes,
+      })
+    }
+  }
+  // ga: end
+  const { timeline: { setsSum } } = yield select()
   yield put(receiveSet(set))
   const newSetsSum = (yield select()).timeline.setsSum
   const hoursBefore = getHours(setsSum)
@@ -43,58 +67,29 @@ export function* finish({ payload : { start, stopped } }) {
   if (promote) {
     yield put(togglePromote())
   }
-  const documentHidden = document.hidden === undefined || document.hidden || document.webkitHidden
-  if (!stopped && documentHidden) {
-    if (window.Windows) {
-      try {
-        const imageUrl = window.location.protocol + '//' + window.location.host + '/images/1024x1024.png'
-        const toastXml = new window.Windows.Data.Xml.Dom.XmlDocument()
-        const toastNotificationXmlTemplate =
-        `<toast>
-            <visual>
-                <binding template="ToastGeneric">
-                    <text hint-maxLines="1"></text>
-                    <text></text>
-                    <image placement="" src=""/>
-                </binding>
-            </visual>
-        </toast>`
-        toastXml.loadXml(toastNotificationXmlTemplate)
-  
-        const images = toastXml.getElementsByTagName('image')
-        images[0].setAttribute('src', imageUrl)
-        const textNodes = toastXml.getElementsByTagName('text');
-        textNodes[0].innerText = 'Pomodoro by Increaser'
-        textNodes[1].innerText = NOTIFICATION_TEXT
-        const toast = new window.Windows.UI.Notifications.ToastNotification(toastXml)
-        window.Windows.UI.Notifications.ToastNotificationManager.createToastNotifier().show(toast)
-      } catch(error) {
-        Sentry.captureException(error)
-      }
-    } else if ( window.Notification && window.Notification.permission === 'granted') {
-      try {
-        const notification = new window.Notification(NOTIFICATION_TEXT)
-        notification.onclick = function() {
-          window.focus()
-          notification.close()
-        }
-      } catch (_) {
-        navigator.serviceWorker.getRegistration().then(registration => {
-          registration.showNotification(NOTIFICATION_TEXT, {
-            vibrate: [200, 100, 200, 100, 200, 100, 200],
-            requireInteraction: true
-          })
-        })
-      }
-    }
-  }
-  if (!stopped && sound) {
-    const sound = new Audio(SET_FINISHED)
-    try {
-      yield sound.play()
-    } catch (err) {
-      console.log('fail to play sound')
+  if (!stopped) {
+    yield soundNotification()
+    if (document.hidden === undefined || document.hidden || document.webkitHidden) {
+      showNotification(NOTIFICATION_TEXT)
     }
   }
   yield put(to('timePicker'))
+}
+
+export function* notifyAfter ({ payload }) {
+  const stateBefore = yield select()
+  const getLastSetEnd = (state) => {
+    const { sets } = state.timeline
+    return sets.length ? sets[sets.length - 1].end : undefined
+  }
+  const lastSetEndBefore = getLastSetEnd(stateBefore)
+  yield call(delay, payload * 60 * 1000)
+  yield put(doNotNotifyAfter())
+  const state = yield select()
+  const page = state.navigation.page
+  const lastSetEnd = getLastSetEnd(state)
+  if (page !== 'timer' && lastSetEnd === lastSetEndBefore) {
+    yield soundNotification()
+    showNotification('Time to come back to work!')
+  }
 }
