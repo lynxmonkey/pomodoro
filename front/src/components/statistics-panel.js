@@ -9,9 +9,6 @@ import Timeline from './timeline'
 import { notificationAllowed } from '../utils/notification'
 
 const Container = styled.div`
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;

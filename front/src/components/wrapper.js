@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export default styled.div`
-  width: 80vmin;
+  margin: 10%;
+  /* width: 80vmin;
   height: 80vmin;
 
   @media (max-width: 1220px) {
@@ -12,5 +13,5 @@ export default styled.div`
   @media (max-width: 800px) {
     height: 80vmin;
     width: 80vmin;
-  }
+  } */
 `

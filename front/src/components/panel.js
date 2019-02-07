@@ -8,9 +8,6 @@ import Help from './help'
 import { AUTHOR_SITE } from '../constants/links';
 
 const Container = styled.div`
-  position: absolute;
-  top: 8%;
-  left: 5%;
   display: flex;
   flex-direction: column;
 `

@@ -7,9 +7,6 @@ import LastSetEnd from './last-set-end'
 import { getHumanTime } from '../utils/time';
 
 const Container = styled.div`
-  position: absolute;
-  top: 5%;
-  right: 5%;
   width: 320px;
   height: 100px;
   background-color: ${props => props.theme.color.glass};

@@ -1,8 +1,7 @@
 import React from 'react'
-import TimePicker from 'increaser-timepicker'
+import styled from 'styled-components'
 
-import * as actions from '../../actions/timer'
-import { promptToAddToHomeScreen, togglePromote } from '../../actions/generic'
+import { togglePromote } from '../../actions/generic'
 import { connectTo, takeFromState } from '../../utils/generic'
 import Page from '../page'
 import Time from '../time'
@@ -10,28 +9,50 @@ import Panel from '../panel'
 import Wrapper from '../wrapper'
 import Logo from '../logo'
 import StatisticsPanel from '../statistics-panel'
+import PlaceHolder from '../timeline-wrapper'
+import Center from './center'
+
+const Left = styled.div`
+  background-color: goldenrod;
+  padding: 5vh 0 5vh 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
+
+const Right = styled.div`
+  background-color: navy;
+  padding: 5vh 5vw 5vh 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
 
 class Component extends React.Component {
   render() {
-    const { changeDuration, start, duration, proposalEvent, promptToAddToHomeScreen, sets } = this.props
-    const onStart = () => {
-      start()
-      if (proposalEvent && sets.length) {
-        promptToAddToHomeScreen()
-      }
-    }
     return (
       <Page>
-        <Logo/>
+        <Left>
+          <Panel/>
+          <PlaceHolder/>
+        </Left>
+        <Center>
+        </Center>
+        <Right>
+          <Time showLastSet />
+          <StatisticsPanel/>
+        </Right>
+
+
+        {/* <Logo/>
         <Panel/>
-        <Time showLastSet />
         <TimePicker
           wrapper={Wrapper}
           duration={duration}
           onDurationChange={changeDuration}
           onStart={onStart}
         />
-        <StatisticsPanel/>
+         */}
       </Page>
     )
   }
@@ -54,13 +75,9 @@ class Component extends React.Component {
 
 export default connectTo(
   state => ({
-    ...takeFromState(state, 'timer', ['changeDuration', 'start', 'duration']),
-    ...takeFromState(state, 'generic', ['proposalEvent', 'promoting']),
-    ...takeFromState(state, 'timeline', ['sets'])
+    ...takeFromState(state, 'generic', ['promoting']),
   }),
   {
-    ...actions,
-    promptToAddToHomeScreen,
     togglePromote
   },
   Component

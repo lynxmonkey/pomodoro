@@ -1,15 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Quote } from 'increaser-components'
+
 import { INCREASER } from '../constants/links';
-
-const Wrapper = styled.div`
-  position: absolute;
-  bottom: 5%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`
-
+import { connectTo, takeFromState } from '../utils/generic';
 const Link = styled.a`
   font-family: 'Dancing Script', cursive;
   color: ${props => props.theme.color.text};
@@ -18,10 +12,13 @@ const Link = styled.a`
   font-size: 32px;
 `
 
-export default () => (
-  <Wrapper>
+export default connectTo(
+  state => takeFromState(state, 'timeline', ['sets']),
+  {},
+  ({ sets }) => sets.length ? <Quote/> : (
     <Link target="_blank" href={INCREASER}>
       Pomodoro by Increaser
     </Link>
-  </Wrapper>
+  )
 )
+  

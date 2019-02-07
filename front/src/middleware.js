@@ -21,7 +21,11 @@ const localStorageMiddleware = store => next => action => {
     localStorage.setItem('settings', newSettings)
   }
   if (prevState.time.lastSetEnd !== nextState.time.lastSetEnd) {
-    localStorage.setItem('lastSetEnd', nextState.time.lastSetEnd)
+    if (!nextState.time.lastSetEnd){
+      localStorage.removeItem('lastSetEnd')
+    } else {
+      localStorage.setItem('lastSetEnd', nextState.time.lastSetEnd)
+    }
   }
   if (prevState.timeline.sets !== nextState.timeline.sets) {
     localStorage.setItem('sets', JSON.stringify(nextState.timeline.sets))
