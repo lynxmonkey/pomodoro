@@ -3,45 +3,55 @@ import styled from 'styled-components'
 
 import { togglePromote } from '../../actions/generic'
 import { connectTo, takeFromState } from '../../utils/generic'
-import Page from '../page'
 import Time from '../time'
 import Panel from '../panel'
-import Wrapper from '../wrapper'
-import Logo from '../logo'
 import StatisticsPanel from '../statistics-panel'
 import PlaceHolder from '../timeline-wrapper'
 import Center from './center'
 
 const Left = styled.div`
-  background-color: goldenrod;
-  padding: 5vh 0 5vh 5vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `
 
 const Right = styled.div`
-  background-color: navy;
-  padding: 5vh 5vw 5vh 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `
 
+const Page = styled.div`
+  padding: 4% 4% 20px 4%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  background-image: ${p => p.theme.color.pageBackground};
+`
+
 class Component extends React.Component {
   render() {
+    const { pageWidth } = this.props
+    const mobile = pageWidth < 1220
     return (
       <Page>
-        <Left>
-          <Panel/>
-          <PlaceHolder/>
-        </Left>
+        {!mobile && (
+          <Left>
+            <Panel/>
+            <PlaceHolder/>
+          </Left>
+
+        )}
         <Center>
+          {mobile && <Time showLastSet mobile />}
         </Center>
-        <Right>
-          <Time showLastSet />
-          <StatisticsPanel/>
-        </Right>
+        {!mobile && (
+          <Right>
+            <Time showLastSet />
+            <StatisticsPanel/>
+          </Right>
+        )}
 
 
         {/* <Logo/>
@@ -75,7 +85,7 @@ class Component extends React.Component {
 
 export default connectTo(
   state => ({
-    ...takeFromState(state, 'generic', ['promoting']),
+    ...takeFromState(state, 'generic', ['promoting', 'pageWidth']),
   }),
   {
     togglePromote

@@ -8,14 +8,17 @@ import { promptToAddToHomeScreen } from '../../actions/generic'
 import Logo from '../logo'
 
 const Container = styled.div`
-  /* padding: 5vh 0; */
-  background-color: blueviolet;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   overflow: hidden;
   width: 100%;
+`
+
+const Bottom = styled.div`
+  padding-top: 20px;
+  max-width: 600px;
 `
 
 class Center extends React.Component {
@@ -28,7 +31,7 @@ class Center extends React.Component {
   }
 
   render() {
-    const { duration, changeDuration, start, proposalEvent, sets } = this.props
+    const { duration, changeDuration, start, proposalEvent, sets, children } = this.props
     const Content = () => {
       const { width, height } = this.state
       if (!width || !height) return null
@@ -55,8 +58,11 @@ class Center extends React.Component {
     }
     return (
       <Container ref={el => this.container = el}>
+        {children ? children : <div/>}
         <Content/>
-        <Logo/>
+        <Bottom>
+          <Logo/>
+        </Bottom>
       </Container>
     )
   }

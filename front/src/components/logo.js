@@ -4,6 +4,7 @@ import { Quote } from 'increaser-components'
 
 import { INCREASER } from '../constants/links';
 import { connectTo, takeFromState } from '../utils/generic';
+
 const Link = styled.a`
   font-family: 'Dancing Script', cursive;
   color: ${props => props.theme.color.text};

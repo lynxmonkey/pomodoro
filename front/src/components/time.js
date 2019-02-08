@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { connectTo, takeFromState } from '../utils/generic'
 import { mount, unmount } from '../actions/time'
@@ -17,12 +17,10 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  @media (max-width: 1220px) {
+  ${p => p.mobile && css`
     background-color: transparent;
-    left: 50%;
-    transform: translateX(-50%);
     height: 120px;
-  }
+  `}
 `
 
 const TimeNow = styled.p`
@@ -31,12 +29,12 @@ const TimeNow = styled.p`
 
 class Time extends React.Component {
   render() {
-    const { lastSetEnd, page, showLastSet } = this.props
+    const { lastSetEnd, page, showLastSet, mobile } = this.props
 
     const time = getHumanTime()
     const showLastEnd = page !== 'timer' && lastSetEnd && showLastSet
     return (
-      <Container>
+      <Container mobile={mobile}>
         <TimeNow large={!showLastEnd}>{time}</TimeNow>
         {showLastEnd && <LastSetEnd lastSetEnd={lastSetEnd} />}
       </Container>

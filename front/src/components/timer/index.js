@@ -1,18 +1,54 @@
 import React from 'react'
 import Timer from 'increaser-timer'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { TimerButton } from 'increaser-components'
 
-import Wrapper from '../wrapper'
 import { stop } from '../../actions/timer'
 import { connectTo } from '../../utils/generic'
 import Time from '../time'
-import Page from '../page'
+
+const Page = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: ${p => p.theme.color.pageBackground};
+`
+
+const Wrapper = styled.div`
+  width: 80vmin;
+  height: 80vmin;
+
+  @media (max-width: 1220px) {
+    height: 66vmin;
+    width: 66vmin;
+  }
+
+  @media (max-width: 800px) {
+    height: 80vmin;
+    width: 80vmin;
+  }
+`
 
 const Container = styled(Wrapper)`
   position: absolute;
   display: flex;
   justify-content: center;
+`
+
+const TimeContainer = styled.div`
+  position: absolute;
+  top: 4%;
+  ${p => p.mobile ? css`
+    height: 120px;
+    background-color: transparent;
+    left: 50%;
+    transform: translateX(-50%);
+  ` : css`
+    right: 4%;
+  `}
 `
 
 const TimerWrapper = connectTo(
@@ -21,9 +57,12 @@ const TimerWrapper = connectTo(
   ({ stop, children, pageWidth }) => 
   {
     const stopInsideTimer = pageWidth > 800
+    const mobile = pageWidth < 1220
     return (
-      <Page >
-        <Time/>
+      <Page>
+        <TimeContainer mobile={mobile}>
+          <Time mobile={mobile}/>
+        </TimeContainer>
         <Container>
           {children}
           {stopInsideTimer && <TimerButton onClick={stop}>STOP</TimerButton>}
