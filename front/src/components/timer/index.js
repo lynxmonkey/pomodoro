@@ -1,20 +1,18 @@
 import React from 'react'
 import Timer from 'increaser-timer'
-import styled, { css } from 'styled-components'
-import { TimerButton } from 'increaser-components'
+import styled, { css, withTheme } from 'styled-components'
+import { TimerButton, centerContentStyle } from 'increaser-components'
 
 import { stop } from '../../actions/timer'
 import { connectTo } from '../../utils/generic'
+import Page from '../page'
 import Time from '../time'
 
-const Page = styled.div`
+const InnerPage = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: ${p => p.theme.color.pageBackground};
+  ${centerContentStyle}
 `
 
 const Wrapper = styled.div`
@@ -40,14 +38,14 @@ const Container = styled(Wrapper)`
 
 const TimeContainer = styled.div`
   position: absolute;
-  top: 4%;
+  top: 0%;
   ${p => p.mobile ? css`
     height: 120px;
     background-color: transparent;
     left: 50%;
     transform: translateX(-50%);
   ` : css`
-    right: 4%;
+    right: 0%;
   `}
 `
 
@@ -60,25 +58,27 @@ const TimerWrapper = connectTo(
     const mobile = pageWidth < 1220
     return (
       <Page>
-        <TimeContainer mobile={mobile}>
-          <Time mobile={mobile}/>
-        </TimeContainer>
-        <Container>
-          {children}
-          {stopInsideTimer && <TimerButton onClick={stop}>STOP</TimerButton>}
-        </Container>
-        {!stopInsideTimer && <TimerButton onClick={stop}>STOP</TimerButton>}
+        <InnerPage>
+          <TimeContainer mobile={mobile}>
+            <Time mobile={mobile}/>
+          </TimeContainer>
+          <Container>
+            {children}
+            {stopInsideTimer && <TimerButton onClick={stop}>STOP</TimerButton>}
+          </Container>
+          {!stopInsideTimer && <TimerButton onClick={stop}>STOP</TimerButton>}
+        </InnerPage>
       </Page>
     )
   }
 )
 
-const InnerTimer = connectTo(
+const InnerTimer = withTheme(connectTo(
   state => state.timer,
   {},
   class extends React.Component {
     render() {
-      const { startTime, timeNow, duration } = this.props
+      const { startTime, timeNow, duration, theme } = this.props
       return (
         <Timer
           wrapper={Wrapper}
@@ -87,7 +87,7 @@ const InnerTimer = connectTo(
           duration={duration}
           showTimeInTitle={true}
           handleBeforeUnload={true}
-          theme={{ timeFillColor: 'rgb(249, 168, 37)' }}
+          theme={{ timeFillColor: theme.color.gold }}
         />
       )
     }
@@ -98,7 +98,7 @@ const InnerTimer = connectTo(
       }
     }
   }
-)
+))
 
 export default () => (
   <TimerWrapper>

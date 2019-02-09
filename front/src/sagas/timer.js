@@ -32,7 +32,6 @@ export function* start() {
 
 function* soundNotification () {
   const { settings: { sound } } = yield select()
-  console.log(sound)
   if (sound) {
     const audio = new Audio(SET_FINISHED)
     try {

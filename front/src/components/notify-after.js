@@ -10,7 +10,7 @@ const Container = styled.div`
   background-color: ${p => p.theme.color.default};
   color: ${props => props.theme.color.text};
   padding: 10px;
-  margin: 20px;
+  margin: 20px 0;
 `
 
 const Header = styled.p`

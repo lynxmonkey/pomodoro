@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import TimePicker from 'increaser-timepicker'
+import { centerContentStyle } from 'increaser-components'
 
 import { connectTo, takeFromState } from '../../utils/generic';
 import * as actions from '../../actions/timer'
@@ -12,76 +13,50 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  overflow: hidden;
   width: 100%;
+  overflow: hidden;
 `
 
-const Bottom = styled.div`
-  padding-top: 20px;
+const Placeholder = styled.div`
+  width: 100%;
+  height: 160px;
+  ${centerContentStyle};
+`
+
+const Bottom = styled(Placeholder)`
   max-width: 600px;
 `
 
-class Center extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      width: 0,
-      height: 0
+const Middle = styled.div`
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  ${centerContentStyle}
+`
+
+const Center = ({ duration, changeDuration, start, proposalEvent, sets, children = null }) => {
+  const onStart = () => {
+    start()
+    if (proposalEvent && sets.length) {
+      promptToAddToHomeScreen()
     }
   }
-
-  render() {
-    const { duration, changeDuration, start, proposalEvent, sets, children } = this.props
-    const Content = () => {
-      const { width, height } = this.state
-      if (!width || !height) return null
-      const Wrapper = styled.div`
-        width: ${width}px;
-        height: ${width > height ? '100%' : `${width}px`};
-      `
-
-      const onStart = () => {
-        start()
-        if (proposalEvent && sets.length) {
-          promptToAddToHomeScreen()
-        }
-      }
-
-      return (
-        <TimePicker
-          wrapper={Wrapper}
-          duration={duration}
-          onDurationChange={changeDuration}
-          onStart={onStart}
-        />
-      )
-    }
-    return (
-      <Container ref={el => this.container = el}>
-        {children ? children : <div/>}
-        <Content/>
-        <Bottom>
-          <Logo/>
-        </Bottom>
-      </Container>
-    )
-  }
-
-  componentDidMount() {
-    this.onResize()
-    window.addEventListener('resize', this.onResize)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize)
-  }
-
-  onResize = () => {
-    if (this.container) {
-      const { width, height } = this.container.getBoundingClientRect()
-      this.setState({ width, height })
-    }
-  }
+  return (
+    <Container>
+      <Placeholder>
+        {children}
+      </Placeholder>
+      <TimePicker
+        wrapper={Middle}
+        duration={duration}
+        onDurationChange={changeDuration}
+        onStart={onStart}
+      />
+      <Bottom>
+        <Logo/>
+      </Bottom>
+    </Container>
+  )
 }
 
 export default connectTo(

@@ -9,7 +9,7 @@
     "@sentry/browser": "^4.4.2",
     "increaser-components": "^0.1.5",
     "increaser-timeline": "^1.0.3",
-    "increaser-timepicker": "^1.0.15",
+    "increaser-timepicker": "^1.0.16",
     "increaser-timer": "^1.0.4",
     "luxon": "^1.9.0",
     "react": "^16.6.3",

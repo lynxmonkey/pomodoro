@@ -7,62 +7,55 @@ import Time from '../time'
 import Panel from '../panel'
 import StatisticsPanel from '../statistics-panel'
 import PlaceHolder from '../timeline-wrapper'
+import Page from '../page'
 import Center from './center'
 
-const Left = styled.div`
+const Side = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `
 
-const Right = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+const Right = styled(Side)`
+  align-items: flex-start;
 `
 
-const Page = styled.div`
-  padding: 4% 4% 20px 4%;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  background-image: ${p => p.theme.color.pageBackground};
+const Left = styled(Side)`
+  align-items: flex-end;
 `
 
 class Component extends React.Component {
   render() {
     const { pageWidth } = this.props
     const mobile = pageWidth < 1220
-    return (
-      <Page>
-        {!mobile && (
-          <Left>
+
+    const Content = () => {
+      if (mobile) {
+        return (
+          <Center>
+            <Time showLastSet mobile/>
+          </Center>
+        )
+      }
+
+      return (
+        <>
+          <Right>
             <Panel/>
             <PlaceHolder/>
-          </Left>
-
-        )}
-        <Center>
-          {mobile && <Time showLastSet mobile />}
-        </Center>
-        {!mobile && (
-          <Right>
+          </Right>
+          <Center/>
+          <Left>
             <Time showLastSet />
             <StatisticsPanel/>
-          </Right>
-        )}
+          </Left>
+        </>
+      )
+    }
 
-
-        {/* <Logo/>
-        <Panel/>
-        <TimePicker
-          wrapper={Wrapper}
-          duration={duration}
-          onDurationChange={changeDuration}
-          onStart={onStart}
-        />
-         */}
+    return (
+      <Page>
+        <Content/>
       </Page>
     )
   }
