@@ -47,5 +47,5 @@ if (process.env.NODE_ENV === 'production') {
   })
   ReactGA.initialize('UA-131566304-1')
   ReactGA.pageview(window.location.pathname + window.location.search)
-  console.log('start app, version 1.1.0')
+  console.log('start app, version 1.1.1')
 }
