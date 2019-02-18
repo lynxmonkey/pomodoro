@@ -24,12 +24,28 @@ const Left = styled(Side)`
   align-items: flex-end;
 `
 
+const MEDIUM_WIDTH = 1540
+// const MOBILE_WIDTH = 800
+
 class Component extends React.Component {
   render() {
     const { pageWidth } = this.props
     const mobile = pageWidth < 1220
 
     const Content = () => {
+      if (pageWidth < MEDIUM_WIDTH) {
+        return (
+          <>
+            <Right>
+              <Panel/>
+              <StatisticsPanel/>
+            </Right>
+            <Center>
+              <Time showLastSet mobile/>
+            </Center>
+          </>
+        )
+      }
       if (mobile) {
         return (
           <Center>
