@@ -12,8 +12,7 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-const Panel = ({ sound, toggleSound, pageWidth, setsSum }) => {
-  if (pageWidth < 1220) return null
+const Panel = ({ sound, toggleSound, setsSum }) => {
   return (
     <Container>
       <Item
@@ -38,7 +37,6 @@ const Panel = ({ sound, toggleSound, pageWidth, setsSum }) => {
 export default connectTo(
   state => ({
     ...state.settings,
-    ...state.generic,
     ...takeFromState(state, 'timeline', ['setsSum'])
   }),
   actions,

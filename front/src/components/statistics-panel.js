@@ -14,8 +14,8 @@ const Container = styled.div`
   align-items: center;
 `
 
-const StatisticsPanel = ({ pageWidth, promoting, sets, willNotifyAfter }) => {
-  if (pageWidth < 1540 || sets.length < 1) return null
+const StatisticsPanel = ({ promoting, sets, willNotifyAfter }) => {
+  if (sets.length < 1) return null
   const renderNotify = () => {
     if (willNotifyAfter || !notificationAllowed()) return null
     const lastSetEnd = sets[sets.length - 1].end
@@ -35,7 +35,7 @@ const StatisticsPanel = ({ pageWidth, promoting, sets, willNotifyAfter }) => {
 export default connectTo(
   state => ({
     ...takeFromState(state, 'timer', ['willNotifyAfter']),
-    ...takeFromState(state, 'generic', ['pageWidth', 'promoting']),
+    ...takeFromState(state, 'generic', ['promoting']),
     ...takeFromState(state, 'timeline', ['sets']),
   }),
   {},

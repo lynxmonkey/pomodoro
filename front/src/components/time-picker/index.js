@@ -9,6 +9,8 @@ import StatisticsPanel from '../statistics-panel'
 import PlaceHolder from '../timeline-wrapper'
 import Page from '../page'
 import Center from './center'
+import Mobile from './mobile'
+
 
 const Side = styled.div`
   display: flex;
@@ -24,38 +26,41 @@ const Left = styled(Side)`
   align-items: flex-end;
 `
 
+const MEDIUM_WIDTH = 1540
+const MOBILE_WIDTH = 800
+
 class Component extends React.Component {
   render() {
     const { pageWidth } = this.props
-    const mobile = pageWidth < 1220
 
-    const Content = () => {
-      if (mobile) {
-        return (
+    if (pageWidth < MOBILE_WIDTH) {
+      return <Mobile/>
+    }
+    if (pageWidth < MEDIUM_WIDTH) {
+      return (
+        <Page>
+          <Right>
+            <Panel/>
+            <StatisticsPanel/>
+          </Right>
           <Center>
             <Time showLastSet mobile/>
           </Center>
-        )
-      }
-
-      return (
-        <>
-          <Right>
-            <Panel/>
-            <PlaceHolder/>
-          </Right>
-          <Center/>
-          <Left>
-            <Time showLastSet />
-            <StatisticsPanel/>
-          </Left>
-        </>
+        </Page>
       )
     }
 
     return (
       <Page>
-        <Content/>
+        <Right>
+          <Panel/>
+          <PlaceHolder/>
+        </Right>
+        <Center/>
+        <Left>
+          <Time showLastSet />
+          <StatisticsPanel/>
+        </Left>
       </Page>
     )
   }
