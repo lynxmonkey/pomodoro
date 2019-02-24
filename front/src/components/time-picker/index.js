@@ -81,7 +81,7 @@ class Component extends React.Component {
   }
 }
 
-export default connectTo(
+const ConnectedComponent =  connectTo(
   state => ({
     ...takeFromState(state, 'generic', ['promoting', 'pageWidth']),
   }),
@@ -90,3 +90,47 @@ export default connectTo(
   },
   Component
 )
+
+export default ConnectedComponent
+
+// import { Authenticator } from 'aws-amplify-react/dist/Auth'
+
+// const federated = {
+//   google_client_id: '1014540554504-pn7mcbh6vp7dhm67nuo41n4n0e8ce500.apps.googleusercontent.com',
+//   facebook_app_id: '356315411761615' 
+// }
+
+// const signUpFields = {
+//   hideAllDefaults: true,
+//   signUpFields: [
+//     {
+//       label: 'Email',
+//       key: 'email',
+//       required: true,
+//       placeholder: 'Email',
+//       type: 'email',
+//       displayOrder: 1
+//     },
+//     {
+//       label: 'Password',
+//       key: 'password',
+//       required: true,
+//       placeholder: 'Password',
+//       type: 'password',
+//       displayOrder: 2
+//     }
+//   ]
+// }
+
+// const signUpConfig = {
+//   hideAllDefaults: true,
+//   signUpFields,
+//   signInFields: signUpFields
+// }
+
+// export default () => (
+//     <Authenticator
+//       federated={federated}
+//       signUpConfig={signUpConfig}
+//     />
+// )

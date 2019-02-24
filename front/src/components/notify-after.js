@@ -8,7 +8,7 @@ const Container = styled.div`
   width: 300px;
   border-radius: 5px;
   background-color: ${p => p.theme.color.default};
-  color: ${props => props.theme.color.text};
+  color: ${props => props.theme.color.mainFont};
   padding: 10px;
   margin: 20px 0;
 `

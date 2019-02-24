@@ -1,5 +1,6 @@
 import { combineReducers, createStore } from 'redux'
 
+import auth from './auth'
 import generic from './generic'
 import timer from './timer'
 import time from './time'
@@ -11,6 +12,7 @@ import { fail } from '../actions/generic'
 const getNewReducer = _ =>
   combineReducers(
     Object.entries({
+      auth,
       generic,
       timer,
       navigation,

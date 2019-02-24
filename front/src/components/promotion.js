@@ -5,10 +5,10 @@ import { INCREASER } from '../constants/links';
 
 const animation = p => keyframes`
   from {
-    box-shadow: 0 0 10px ${p.theme.color.text}, 0 0 20px ${p.theme.color.text}, 0 0 30px ${p.theme.color.text}, 0 0 40px ${p.theme.color.gold}, 0 0 70px ${p.theme.color.gold}, 0 0 80px ${p.theme.color.gold}, 0 0 100px ${p.theme.color.gold}, 0 0 150px ${p.theme.color.gold};
+    box-shadow: 0 0 10px ${p.theme.color.mainFont}, 0 0 20px ${p.theme.color.mainFont}, 0 0 30px ${p.theme.color.mainFont}, 0 0 40px ${p.theme.color.gold}, 0 0 70px ${p.theme.color.gold}, 0 0 80px ${p.theme.color.gold}, 0 0 100px ${p.theme.color.gold}, 0 0 150px ${p.theme.color.gold};
   }
   to {
-    box-shadow: 0 0 5px ${p.theme.color.text}, 0 0 10px ${p.theme.color.text}, 0 0 15px ${p.theme.color.text}, 0 0 20px ${p.theme.color.gold}, 0 0 35px ${p.theme.color.gold}, 0 0 40px ${p.theme.color.gold}, 0 0 50px ${p.theme.color.gold}, 0 0 75px ${p.theme.color.gold};
+    box-shadow: 0 0 5px ${p.theme.color.mainFont}, 0 0 10px ${p.theme.color.mainFont}, 0 0 15px ${p.theme.color.mainFont}, 0 0 20px ${p.theme.color.gold}, 0 0 35px ${p.theme.color.gold}, 0 0 40px ${p.theme.color.gold}, 0 0 50px ${p.theme.color.gold}, 0 0 75px ${p.theme.color.gold};
   }
 `
 
@@ -38,7 +38,7 @@ const Container = styled.a`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: ${p => p.theme.color.text};
+  color: ${p => p.theme.color.mainFont};
   cursor: pointer;
   text-decoration: none;
 `

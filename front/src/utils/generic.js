@@ -12,3 +12,11 @@ export const takeFromState = (state, stateObjectName, fields) =>
       (acc, [key, value]) => fields.includes(key) ? { ...acc, [key]: value } : acc,
       {}
     )
+
+export const loadScript = (src, onLoad) => {
+  const script = document.createElement('script')
+  script.src = src
+  script.async = true
+  document.body.appendChild(script)
+  script.onload = onLoad
+}

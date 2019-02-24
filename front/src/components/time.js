@@ -9,10 +9,10 @@ import { getHumanTime } from '../utils/time';
 const Container = styled.div`
   width: 320px;
   height: 100px;
-  background-color: ${props => props.theme.color.glass};
+  background-color: ${props => props.theme.color.default};
   border-radius: 5px;
   padding: 20px;
-  color: ${props => props.theme.color.text};
+  color: ${props => props.theme.color.mainFont};
   display: flex;
   flex-direction: column;
   justify-content: space-around;

@@ -6,6 +6,7 @@ import { connectTo, takeFromState } from '../utils/generic'
 import NotifyAfter from './notify-after'
 import Promotion from './promotion'
 import Timeline from './timeline'
+import Sync from './sync'
 import { notificationAllowed } from '../utils/notification'
 
 const Container = styled.div`
@@ -28,6 +29,7 @@ const StatisticsPanel = ({ promoting, sets, willNotifyAfter }) => {
     <Container>
       <RerenderWithTime renderComponent={renderNotify} milliseconds={2000} />
       {promoting ? <Promotion/> : <Timeline/>}
+      <Sync/>
     </Container>
   )
 }

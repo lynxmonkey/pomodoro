@@ -7,7 +7,7 @@ import { connectTo, takeFromState } from '../utils/generic';
 
 const Link = styled.a`
   font-family: 'Dancing Script', cursive;
-  color: ${props => props.theme.color.text};
+  color: ${props => props.theme.color.mainFont};
   cursor: pointer;
   text-decoration: none;
   font-size: 32px;

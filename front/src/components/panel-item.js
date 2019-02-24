@@ -29,7 +29,7 @@ const GenericHintContainer = styled.div`
   animation-fill-mode: both;
   ${Container}:hover & {
     display: block;
-    color: ${props => props.theme.color.text};
+    color: ${props => props.theme.color.mainFont};
   }
 `
 
@@ -40,7 +40,7 @@ const Hint = styled.div`
   border-radius: 5px;
   width: 240px;
   padding: 10px;
-  background-color: ${props => props.theme.color.glass};
+  background-color: ${props => props.theme.color.default};
 `
 
 export default ({ icon, onClick, hint, linkTo, customHint, calling }) => {

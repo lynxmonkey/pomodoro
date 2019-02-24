@@ -6,6 +6,7 @@ import ReactGA from 'react-ga'
 import { THEME as ICTHEME } from 'increaser-components'
 
 import './utils/init-fa'
+import './utils/init-amplify'
 import saga from './sagas'
 import store from './store'
 import { sagaMiddleware } from './middleware'

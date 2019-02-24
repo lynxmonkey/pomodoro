@@ -20,6 +20,15 @@ const localStorageMiddleware = store => next => action => {
     const newSettings = JSON.stringify({ ...oldSettings, sound: nextState.settings.sound })
     localStorage.setItem('settings', newSettings)
   }
+  if (prevState.auth.token !== nextState.auth.token) {
+    if (!nextState.auth.token) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('tokenExpirationTime')
+    } else {
+      localStorage.setItem('token', nextState.auth.token)
+      localStorage.setItem('tokenExpirationTime', nextState.auth.tokenExpirationTime)
+    }
+  }
   if (prevState.time.lastSetEnd !== nextState.time.lastSetEnd) {
     if (!nextState.time.lastSetEnd){
       localStorage.removeItem('lastSetEnd')

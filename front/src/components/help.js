@@ -5,7 +5,7 @@ const Container = styled.div`
   width: 320px;
   padding: 10px;
   background: ${p => p.theme.color.default};
-  color: ${props => props.theme.color.text};
+  color: ${props => props.theme.color.mainFont};
   border-radius: 5px;
   display: flex;
   flex-direction: column;
