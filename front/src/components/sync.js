@@ -49,7 +49,7 @@ class Sync extends React.Component {
     }
   }
   render() {
-    const { token } = this.props
+    const { token, authorizeWithGoogle, authorizeWithFacebook } = this.props
     if (token || !navigator.onLine) return null
     const { google, facebook } = this.state
     if (!google || !facebook) return null
@@ -65,11 +65,11 @@ class Sync extends React.Component {
           </p>
         </Side>
         <Side>
-          <RoundButton  size='s' type='default'>
+          <RoundButton  size='s' type='default' onClick={authorizeWithGoogle}>
             <FontAwesomeIcon size={'lg'} icon={faGoogle} />
           </RoundButton>
           <BetweenButtons/>
-          <RoundButton  size='s' type='default'>
+          <RoundButton  size='s' type='default' onClick={authorizeWithFacebook}>
             <FontAwesomeIcon size={'lg'} icon={faFacebookF} />
           </RoundButton>
         </Side>

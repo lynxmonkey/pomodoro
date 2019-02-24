@@ -9,11 +9,15 @@ import * as timeSagas from './time'
 import * as genericActions from '../actions/generic'
 import * as genericSagas from './generic'
 
+import * as authActions from '../actions/auth'
+import * as authSagas from './auth'
+
 export default function* saga() {
   const relations = [
     [timerActions, timerSagas],
     [timeActions, timeSagas],
-    [genericActions, genericSagas]
+    [genericActions, genericSagas],
+    [authActions, authSagas]
   ]
 
   for (const [actions, sagas] of relations) {
