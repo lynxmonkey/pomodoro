@@ -20,3 +20,6 @@ export const loadScript = (src, onLoad) => {
   document.body.appendChild(script)
   script.onload = onLoad
 }
+
+export const googleAuthAvailable = () =>
+Boolean(window.gapi && window.gapi.auth2 && window.gapi.auth2.getAuthInstance())

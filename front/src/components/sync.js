@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons'
 
 import * as actions from '../actions/auth'
-import { connectTo, takeFromState, loadScript } from '../utils/generic'
-import { GOOGLE_SCRIPT, GOOGLE_CLIENT_ID, FACEBOOK_SCRIPT, FACEBOOK_APP_ID, FACEBOOK_VERSION } from '../constants/auth';
+import { connectTo, takeFromState, loadScript, googleAuthAvailable } from '../utils/generic'
+import { GOOGLE_SCRIPT, GOOGLE_CLIENT_ID, FACEBOOK_SCRIPT, FACEBOOK_APP_ID, FACEBOOK_VERSION, GOOGLE_SCOPE } from '../constants/auth';
 
 const Container = styled.div`
   display: flex;
@@ -44,15 +44,14 @@ class Sync extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      google: false,
-      facebook: false
+      google: googleAuthAvailable(),
+      facebook: Boolean(window.FB)
     }
   }
   render() {
     const { token, authorizeWithGoogle, authorizeWithFacebook } = this.props
-    if (token || !navigator.onLine) return null
     const { google, facebook } = this.state
-    if (!google || !facebook) return null
+    if (token || !navigator.onLine || !google || !facebook) return null
 
     return (
       <Container>
@@ -89,7 +88,7 @@ class Sync extends React.Component {
       }
       loadScript(FACEBOOK_SCRIPT)
     }
-    if (!(window.gapi && window.gapi.auth2 && window.gapi.auth2.getAuthInstance())) {
+    if (!googleAuthAvailable()) {
       loadScript(
         GOOGLE_SCRIPT,
         () => {
@@ -97,7 +96,7 @@ class Sync extends React.Component {
           g.load('auth2', () => {
               g.auth2.init({
                   client_id: GOOGLE_CLIENT_ID,
-                  scope: 'profile email'
+                  scope: GOOGLE_SCOPE
               })
           })
           this.setState({ google: true })
