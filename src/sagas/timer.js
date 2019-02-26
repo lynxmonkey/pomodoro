@@ -68,9 +68,7 @@ export function* finish({ payload : { start, stopped } }) {
   }
   if (!stopped) {
     yield soundNotification()
-    if (document.hidden === undefined || document.hidden || document.webkitHidden) {
-      showNotification(NOTIFICATION_TEXT)
-    }
+    showNotification(NOTIFICATION_TEXT)
   }
   yield put(to('timePicker'))
 }
