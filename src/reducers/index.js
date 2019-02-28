@@ -7,7 +7,7 @@ import time from './time'
 import timeline from './timeline'
 import navigation from './navigation'
 import settings from './settings'
-import { fail } from '../actions/generic'
+import { unauthorizeUser } from '../actions/auth'
 
 const getNewReducer = _ =>
   combineReducers(
@@ -28,7 +28,7 @@ const getNewReducer = _ =>
 const reducer = getNewReducer()
 
 export default (state, action) => {
-  if (action.type === fail.getType()) {
+  if (action.type === unauthorizeUser.getType()) {
     return reducer(createStore(getNewReducer()).getState())
   }
 

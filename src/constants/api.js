@@ -1,0 +1,1 @@
+export const API = 'https://pomodoro-api.increaser.org/api'

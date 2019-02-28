@@ -12,7 +12,7 @@ class Layout extends React.Component {
   }
 
   componentDidMount() {
-    const { saveInstallProposalEvent, changePageSize } = this.props
+    const { saveInstallProposalEvent, changePageSize, startApp } = this.props
 
     window.addEventListener('beforeinstallprompt', e => {
       e.preventDefault()
@@ -22,6 +22,8 @@ class Layout extends React.Component {
       width: window.innerWidth,
       height: window.innerHeight
     }))
+
+    startApp()
   }
 
   componentDidCatch(error, errorInfo) {

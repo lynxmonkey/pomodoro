@@ -5,8 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons'
 
 import * as actions from '../actions/auth'
-import { connectTo, takeFromState, loadScript, googleAuthAvailable } from '../utils/generic'
-import { GOOGLE_SCRIPT, GOOGLE_CLIENT_ID, FACEBOOK_SCRIPT, FACEBOOK_APP_ID, FACEBOOK_VERSION, GOOGLE_SCOPE } from '../constants/auth';
+import { connectTo, takeFromState } from '../utils/generic'
 
 const Container = styled.div`
   display: flex;
@@ -40,70 +39,30 @@ const Side = styled.div`
   align-items: center;
 `
 
-class Sync extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      google: googleAuthAvailable(),
-      facebook: Boolean(window.FB)
-    }
-  }
-  render() {
-    const { token, authorizeWithGoogle, authorizeWithFacebook } = this.props
-    const { google, facebook } = this.state
-    if (token || !navigator.onLine || !google || !facebook) return null
+const Sync = ({ token, authorizeWithGoogle, authorizeWithFacebook }) => {
+  if (token || !navigator.onLine) return null
 
-    return (
-      <Container>
-        <Side>
-          <SyncIcon>
-            <FontAwesomeIcon size={'lg'} icon={'sync-alt'} />
-          </SyncIcon>
-          <p>
-            Synchronize statistics
-          </p>
-        </Side>
-        <Side>
-          <RoundButton  size='s' type='default' onClick={authorizeWithGoogle}>
-            <FontAwesomeIcon size={'lg'} icon={faGoogle} />
-          </RoundButton>
-          <BetweenButtons/>
-          <RoundButton  size='s' type='default' onClick={authorizeWithFacebook}>
-            <FontAwesomeIcon size={'lg'} icon={faFacebookF} />
-          </RoundButton>
-        </Side>
-      </Container>
-    )
-  }
-
-  componentDidMount() {
-    if (!navigator.onLine) return
-    if (!window.FB) {
-      window.fbAsyncInit = () => {
-        window.FB.init({
-          appId: FACEBOOK_APP_ID,
-          version : FACEBOOK_VERSION
-        })
-        this.setState({ facebook: true })
-      }
-      loadScript(FACEBOOK_SCRIPT)
-    }
-    if (!googleAuthAvailable()) {
-      loadScript(
-        GOOGLE_SCRIPT,
-        () => {
-          const g = window.gapi
-          g.load('auth2', () => {
-              g.auth2.init({
-                  client_id: GOOGLE_CLIENT_ID,
-                  scope: GOOGLE_SCOPE
-              })
-          })
-          this.setState({ google: true })
-        }
-      )
-    }
-  }
+  return (
+    <Container>
+      <Side>
+        <SyncIcon>
+          <FontAwesomeIcon size={'lg'} icon={'sync-alt'} />
+        </SyncIcon>
+        <p>
+          Synchronize statistics
+        </p>
+      </Side>
+      <Side>
+        <RoundButton  size='s' type='default' onClick={authorizeWithGoogle}>
+          <FontAwesomeIcon size={'lg'} icon={faGoogle} />
+        </RoundButton>
+        <BetweenButtons/>
+        <RoundButton  size='s' type='default' onClick={authorizeWithFacebook}>
+          <FontAwesomeIcon size={'lg'} icon={faFacebookF} />
+        </RoundButton>
+      </Side>
+    </Container>
+  )
 }
 
 export default connectTo(

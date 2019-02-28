@@ -6,13 +6,15 @@ import { takeIfExists } from '../utils/localStorage'
 const getDefaultState = () => ({
   token: takeIfExists('token'),
   tokenExpirationTime: takeIfExists('tokenExpirationTime', Number),
+  id: takeIfExists('id')
 })
 
 export default () => createReducer({
-    [a.receiveAuthData]: (state, { token, tokenExpirationTime }) => ({
+    [a.receiveAuthData]: (state, { token, tokenExpirationTime, id }) => ({
       ...state,
       token,
-      tokenExpirationTime
+      tokenExpirationTime,
+      id
     }),
     [a.unauthorizeUser]: () => ({})
   },

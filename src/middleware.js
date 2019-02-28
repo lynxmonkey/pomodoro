@@ -1,13 +1,14 @@
+import * as Sentry from '@sentry/browser'
 import createSagaMiddleware from 'redux-saga'
 
-import { fail } from './actions/generic'
-import { takeIfExists } from './utils/localStorage';
+import { takeIfExists } from './utils/localStorage'
+import { unauthorizeUser } from './actions/auth'
 
 
 export const sagaMiddleware = createSagaMiddleware()
 
-const localStorageMiddleware = store => next => action => {
-  if (fail.getType() === action.type) {
+const middleware = store => next => action => {
+  if (unauthorizeUser.getType() === action.type) {
     localStorage.clear()
   }
 
@@ -24,9 +25,18 @@ const localStorageMiddleware = store => next => action => {
     if (!nextState.auth.token) {
       localStorage.removeItem('token')
       localStorage.removeItem('tokenExpirationTime')
+      localStorage.removeItem('id')
     } else {
       localStorage.setItem('token', nextState.auth.token)
       localStorage.setItem('tokenExpirationTime', nextState.auth.tokenExpirationTime)
+      localStorage.setItem('id', nextState.auth.id)
+    }
+    if (process.env.NODE_ENV === 'production') {
+      Sentry.configureScope(scope => {
+        scope.setUser({
+          id: nextState.auth.id
+        })
+      })
     }
   }
   if (prevState.time.lastSetEnd !== nextState.time.lastSetEnd) {
@@ -58,4 +68,4 @@ const localStorageMiddleware = store => next => action => {
   return result
 }
 
-export default [sagaMiddleware, localStorageMiddleware]
+export default [sagaMiddleware, middleware]

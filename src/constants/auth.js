@@ -6,3 +6,8 @@ export const FACEBOOK_SCRIPT = 'https://connect.facebook.net/en_US/sdk.js'
 export const FACEBOOK_APP_ID = '356315411761615'
 export const FACEBOOK_VERSION = 'v2.11'
 export const FACEBOOK_SCOPE = 'public_profile,email'
+
+export const PROVIDER = {
+  GOOGLE: 'GOOGLE',
+  FACEBOOK: 'FACEBOOK'
+}

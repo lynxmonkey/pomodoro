@@ -1,10 +1,35 @@
 import * as Sentry from '@sentry/browser'
-import { call } from 'redux-saga/effects'
+import { call, put } from 'redux-saga/effects'
 
-import { FACEBOOK_SCOPE } from '../constants/auth'
+import {
+  FACEBOOK_SCOPE,
+  FACEBOOK_APP_ID,
+  FACEBOOK_VERSION,
+  FACEBOOK_SCRIPT,
+  GOOGLE_SCRIPT,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_SCOPE,
+  PROVIDER
+} from '../constants/auth'
+import { loadScript, googleAuthAvailable } from '../utils/generic'
+import { post } from '../utils/api'
+import { API } from '../constants/api'
+import { receiveAuthData } from '../actions/auth'
 
-export function* authorize(provider, authData) {
-  yield console.log(provider, authData)
+
+export function* authorize(provider, token) {
+  const query = `
+    query {
+      identify(provider: ${provider}, token: "${token}") {
+        token,
+        tokenExpirationTime,
+        id
+      }
+    }
+  `
+
+  const { data: { identify } } = yield call(post, API, { query })
+  yield put(receiveAuthData(identify))
 }
 
 const reportError = (provider, error) => {
@@ -14,43 +39,62 @@ const reportError = (provider, error) => {
     Sentry.configureScope(scope => {
       scope.setExtra('error', error)
     })
-  } else {
+  } else { 
     console.log(message, error)
   }
 }
 
 export function* authorizeWithGoogle() {
-  const provider = 'google'
+  const provider = PROVIDER.GOOGLE
   try {
+    if (!googleAuthAvailable()) {
+      yield call(() => new Promise(resolve => loadScript(
+        GOOGLE_SCRIPT,
+        () => {
+          const g = window.gapi
+          g.load('auth2', () => {
+            g.auth2.init({
+              client_id: GOOGLE_CLIENT_ID,
+              scope: GOOGLE_SCOPE
+            })
+            resolve()
+          })
+        }
+      )))
+    }
     const ga = window.gapi.auth2.getAuthInstance()
     const googleUser = yield call(() => new Promise((resolve, reject) => ga.signIn().then(resolve, reject)))
-    const { id_token, expires_at } = googleUser.getAuthResponse()
-    const profile = googleUser.getBasicProfile()
-    let user = {
-      email: profile.getEmail(),
-      name: profile.getName()
-    }
-    yield * authorize(provider, { token: id_token, expires_at }, user)
+    const { id_token } = googleUser.getAuthResponse()
+
+    yield * authorize(provider, id_token)
   } catch(err) {
     reportError(provider, err)
   }
 }
 
 export function* authorizeWithFacebook() {
-  const provider = 'facebook'
+  const provider = PROVIDER.FACEBOOK
   try {
+    if (!window.FB) {
+      yield call(() => new Promise(resolve => loadScript(FACEBOOK_SCRIPT, resolve)))
+      yield call(() => new Promise(resolve => {
+        window.fbAsyncInit = () => {
+          window.FB.init({
+            appId: FACEBOOK_APP_ID,
+            version : FACEBOOK_VERSION
+          })
+          resolve()
+        }
+      }))
+    }
+
     const fb = window.FB
     const response = yield call(() => new Promise(resolve => fb.login(resolve, { scope: FACEBOOK_SCOPE })))
     if (response && response.authResponse) {
-      const { accessToken, expiresIn } = response.authResponse
-      const date = new Date()
-      const expires_at = expiresIn * 1000 + date.getTime()
+      const { accessToken } = response.authResponse
       if (!accessToken) return
   
-      const fb = window.FB
-      const { name, email } = yield call(() => new Promise(resolve => fb.api('/me', { fields: 'name,email' }, resolve)))
-      const user = { name, email }
-      yield * authorize(provider, { token: accessToken, expires_at }, user)
+      yield * authorize(provider, accessToken)
     }
   } catch(err) {
     reportError(provider, err)
