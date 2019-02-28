@@ -39,7 +39,7 @@ export const showNotification = (text) => {
         notification.close()
       }
     } catch (_) {
-      navigator.serviceWorker.getRegistration().then(registration => {
+      window.navigator.serviceWorker.getRegistration().then(registration => {
         registration.showNotification(text, {
           vibrate: [200, 100, 200, 100, 200, 100, 200],
           requireInteraction: true

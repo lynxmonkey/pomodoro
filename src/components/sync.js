@@ -40,7 +40,7 @@ const Side = styled.div`
 `
 
 const Sync = ({ token, authorizeWithGoogle, authorizeWithFacebook }) => {
-  if (token || !navigator.onLine) return null
+  if (token || !window.navigator.onLine) return null
 
   return (
     <Container>

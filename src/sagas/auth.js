@@ -15,6 +15,7 @@ import { loadScript, googleAuthAvailable } from '../utils/generic'
 import { post } from '../utils/api'
 import { API } from '../constants/api'
 import { receiveAuthData } from '../actions/auth'
+import { synchronize } from './generic'
 
 
 export function* authorize(provider, token) {
@@ -27,9 +28,10 @@ export function* authorize(provider, token) {
       }
     }
   `
-
+  console.log(provider, token)
   const { data: { identify } } = yield call(post, API, { query })
   yield put(receiveAuthData(identify))
+  yield * synchronize()
 }
 
 const reportError = (provider, error) => {
