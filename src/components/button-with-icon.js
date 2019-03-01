@@ -6,7 +6,6 @@ import { centerContentStyle } from 'increaser-components'
 
 const Container = styled.button`
   color: ${p => p.theme.color.mainFont};
-  margin: 10px 0;
   height: 40px;
   border-radius: 20px;
   border: 2px solid #31CEFF;

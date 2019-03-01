@@ -9,9 +9,11 @@ import { centerContentStyle } from 'increaser-components';
 
 const Container = styled.div`
   width: 100%;
+  height: 120px;
   ${centerContentStyle};
   flex-direction: column;
   margin-top: 10px;
+  justify-content: space-around;
 `
 
 const Sync = ({ authorizeWithGoogle, authorizeWithFacebook }) => {

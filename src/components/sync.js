@@ -7,6 +7,7 @@ import Button from './button-with-icon'
 import Auth from './auth'
 
 const Container = styled.div`
+  height: 120px;
   width: 100%;
   display: flex;
   justify-content: center;
