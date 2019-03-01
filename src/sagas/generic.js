@@ -56,7 +56,20 @@ export function* synchronize() {
         }
       }
     }
-    const { data: { synchronize } } = yield call(post, API, payload)
-    yield put(receiveSets(synchronize))
+    try {
+      const { data: { synchronize } } = yield call(post, API, payload)
+      yield put(receiveSets(synchronize))
+    } catch(err) {
+      if (err.message && err.message.errors && err.message.errors.find(e => e.message === 'Invalid Token')) {
+        yield put(unauthorizeUser())
+      } else {
+        if (process.env.NODE_ENV === 'production') {
+          Sentry.captureException('fail to synchronize: ')
+          Sentry.configureScope(scope => {
+            scope.setExtra('error', err)
+          })
+        }
+      }
+    }
   }
 }

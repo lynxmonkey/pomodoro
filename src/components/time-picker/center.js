@@ -12,6 +12,7 @@ const Container = styled.div`
   justify-content: space-between;
   width: 100%;
   overflow: hidden;
+  margin: 0 10px;
 `
 
 const Placeholder = styled.div`

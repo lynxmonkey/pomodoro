@@ -10,13 +10,18 @@ import Sync from './sync'
 import { notificationAllowed } from '../utils/notification'
 
 const Container = styled.div`
+  width: 320px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `
 
 const StatisticsPanel = ({ promoting, sets, willNotifyAfter }) => {
-  if (sets.length < 1) return null
+  if (sets.length < 1) return (
+    <Container>
+      <Sync/>
+    </Container>
+  )
   const renderNotify = () => {
     if (willNotifyAfter || !notificationAllowed()) return null
     const lastSetEnd = sets[sets.length - 1].end
