@@ -38,7 +38,7 @@ function* soundNotification () {
     try {
       yield audio.play()
     } catch (err) {
-      console.log('fail to play sound')
+      console.info('fail to play sound')
     }
   }
 }

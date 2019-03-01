@@ -2,6 +2,7 @@ import * as Sentry from '@sentry/browser'
 import { select, put, call } from 'redux-saga/effects'
 
 import { unauthorizeUser } from '../actions/auth'
+import { receiveSets } from '../actions/timeline'
 import { post } from '../utils/api'
 import { API } from '../constants/api'
 
@@ -39,19 +40,23 @@ export function* synchronize() {
   if (state.auth.token && window.navigator.onLine) {
     const { sets } = state.timeline
     const query = `
-      query Synchronize($input: SynchronizeInput) {
+      query Synchronize($input: SynchronizeInput!) {
         synchronize(synchronizeInput: $input) {
           start,
           end
         }
       }
     `
-    const variables = {
-      $input: {
-        sets
+
+    const payload = {
+      query,
+      variables: {
+        input: {
+          sets
+        }
       }
     }
-    const { data: { synchronize } } = yield call(post, API, { query, variables })
-    console.log(synchronize)
+    const { data: { synchronize } } = yield call(post, API, payload)
+    yield put(receiveSets(synchronize))
   }
 }

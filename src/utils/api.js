@@ -5,10 +5,13 @@ class RequestError {
   }
 }
 
-export const headers = () => ({
-  'Content-Type': 'application/json',
-  Authorization: `Bearer ${localStorage.getItem('token')}`
-})
+export const headers = () => {
+  const token = localStorage.getItem('token')
+  const basic = {
+    'Content-Type': 'application/json'
+  }
+  return token ? { ...basic, Authorization: token } : basic
+}
 
 export const makePostOptions = data => ({
   method: 'POST',

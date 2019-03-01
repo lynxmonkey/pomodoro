@@ -28,7 +28,6 @@ export function* authorize(provider, token) {
       }
     }
   `
-  console.log(provider, token)
   const { data: { identify } } = yield call(post, API, { query })
   yield put(receiveAuthData(identify))
   yield * synchronize()
@@ -42,7 +41,7 @@ const reportError = (provider, error) => {
       scope.setExtra('error', error)
     })
   } else { 
-    console.log(message, error)
+    console.info(message, error)
   }
 }
 
