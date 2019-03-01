@@ -1,12 +1,18 @@
 import * as Sentry from '@sentry/browser'
 import createSagaMiddleware from 'redux-saga'
 
+import { unauthorizeUser } from './actions/auth'
 import { takeIfExists } from './utils/localStorage'
 
 
 export const sagaMiddleware = createSagaMiddleware()
 
 const middleware = store => next => action => {
+  if (action.type === unauthorizeUser.getType()) {
+    localStorage.removeItem('token')
+    localStorage.removeItem('tokenExpirationTime')
+    localStorage.removeItem('id')
+  }
   const prevState = store.getState()
   const result = next(action)
   const nextState = store.getState()

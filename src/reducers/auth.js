@@ -15,8 +15,7 @@ export default () => createReducer({
       token,
       tokenExpirationTime,
       id
-    }),
-    [a.unauthorizeUser]: () => ({})
+    })
   },
   getDefaultState()
 )

@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons'
 
-import * as actions from '../actions/auth'
+import { openAuth } from '../actions/generic'
 import { connectTo, takeFromState } from '../utils/generic'
 import Button from './button-with-icon'
+import Auth from './auth'
 
 const Container = styled.div`
   width: 100%;
@@ -15,18 +15,22 @@ const Container = styled.div`
   margin-top: 10px;
 `
 
-const Sync = ({ token, authorizeWithGoogle, authorizeWithFacebook }) => {
+const Sync = ({ openAuth, auth, token }) => {
   if (token || !window.navigator.onLine) return null
+  if (auth)return <Auth/>
+  
   return (
     <Container>
-      <Button onClick={authorizeWithGoogle} icon={faGoogle} text='Sign In with Google'/>
-      <Button onClick={authorizeWithFacebook} icon={faFacebookF} text='Sign In with Facebook'/>
+      <Button onClick={openAuth} icon='sync-alt' text='Synchronize Statistics'/>
     </Container>
   )
 }
 
 export default connectTo(
-  state => takeFromState(state, 'auth', ['token']),
-  actions,
+  state => ({
+    ...takeFromState(state, 'auth', ['token']),
+    ...takeFromState(state, 'generic', ['auth']),
+  }),
+  { openAuth },
   Sync
 )
