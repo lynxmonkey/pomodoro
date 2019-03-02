@@ -4,7 +4,7 @@ import styled, { css, withTheme } from 'styled-components'
 import { TimerButton, centerContentStyle } from 'increaser-components'
 
 import { stop } from '../../actions/timer'
-import { connectTo } from '../../utils/generic'
+import { connectTo, takeFromState } from '../../utils/generic'
 import Page from '../page'
 import Time from '../time'
 
@@ -15,21 +15,23 @@ const InnerPage = styled.div`
   ${centerContentStyle}
 `
 
-const Wrapper = styled.div`
-  width: 80vmin;
-  height: 80vmin;
-  
-  @media (max-width: 800px) {
-    height: 80vmin;
-    width: 80vmin;
-  }
-`
+const MOBILE = 1220
 
-const Container = styled(Wrapper)`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-`
+const getWrapper = () => {
+  const width = window.innerWidth
+  if (width > MOBILE) {
+    return styled.div`
+      width: 80vmin;
+      height: 80vmin;
+    `
+  }
+  const height = window.innerHeight - (window.innerHeight * 0.08) - 240
+  const side = Math.min(width - 80, height)
+  return styled.div`
+    width: ${side}px;
+    height: ${side}px;
+  `
+}
 
 const TimeContainer = styled.div`
   position: absolute;
@@ -47,10 +49,16 @@ const TimeContainer = styled.div`
 const TimerWrapper = connectTo(
   state => state.generic,
   { stop },
-  ({ stop, children, pageWidth }) => 
+  ({ stop, pageWidth, pageHeight }) => 
   {
     const stopInsideTimer = pageWidth > 800
-    const mobile = pageWidth < 1220
+    const mobile = pageWidth < MOBILE
+    const Wrapper = getWrapper()
+    const Container = styled(Wrapper)`
+      position: absolute;
+      display: flex;
+      justify-content: center;
+    `
     return (
       <Page>
         <InnerPage>
@@ -58,7 +66,7 @@ const TimerWrapper = connectTo(
             <Time mobile={mobile}/>
           </TimeContainer>
           <Container>
-            {children}
+            <InnerTimer wrapper={Wrapper}/>
             {stopInsideTimer && <TimerButton onClick={stop}>STOP</TimerButton>}
           </Container>
           {!stopInsideTimer && <TimerButton onClick={stop}>STOP</TimerButton>}
@@ -69,11 +77,14 @@ const TimerWrapper = connectTo(
 )
 
 const InnerTimer = withTheme(connectTo(
-  state => state.timer,
+  state => ({
+    ...state.timer,
+    ...takeFromState(state, 'generic', ['pageWidth', 'pageHeight'])
+  }),
   {},
   class extends React.Component {
     render() {
-      const { startTime, timeNow, duration, theme } = this.props
+      const { startTime, timeNow, duration, theme, wrapper: Wrapper } = this.props
       return (
         <Timer
           wrapper={Wrapper}
@@ -95,8 +106,4 @@ const InnerTimer = withTheme(connectTo(
   }
 ))
 
-export default () => (
-  <TimerWrapper>
-    <InnerTimer />
-  </TimerWrapper>
-)
+export default () => <TimerWrapper/>
