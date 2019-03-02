@@ -5,23 +5,28 @@ import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons'
 import * as actions from '../actions/auth'
 import { connectTo } from '../utils/generic'
 import Button from './button-with-icon'
-import { centerContentStyle } from 'increaser-components';
+import { yAnimation } from './styles'
 
-const Container = styled.div`
-  width: 100%;
-  height: 120px;
-  ${centerContentStyle};
-  flex-direction: column;
-  margin-top: 10px;
-  justify-content: space-around;
+const MOVE = 30
+
+const Top = styled.div`
+  ${yAnimation(MOVE)}
+`
+
+const Bottom = styled.div`
+  ${yAnimation(-MOVE)}
 `
 
 const Sync = ({ authorizeWithGoogle, authorizeWithFacebook }) => {
   return (
-    <Container>
-      <Button onClick={authorizeWithGoogle} icon={faGoogle} text='Sign In with Google'/>
-      <Button onClick={authorizeWithFacebook} icon={faFacebookF} text='Sign In with Facebook'/>
-    </Container>
+    <>
+      <Top>
+        <Button onClick={authorizeWithGoogle} icon={faGoogle} text='Sign In with Google'/>
+      </Top>
+      <Bottom>
+        <Button onClick={authorizeWithFacebook} icon={faFacebookF} text='Sign In with Facebook'/>
+      </Bottom>
+    </>
   )
 }
 

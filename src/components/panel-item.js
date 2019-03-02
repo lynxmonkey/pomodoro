@@ -1,23 +1,12 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { RoundButton } from 'increaser-components'
+import { yAnimation } from './styles';
 
 const Container = styled.div`
   position: relative;
   margin: 10px 0;
-`
-
-const animation = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 `
 
 const GenericHintContainer = styled.div`
@@ -25,7 +14,7 @@ const GenericHintContainer = styled.div`
   top: 5px;
   position: absolute;
   display: none;
-  animation: ${animation} .35s ease-in-out;
+  ${yAnimation(10)};
   animation-fill-mode: both;
   ${Container}:hover & {
     display: block;

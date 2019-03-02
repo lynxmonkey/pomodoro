@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/browser'
+import ReactGA from 'react-ga'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -21,5 +23,14 @@ export const loadScript = (src, onLoad) => {
   script.onload = onLoad
 }
 
+export const setUserForReporting = id => {
+  if (process.env.NODE_ENV === 'production') {
+    Sentry.configureScope(scope => {
+      scope.setUser({ id })
+    })
+    ReactGA.set({ userId: id })
+  }
+}
+
 export const googleAuthAvailable = () =>
-Boolean(window.gapi && window.gapi.auth2 && window.gapi.auth2.getAuthInstance())
+  Boolean(window.gapi && window.gapi.auth2 && window.gapi.auth2.getAuthInstance())

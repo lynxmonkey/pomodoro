@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import { centerContentStyle } from 'increaser-components'
 
+// to: one placy with custom colors
 const Container = styled.button`
   color: ${p => p.theme.color.mainFont};
   height: 40px;
   border-radius: 20px;
   border: 2px solid #31CEFF;
-  ${centerContentStyle};
   background-color: transparent;
   cursor: pointer;
   transition: 0.2s ease-in-out;
@@ -17,6 +17,7 @@ const Container = styled.button`
   &:hover {
     background-color: rgba(52, 152, 219, 0.15);
   }
+  ${centerContentStyle};
 `
 
 const IconPart = styled.div`

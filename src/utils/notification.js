@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/browser'
+import { reportError } from '../sagas/generic';
 
 export const notificationAllowed = () => window.Windows || (window.Notification && window.Notification.permission === 'granted')
 
@@ -29,7 +30,7 @@ export const showNotification = (text) => {
       const toast = new window.Windows.UI.Notifications.ToastNotification(toastXml)
       window.Windows.UI.Notifications.ToastNotificationManager.createToastNotifier().show(toast)
     } catch(error) {
-      Sentry.captureException(error)
+      reportError(error)
     }
   } else {
     try {

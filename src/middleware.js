@@ -1,9 +1,8 @@
-import * as Sentry from '@sentry/browser'
 import createSagaMiddleware from 'redux-saga'
 
 import { unauthorizeUser } from './actions/auth'
 import { takeIfExists } from './utils/localStorage'
-
+import { setUserForReporting } from './utils/generic'
 
 export const sagaMiddleware = createSagaMiddleware()
 
@@ -32,13 +31,7 @@ const middleware = store => next => action => {
       localStorage.setItem('tokenExpirationTime', nextState.auth.tokenExpirationTime)
       localStorage.setItem('id', nextState.auth.id)
     }
-    if (process.env.NODE_ENV === 'production') {
-      Sentry.configureScope(scope => {
-        scope.setUser({
-          id: nextState.auth.id
-        })
-      })
-    }
+    setUserForReporting(nextState.auth.id)
   }
   if (prevState.time.lastSetEnd !== nextState.time.lastSetEnd) {
     if (!nextState.time.lastSetEnd){

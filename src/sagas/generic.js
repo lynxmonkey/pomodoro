@@ -5,16 +5,11 @@ import { unauthorizeUser } from '../actions/auth'
 import { receiveSets } from '../actions/timeline'
 import { post } from '../utils/api'
 import { API } from '../constants/api'
+import { setUserForReporting } from '../utils/generic'
+
 
 export function fail({ payload: { error, errorInfo }}) {
-  if (process.env.NODE_ENV === 'production') {
-    Sentry.withScope(scope => {
-      Object.keys(errorInfo).forEach(key => {
-        scope.setExtra(key, errorInfo[key])
-      })
-      Sentry.captureException(error)
-    })
-  }
+  reportError(error, errorInfo)
 }
 
 export function * startApp() {
@@ -23,13 +18,7 @@ export function * startApp() {
     if (state.auth.tokenExpirationTime < Date.now() / 1000) {
       yield put(unauthorizeUser())
     } else {
-      if (process.env.NODE_ENV === 'production') {
-        Sentry.configureScope(scope => {
-          scope.setUser({
-            id: state.auth.id
-          })
-        })
-      }
+      setUserForReporting(state.auth.id)
       yield * synchronize()
     }
   }
@@ -61,15 +50,29 @@ export function* synchronize() {
       if (errors.find(e => e.message === 'Invalid Token')) {
         yield put(unauthorizeUser())
       } else {
-        if (process.env.NODE_ENV === 'production') {
-          Sentry.captureException('fail to synchronize: ')
-          Sentry.configureScope(scope => {
-            scope.setExtra('errors', errors)
-          })
-        }
+        reportError('fail to synchronize', { errors })
       }
     } else {
       yield put(receiveSets(synchronize))
     }
+  }
+}
+
+export const reportError = (message, info) => {
+  if (process.env.NODE_ENV !== 'production') {
+    if (info) {
+      Sentry.withScope(scope => {
+        try {
+          Object.keys(info).forEach(key => {
+            scope.setExtra(key, info[key])
+          })
+        } catch(err) {
+          scope.setExtra('info', info)
+        }
+        Sentry.captureException(message)
+      })
+    }
+  } else {
+    console.error(message, info)
   }
 }

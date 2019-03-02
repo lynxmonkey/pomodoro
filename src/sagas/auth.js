@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/browser'
 import { call, put } from 'redux-saga/effects'
 
 import {
@@ -35,14 +34,7 @@ export function* authorize(provider, token) {
 
 const reportError = (provider, error) => {
   const message = `fail to login with ${provider}`
-  if (process.env.NODE_ENV === 'production') {
-    Sentry.captureException(message)
-    Sentry.configureScope(scope => {
-      scope.setExtra('error', error)
-    })
-  } else { 
-    console.info(message, error)
-  }
+  reportError(message, { error })
 }
 
 export function* authorizeWithGoogle() {
