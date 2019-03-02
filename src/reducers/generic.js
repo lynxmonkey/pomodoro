@@ -6,7 +6,6 @@ const getDefaultState = () => ({
   proposalEvent: undefined,
   pageWidth: window.innerWidth,
   pageHeight: window.innerWidth,
-  promoting: false,
   auth: false
 })
 
@@ -20,7 +19,6 @@ export default () =>
         pageHeight: height
       }),
       [a.promptToAddToHomeScreen]: (state) => ({ ...state, proposalEvent: undefined }),
-      [a.togglePromote]: (state) => ({ ...state, promoting: !state.promoting }),
       [a.openAuth]: state => ({
         ...state,
         auth: true

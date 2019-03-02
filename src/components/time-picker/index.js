@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { togglePromote } from '../../actions/generic'
 import { connectTo, takeFromState } from '../../utils/generic'
 import Time from '../time'
 import Panel from '../panel'
@@ -69,13 +68,6 @@ class Component extends React.Component {
     document.addEventListener('click', this.onClick)
   }
 
-  onClick = () => {
-    const { promoting, togglePromote } = this.props
-    if (promoting) {
-      togglePromote()
-    }
-  }
-
   componentWillUnmount() {
     document.removeEventListener('click', this.onClick)
   }
@@ -83,10 +75,8 @@ class Component extends React.Component {
 
 export default connectTo(
   state => ({
-    ...takeFromState(state, 'generic', ['promoting', 'pageWidth']),
+    ...takeFromState(state, 'generic', ['pageWidth']),
   }),
-  {
-    togglePromote
-  },
+  { },
   Component
 )

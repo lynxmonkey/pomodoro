@@ -4,7 +4,6 @@ import { RerenderWithTime } from 'increaser-components'
 
 import { connectTo, takeFromState } from '../utils/generic'
 import NotifyAfter from './notify-after'
-import Promotion from './promotion'
 import Timeline from './timeline'
 import Sync from './sync'
 import { notificationAllowed } from '../utils/notification'
@@ -16,7 +15,7 @@ const Container = styled.div`
   align-items: center;
 `
 
-const StatisticsPanel = ({ promoting, sets, willNotifyAfter }) => {
+const StatisticsPanel = ({ sets, willNotifyAfter }) => {
   if (sets.length < 1) return (
     <Container>
       <Sync/>
@@ -33,7 +32,7 @@ const StatisticsPanel = ({ promoting, sets, willNotifyAfter }) => {
   return (
     <Container>
       <RerenderWithTime renderComponent={renderNotify} milliseconds={2000} />
-      {promoting ? <Promotion/> : <Timeline/>}
+        <Timeline/>
       <Sync/>
     </Container>
   )
@@ -42,7 +41,6 @@ const StatisticsPanel = ({ promoting, sets, willNotifyAfter }) => {
 export default connectTo(
   state => ({
     ...takeFromState(state, 'timer', ['willNotifyAfter']),
-    ...takeFromState(state, 'generic', ['promoting']),
     ...takeFromState(state, 'timeline', ['sets']),
   }),
   {},
