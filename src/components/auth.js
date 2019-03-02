@@ -17,7 +17,7 @@ const Bottom = styled.div`
   ${yAnimation(-MOVE)}
 `
 
-const Sync = ({ authorizeWithGoogle, authorizeWithFacebook }) => {
+const Auth = ({ authorizeWithGoogle, authorizeWithFacebook }) => {
   return (
     <>
       <Top>
@@ -33,5 +33,5 @@ const Sync = ({ authorizeWithGoogle, authorizeWithFacebook }) => {
 export default connectTo(
   () => ({ }),
   actions,
-  Sync
+  Auth
 )

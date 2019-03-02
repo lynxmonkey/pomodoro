@@ -43,9 +43,9 @@ sagaMiddleware.run(saga)
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
-    dsn: "https://0dc467f02c2a46c9bfaacff3bab0b6ef@sentry.io/1362069"
+    dsn: process.env.REACT_APP_SENTRY_KEY
   })
-  ReactGA.initialize('UA-131566304-1')
+  ReactGA.initialize(process.env.GA_KEY)
   ReactGA.pageview(window.location.pathname + window.location.search)
   console.info('start app, version 1.2.0')
 }
