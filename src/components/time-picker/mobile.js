@@ -18,8 +18,12 @@ const Page = styled.div`
 `
 
 const TimePickerWrapper = styled.div`
-  height: calc(100vw - 40px);
-  width: calc(100vw - 40px);
+  height: 400px;
+  width: 400px;
+  @media (max-width: 480px) {
+    height: calc(100vw - 40px);
+    width: calc(100vw - 40px);
+  } 
 `
 
 const StatisticsPanelWrapper = styled.div`

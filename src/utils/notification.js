@@ -1,5 +1,4 @@
-import * as Sentry from '@sentry/browser'
-import { reportError } from '../sagas/generic';
+import { reportError } from '../sagas/generic'
 
 export const notificationAllowed = () => window.Windows || (window.Notification && window.Notification.permission === 'granted')
 
