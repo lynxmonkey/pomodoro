@@ -45,7 +45,8 @@ if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_KEY
   })
+  window.ga_key = process.env.REACT_APP_GA_KEY
   ReactGA.initialize(process.env.REACT_APP_GA_KEY)
   ReactGA.pageview(window.location.pathname + window.location.search)
-  console.info('start app, version 1.2.0')
+  console.info('start app, version 1.2.0.1')
 }
