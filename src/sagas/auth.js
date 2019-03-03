@@ -14,7 +14,7 @@ import { loadScript, googleAuthAvailable } from '../utils/generic'
 import { post } from '../utils/api'
 import { API } from '../constants/api'
 import { receiveAuthData } from '../actions/auth'
-import { synchronize } from './generic'
+import { synchronize, reportError } from './generic'
 
 
 export function* authorize(provider, token) {
@@ -32,7 +32,7 @@ export function* authorize(provider, token) {
   yield * synchronize()
 }
 
-const reportError = (provider, error) => {
+const reportAuthError = (provider, error) => {
   const message = `fail to login with ${provider}`
   reportError(message, { error })
 }
@@ -61,7 +61,7 @@ export function* authorizeWithGoogle() {
 
     yield * authorize(provider, id_token)
   } catch(err) {
-    reportError(provider, err)
+    reportAuthError(provider, err)
   }
 }
 
@@ -90,6 +90,6 @@ export function* authorizeWithFacebook() {
       yield * authorize(provider, accessToken)
     }
   } catch(err) {
-    reportError(provider, err)
+    reportAuthError(provider, err)
   }
 }
