@@ -41,6 +41,7 @@ function* soundNotification () {
 }
 
 export function* finish({ payload : { start, stopped } }) {
+  yield put(to('timePicker'))
   const end = Date.now()
   const set = { start, end }
   // ga: start
@@ -61,7 +62,6 @@ export function* finish({ payload : { start, stopped } }) {
     yield soundNotification()
     showNotification(NOTIFICATION_TEXT)
   }
-  yield put(to('timePicker'))
 }
 
 export function* notifyAfter ({ payload }) {
