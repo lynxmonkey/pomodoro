@@ -6,6 +6,7 @@ import { receiveSets } from '../actions/timeline'
 import { post } from '../utils/api'
 import { API } from '../constants/api'
 import { setUserForReporting } from '../utils/generic'
+import { getTodaySets } from '../utils/time';
 
 
 export function fail({ payload: { error, errorInfo }}) {
@@ -53,7 +54,7 @@ export function* synchronize() {
         reportError('fail to synchronize', { errors })
       }
     } else {
-      yield put(receiveSets(synchronize))
+      yield put(receiveSets(getTodaySets(synchronize)))
     }
   }
 }
