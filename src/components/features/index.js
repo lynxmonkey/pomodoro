@@ -3,11 +3,13 @@ import styled from 'styled-components'
 
 import { connectTo } from '../../utils/generic'
 import * as actions from '../../actions/features'
+import { to } from '../../actions/navigation'
 
 import List from './list'
 import Form from './form'
 import AuthContainer from '../auth-container'
 import Auth from '../auth'
+import Exit from '../exit-button'
 
 const Page = styled.div`
   padding: 4% 4% 20px 4%;
@@ -32,9 +34,10 @@ const Right = styled.div`
   /* background-color: gold; */
 `
 
-const Features = () => {
+const Features = ({ to }) => {
   return (
     <Page>
+      <Exit onClick={() => to('timePicker')}/>
       <Left>
         <List/>
       </Left>
@@ -50,6 +53,9 @@ const Features = () => {
 
 export default connectTo(
   () => ({}),
-  actions,
+  {
+    ...actions,
+    to
+  },
   Features
 )

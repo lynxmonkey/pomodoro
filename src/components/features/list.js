@@ -8,7 +8,9 @@ import Feature from './feature'
 import { STATUS } from '../../constants/features';
 
 const Header = styled.h3`
+  font-size: 20px;
   color: ${p => p.theme.color.mainFont};
+  margin-bottom: 5px;
 `
 
 const Container = styled.div`
@@ -19,8 +21,9 @@ const Container = styled.div`
 const SectionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 `
+
 
 const Section = ({ features, name }) => {
   const approved = features.filter(({ status }) => status !== STATUS.WAITING_FOR_APPROVE)
@@ -32,7 +35,7 @@ const Section = ({ features, name }) => {
   return (
     <SectionContainer>
       <Header>{name}</Header>
-      {ordered.map(feature => <Feature key={feature.id} {...feature} />)}
+      {ordered.map((feature, index) => <Feature key={index} {...feature} first={index === 0} last={index === features.length - 1} />)}
     </SectionContainer>
   )
 }

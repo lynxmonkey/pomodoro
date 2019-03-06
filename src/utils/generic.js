@@ -32,5 +32,10 @@ export const setUserForReporting = id => {
   }
 }
 
+export const noPropagation = func => e => {
+  e && e.stopPropagation()
+  func()
+}
+
 export const googleAuthAvailable = () =>
   Boolean(window.gapi && window.gapi.auth2 && window.gapi.auth2.getAuthInstance())

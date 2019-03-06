@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { connectTo } from '../../utils/generic'
 import * as actions from '../../actions/features'
@@ -12,8 +12,15 @@ const Container = styled.div`
   height: 80px;
   display: flex;
   flex-direction: row;
-  margin-bottom: 10px;
-  border-radius: 5px;
+  margin:1px;
+  ${p => p.first && css`
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  `}
+  ${p => p.last && css`
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  `}
   color: ${p => p.theme.color.mainFont};
   background-color: ${p => p.theme.color.default};
   justify-content: space-between;
@@ -24,11 +31,17 @@ const Name = styled.p`
   font-size: 18px;
 `
 
-const Feature = ({ name, upvotesNumber, status, id, upvoted }) => {
+const Feature = ({ first, last, name, upvotesNumber, status, id, upvoted }) => {
+  const upvoteParams = {
+    id,
+    upvoted,
+    number: upvotesNumber,
+    status
+  }
   return (
-    <Container>
+    <Container first={first} last={last}>
       <Name>{name}</Name>
-      {status !== STATUS.WAITING_FOR_APPROVE && <Upvote id={id} upvoted={upvoted} number={upvotesNumber} />}
+      {status !== STATUS.WAITING_FOR_APPROVE && <Upvote {...upvoteParams} />}
     </Container>
   )
 }

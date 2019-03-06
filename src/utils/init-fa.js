@@ -7,7 +7,8 @@ import {
   faQuestion,
   faSyncAlt,
   faClipboardList,
-  faSortUp
+  faSortUp,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -17,5 +18,6 @@ library.add(
   faQuestion,
   faSyncAlt,
   faClipboardList,
-  faSortUp
+  faSortUp,
+  faTimes
 )
