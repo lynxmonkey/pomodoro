@@ -2,22 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import { centerContentStyle } from 'increaser-components'
+import { buttonStyle, buttonHoverStyle } from './styles';
 
 // to: one placy with custom colors
 const Container = styled.button`
-  color: ${p => p.theme.color.mainFont};
+  ${buttonStyle}
   height: 40px;
   border-radius: 20px;
-  border: 2px solid #31CEFF;
-  background-color: transparent;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
   width: 240px;
   &:hover {
-    background-color: rgba(52, 152, 219, 0.15);
+    ${buttonHoverStyle}
   }
-  ${centerContentStyle};
 `
 
 const IconPart = styled.div`

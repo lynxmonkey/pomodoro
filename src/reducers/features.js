@@ -36,5 +36,14 @@ export default () => createReducer({
   [a.changeFeatureDescription]: (state, featureDescription) => ({
     ...state,
     featureDescription
+  }),
+  [a.clearFeatureForm]: state => ({
+    ...state,
+    featureName: '',
+    featureDescription: ''
+  }),
+  [a.receiveFeature]: (state, feature) => ({
+    ...state,
+    features: [ ...state.features, feature ]
   })
 }, getDefaultState())

@@ -1,5 +1,5 @@
 import { put, select } from 'redux-saga/effects'
-import { receiveFeatures } from '../actions/features'
+import { receiveFeatures, clearFeatureForm, receiveFeature } from '../actions/features'
 import { STATUS } from '../constants/features'
 
 export function* requestFeatures() {
@@ -72,4 +72,15 @@ export function* submitFeature() {
     name: featureName,
     description: featureDescription
   })
+  // request to api: ...
+  const feature = {
+    id: Math.round((Math.random * 10000000)).toString(),
+    status: STATUS.WAITING_FOR_APPROVE,
+    name: featureName,
+    description: featureDescription,
+    upvotesNumber: 0,
+    upvoted: false
+  }
+  yield put(receiveFeature(feature))
+  yield put(clearFeatureForm())
 }
