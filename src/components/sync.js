@@ -1,22 +1,13 @@
 import React from 'react'
-import styled from 'styled-components'
 
 import { loadProviderScript } from '../actions/auth'
 import { openAuth } from '../actions/generic'
 import { connectTo, takeFromState, loadScript } from '../utils/generic'
 import Button from './button-with-icon'
 import Auth from './auth'
-import { centerContentStyle } from 'increaser-components'
+import AuthContainer from './auth-container'
 import { PROVIDER, FACEBOOK_SCRIPT, FACEBOOK_APP_ID, FACEBOOK_VERSION, GOOGLE_SCRIPT, GOOGLE_CLIENT_ID, GOOGLE_SCOPE } from '../constants/auth';
 
-const Container = styled.div`
-  height: 120px;
-  width: 100%;
-  ${centerContentStyle};
-  flex-direction: column;
-  margin-top: 10px;
-  justify-content: space-around;
-`
 
 class Sync extends React.Component {
   render() {
@@ -31,9 +22,9 @@ class Sync extends React.Component {
       return <Button onClick={openAuth} icon='sync-alt' text='Synchronize Statistics'/>
     }
     return (
-      <Container>
+      <AuthContainer>
         <Content/>
-      </Container>
+      </AuthContainer>
     )
   }
 

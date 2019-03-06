@@ -3,7 +3,7 @@ import { createReducer } from 'redux-act'
 import * as a from '../actions/navigation'
 
 const getDefaultState = () => ({
-  page: 'timePicker'
+  page: 'features'
 })
 
 export default () =>

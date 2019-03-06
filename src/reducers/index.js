@@ -7,6 +7,7 @@ import time from './time'
 import timeline from './timeline'
 import navigation from './navigation'
 import settings from './settings'
+import features from './features'
 import { unauthorizeUser } from '../actions/auth'
 
 const getNewReducer = _ =>
@@ -18,7 +19,8 @@ const getNewReducer = _ =>
       navigation,
       time,
       timeline,
-      settings
+      settings,
+      features
     }).reduce(
       (acc, [key, createReducer]) => ({ ...acc, [key]: createReducer() }),
       {}
