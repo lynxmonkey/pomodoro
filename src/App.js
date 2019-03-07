@@ -40,12 +40,14 @@ export default () => (
 
 sagaMiddleware.run(saga)
 
+const VERSION = '1.3.0'
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_KEY
   })
+  Sentry.withScope(scope => scope.setTag('version', VERSION))
   ReactGA.initialize(process.env.REACT_APP_GA_KEY)
   ReactGA.pageview(window.location.pathname + window.location.search)
-  console.info('start app, version 1.2.0.1')
+  console.info(`start app, version ${VERSION}`)
 }

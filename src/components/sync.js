@@ -37,6 +37,7 @@ class Sync extends React.Component {
           const g = window.gapi
           g.load('auth2', () => {
             g.auth2.init({
+              cookie_policy: 'none',
               client_id: GOOGLE_CLIENT_ID,
               scope: GOOGLE_SCOPE
             })
