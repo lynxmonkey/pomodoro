@@ -14,7 +14,10 @@ const Container = styled.form`
   background: ${p => p.theme.color.default};
   padding: 20px;
   margin-bottom: 20px;
-  width: 400px;
+  width: 100%;
+  @media (min-width: 1220px) {
+    width: 400px;
+  } 
 `
 
 const UpText = styled.div`

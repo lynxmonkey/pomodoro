@@ -33,6 +33,7 @@ const WithPanel = styled.div`
 
 const ToFeaturesWrap = styled.div`
   width: 320px;
+  height: 120px;
   ${centerContentStyle}
 `
 

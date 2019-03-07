@@ -8,6 +8,19 @@ import { API } from '../constants/api'
 import { setUserForReporting } from '../utils/generic'
 import { getTodaySets } from '../utils/time';
 
+export function* callApi(query, variables) {
+  const payload = variables ? { query, variables } : { query }
+  const { data, errors } = yield call(post, API, payload)
+  if (errors) {
+    if (errors.find(e => e.message === 'Invalid Token')) {
+      yield put(unauthorizeUser())
+    } else {
+      throw errors
+    }
+  } else {
+    return data
+  }
+}
 
 export function fail({ payload: { error, errorInfo }}) {
   reportError(error, errorInfo)
@@ -37,24 +50,11 @@ export function* synchronize() {
         }
       }
     `
-
-    const payload = {
-      query,
-      variables: {
-        input: {
-          sets
-        }
-      }
-    }
-    const { data: { synchronize }, errors } = yield call(post, API, payload)
-    if (errors) {
-      if (errors.find(e => e.message === 'Invalid Token')) {
-        yield put(unauthorizeUser())
-      } else {
-        reportError('fail to synchronize', { errors })
-      }
-    } else {
+    try {
+      const { synchronize } = yield callApi(query, { input: { sets } })
       yield put(receiveSets(getTodaySets(synchronize)))
+    } catch(errors) {
+      reportError('fail to synchronize', { errors })
     }
   }
 }

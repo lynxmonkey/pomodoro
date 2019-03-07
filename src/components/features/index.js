@@ -49,7 +49,6 @@ const Aligned = styled.div`
   align-self: center;
   display: flex;
   flex-direction: column;
-  width: 400px;
 `
 
 const Features = ({ pageWidth, to }) => {
