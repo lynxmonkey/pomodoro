@@ -48,10 +48,13 @@ const Component = ({
     <Container
       upvoted={upvoted}
       disabled={disabled}
-      onClick={clickHandler}>
-      <IconWrap>
-        <FontAwesomeIcon size='lg' icon='sort-up' />
-      </IconWrap>
+      onClick={clickHandler}
+    >
+      {status !== STATUS.DONE &&
+        <IconWrap>
+          <FontAwesomeIcon size='lg' icon='sort-up' />
+        </IconWrap>
+      }
       <p>{number}</p>
     </Container>
   )

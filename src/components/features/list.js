@@ -26,8 +26,8 @@ const SectionContainer = styled.div`
 
 
 const Section = ({ features, name }) => {
-  const approved = features.filter(({ status }) => status !== STATUS.WAITING_FOR_APPROVE)
-  const notApproved = features.filter(({ status }) => status === STATUS.WAITING_FOR_APPROVE)
+  const approved = features.filter(({ status }) => status !== STATUS.WAITING_FOR_CONFIRMATION)
+  const notApproved = features.filter(({ status }) => status === STATUS.WAITING_FOR_CONFIRMATION)
   const ordered = [
     ...approved.sort((a, b) => a.upvotesNumber > b.upvotesNumber ? -1 : 1),
     ...notApproved
@@ -44,14 +44,18 @@ class List extends React.Component {
   render() {
     const { features } = this.props
     const inProgress = features.filter(({ status }) => status === STATUS.IN_PROGRESS)
-    const inQueue = features.filter(({ status }) => status === STATUS.IN_QUEUE || status === STATUS.WAITING_FOR_APPROVE)
+    const inQueue = features.filter(({ status }) => status === STATUS.IN_QUEUE || status === STATUS.WAITING_FOR_CONFIRMATION)
     const done = features.filter(({ status }) => status === STATUS.DONE)
+    const sections = [
+      [inProgress, 'We are working on these'],
+      [inQueue, 'We will start doing these soon'],
+      [done, 'Done!']
+    ].filter(([features]) => features.length > 0)
+      .map(([ features, name ], index) => <Section key={index} {...{features, name}} />)
 
     return (
       <Container>
-        <Section name={'We are working on this'} features={inProgress} />
-        <Section name={'We will start doing these features soon'} features={inQueue} />
-        <Section name={'Those are done'} features={done} />
+        {sections}
       </Container>
     )
   }

@@ -5,10 +5,11 @@ import { connectTo, takeFromState } from '../../utils/generic'
 import Time from '../time'
 import Panel from '../panel'
 import StatisticsPanel from '../statistics-panel'
-import PlaceHolder from '../timeline-wrapper'
 import Page from '../page'
 import Center from './center'
 import Mobile from './mobile'
+import ToFeatures from '../to-features'
+import { centerContentStyle } from 'increaser-components';
 
 
 const Side = styled.div`
@@ -23,6 +24,16 @@ const Right = styled(Side)`
 
 const Left = styled(Side)`
   align-items: flex-end;
+`
+
+const WithPanel = styled.div`
+  ${centerContentStyle};
+  flex-direction: column;
+`
+
+const ToFeaturesWrap = styled.div`
+  width: 320px;
+  ${centerContentStyle}
 `
 
 const MEDIUM_WIDTH = 1540
@@ -40,7 +51,10 @@ class Component extends React.Component {
         <Page>
           <Right>
             <Panel/>
-            <StatisticsPanel/>
+            <WithPanel>
+              <StatisticsPanel/>
+              <ToFeatures/>
+            </WithPanel>
           </Right>
           <Center>
             <Time showLastSet mobile/>
@@ -53,7 +67,9 @@ class Component extends React.Component {
       <Page>
         <Right>
           <Panel/>
-          <PlaceHolder/>
+          <ToFeaturesWrap>
+            <ToFeatures/>
+          </ToFeaturesWrap>
         </Right>
         <Center/>
         <Left>

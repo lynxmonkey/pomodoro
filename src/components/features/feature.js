@@ -12,7 +12,7 @@ const Container = styled.div`
   height: 80px;
   display: flex;
   flex-direction: row;
-  margin:1px;
+  margin: 1px;
   ${p => p.first && css`
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -27,8 +27,15 @@ const Container = styled.div`
   padding: 10px;
 `
 
+
+const Left = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 const Name = styled.p`
   font-size: 18px;
+  padding-bottom: 5px;
 `
 
 const Feature = ({ first, last, name, upvotesNumber, status, id, upvoted }) => {
@@ -40,8 +47,11 @@ const Feature = ({ first, last, name, upvotesNumber, status, id, upvoted }) => {
   }
   return (
     <Container first={first} last={last}>
-      <Name>{name}</Name>
-      {status !== STATUS.WAITING_FOR_APPROVE && <Upvote {...upvoteParams} />}
+      <Left>
+        <Name>{name}</Name>
+        {status === STATUS.WAITING_FOR_CONFIRMATION && <p>This feature will be available for upvote after confirmation.</p>}
+      </Left>
+      {status !== STATUS.WAITING_FOR_CONFIRMATION && <Upvote {...upvoteParams} />}
     </Container>
   )
 }
