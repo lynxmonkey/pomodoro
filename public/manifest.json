@@ -1,6 +1,6 @@
 {
-  "short_name": "Pomodoro",
-  "name": "Pomodoro - Boost Your productivity",
+  "short_name": "Pomodoro by Increaser",
+  "name": "Pomodoro by Increaser",
   "icons": [
     {
       "src": "windows10/Square71x71Logo.scale-400.png",
@@ -418,5 +418,6 @@
   "start_url": "./index.html",
   "display": "fullscreen",
   "theme_color": "#4e4376",
-  "background_color": "#4e4376"
+  "background_color": "#4e4376",
+  "description" : "Modern Pomodoro Timer with Clean Interface"
 }
