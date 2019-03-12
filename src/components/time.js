@@ -29,10 +29,9 @@ const TimeNow = styled.p`
 
 class Time extends React.Component {
   render() {
-    const { lastSetEnd, page, showLastSet, mobile } = this.props
-
+    const { lastSetEnd, pathname, showLastSet, mobile } = this.props
     const time = getHumanTime()
-    const showLastEnd = page !== 'timer' && lastSetEnd && showLastSet
+    const showLastEnd = pathname !== '/timer' && lastSetEnd && showLastSet
     return (
       <Container mobile={mobile}>
         <TimeNow large={!showLastEnd}>{time}</TimeNow>
@@ -53,7 +52,7 @@ class Time extends React.Component {
 export default connectTo(
   state => ({
     ...takeFromState(state, 'time', ['lastSetEnd', 'timeNow']),
-    ...takeFromState(state, 'navigation', ['page'])
+    pathname: state.router.location.pathname
   }),
   { mount, unmount },
   Time

@@ -1,17 +1,17 @@
 import { select, put, call } from 'redux-saga/effects'
 import ReactGA from 'react-ga'
+import { push } from 'connected-react-router'
 
 import { tick, finish as finishTimer, doNotNotifyAfter } from '../actions/timer'
 import { TICK_FREQUENCY, NOTIFICATION_TEXT } from '../constants/timer'
 import { delay } from 'redux-saga'
-import { to } from '../actions/navigation'
 import { receiveSet } from '../actions/timeline'
 import { SET_FINISHED } from '../constants/sounds'
 import { showNotification } from '../utils/notification';
 import { synchronize } from './generic';
 
 export function* start() {
-  yield put(to('timer'))
+  yield put(push('/timer'))
   const { timer: { startTime, duration } } = yield select()
   while(true) {
     const { timer: { stopped } } = yield select()
@@ -41,7 +41,7 @@ function* soundNotification () {
 }
 
 export function* finish({ payload : { start, stopped } }) {
-  yield put(to('timePicker'))
+  yield put(push('/'))
   const end = Date.now()
   const set = { start, end }
   // ga: start
@@ -74,9 +74,9 @@ export function* notifyAfter ({ payload }) {
   yield call(delay, payload * 60 * 1000)
   yield put(doNotNotifyAfter())
   const state = yield select()
-  const page = state.navigation.page
+  const { pathname } = state.router.location
   const lastSetEnd = getLastSetEnd(state)
-  if (page !== 'timer' && lastSetEnd === lastSetEndBefore) {
+  if (pathname !== '/timer' && lastSetEnd === lastSetEndBefore) {
     yield soundNotification()
     showNotification('Time to come back to work!')
   }

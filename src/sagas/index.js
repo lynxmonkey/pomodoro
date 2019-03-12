@@ -1,5 +1,8 @@
 import { takeLatest } from 'redux-saga/effects'
 
+import { LOCATION_CHANGE } from 'connected-react-router'
+import * as routerSagas from './router'
+
 import * as timerActions from '../actions/timer'
 import * as timerSagas from './timer'
 
@@ -21,7 +24,7 @@ export default function* saga() {
     [timeActions, timeSagas],
     [genericActions, genericSagas],
     [authActions, authSagas],
-    [featuresActions, featuresSagas]
+    [featuresActions, featuresSagas],
   ]
 
   for (const [actions, sagas] of relations) {
@@ -30,4 +33,5 @@ export default function* saga() {
       if (saga) yield takeLatest(action.getType(), saga)
     }
   }
+  yield takeLatest(LOCATION_CHANGE, routerSagas.locationChange)
 }

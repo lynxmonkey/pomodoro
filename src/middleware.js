@@ -1,8 +1,10 @@
 import createSagaMiddleware from 'redux-saga'
+import { routerMiddleware } from 'connected-react-router'
 
 import { unauthorizeUser } from './actions/auth'
 import { takeIfExists } from './utils/localStorage'
 import { setUserForReporting } from './utils/generic'
+import history from './history';
 
 export const sagaMiddleware = createSagaMiddleware()
 
@@ -62,4 +64,8 @@ const middleware = store => next => action => {
   return result
 }
 
-export default [sagaMiddleware, middleware]
+export default [
+  routerMiddleware(history),
+  sagaMiddleware,
+  middleware
+]

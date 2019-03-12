@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { push } from 'connected-react-router'
 
-import { to } from '../actions/navigation'
 import Button from './button-with-icon'
 import { connectTo, takeFromState } from '../utils/generic'
 
@@ -14,13 +14,13 @@ export default connectTo(
     ...takeFromState(state, 'auth', ['token']),
     ...takeFromState(state, 'timeline',  ['sets'])
   }),
-  { to },
-  ({ to, sets, token, history }) => {
+  { push },
+  ({ sets, token, push }) => {
     if (!window.navigator.onLine || (!sets.length && !token)) return null
 
     return (
       <ButtonWrap>
-        <Button onClick={() => history.push('/features')} icon='clipboard-list' text={'What can we improve?'}/>
+        <Button onClick={() => push('/features')} icon='clipboard-list' text={'What can we improve?'}/>
       </ButtonWrap>
     )
   }

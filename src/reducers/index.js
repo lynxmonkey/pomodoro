@@ -1,22 +1,26 @@
 import { combineReducers, createStore } from 'redux'
+import { connectRouter } from 'connected-react-router';
 
 import auth from './auth'
 import generic from './generic'
 import timer from './timer'
 import time from './time'
 import timeline from './timeline'
-import navigation from './navigation'
 import settings from './settings'
 import features from './features'
+import previousRouter from './previous-router'
+
+import history from '../history'
 import { unauthorizeUser } from '../actions/auth'
 
-const getNewReducer = _ =>
-  combineReducers(
-    Object.entries({
+const getNewReducer = (history) =>
+  combineReducers({
+    router: connectRouter(history),
+    ...Object.entries({
+      previousRouter,
       auth,
       generic,
       timer,
-      navigation,
       time,
       timeline,
       settings,
@@ -25,13 +29,14 @@ const getNewReducer = _ =>
       (acc, [key, createReducer]) => ({ ...acc, [key]: createReducer() }),
       {}
     )
-  )
+  })
 
-const reducer = getNewReducer()
+
+const reducer = getNewReducer(history)
 
 export default (state, action) => {
   if (action.type === unauthorizeUser.getType()) {
-    return reducer(createStore(getNewReducer()).getState())
+    return reducer(createStore(getNewReducer(history)).getState())
   }
 
   return reducer(state, action)

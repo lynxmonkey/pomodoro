@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { push } from 'connected-react-router'
 
 import { connectTo, takeFromState } from '../../utils/generic'
 import * as actions from '../../actions/features'
@@ -50,7 +51,7 @@ const Aligned = styled.div`
   flex-direction: column;
 `
 
-const Features = ({ pageWidth, history }) => {
+const Features = ({ pageWidth, push }) => {
   const Content = () => {
     if (pageWidth < SMALL) {
       return (
@@ -93,7 +94,7 @@ const Features = ({ pageWidth, history }) => {
   }
   return (
     <Page style={style}>
-      <Exit onClick={() => history.push('/')}/>
+      <Exit onClick={() => push('/')}/>
       <Content/>
     </Page>
   )
@@ -101,6 +102,9 @@ const Features = ({ pageWidth, history }) => {
 
 export default connectTo(
   state => takeFromState(state, 'generic', ['pageWidth']),
-  actions,
+  {
+    ...actions,
+    push
+  },
   Features
 )

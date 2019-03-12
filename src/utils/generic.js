@@ -2,11 +2,10 @@ import * as Sentry from '@sentry/browser'
 import ReactGA from 'react-ga'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { withRouter } from "react-router-dom"
 
 export const connectTo = (mapStateToProps, actions, Container) => {
   const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch)
-  return withRouter(connect(mapStateToProps, mapDispatchToProps)(Container))
+  return connect(mapStateToProps, mapDispatchToProps)(Container)
 }
 
 export const takeFromState = (state, stateObjectName, fields) =>

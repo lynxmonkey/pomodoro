@@ -1,14 +1,19 @@
 import React from 'react'
+import { ConnectedRouter } from 'connected-react-router'
 
-import * as pages from '../pages'
 import { connectTo } from '../utils/generic'
 import * as actions from '../actions/generic'
+import history from '../history'
+
+import Router from '../router'
 
 class Layout extends React.Component {
   render () {
-    const { page } = this.props
-    const Page = pages[page]
-    return <Page />
+    return (
+      <ConnectedRouter history={history}>
+        <Router/>
+      </ConnectedRouter>
+    )
   }
 
   componentDidMount() {
@@ -32,9 +37,7 @@ class Layout extends React.Component {
 }
 
 export default connectTo(
-  state => ({
-    page: state.navigation.page
-  }),
+  () => ({ }),
   actions,
   Layout
 )
