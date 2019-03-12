@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import { connectTo, takeFromState } from '../../utils/generic'
 import * as actions from '../../actions/features'
-import { to } from '../../actions/navigation'
 
 import List from './list'
 import Form from './form'
@@ -51,7 +50,7 @@ const Aligned = styled.div`
   flex-direction: column;
 `
 
-const Features = ({ pageWidth, to }) => {
+const Features = ({ pageWidth, history }) => {
   const Content = () => {
     if (pageWidth < SMALL) {
       return (
@@ -94,7 +93,7 @@ const Features = ({ pageWidth, to }) => {
   }
   return (
     <Page style={style}>
-      <Exit onClick={() => to('timePicker')}/>
+      <Exit onClick={() => history.push('/')}/>
       <Content/>
     </Page>
   )
@@ -102,9 +101,6 @@ const Features = ({ pageWidth, to }) => {
 
 export default connectTo(
   state => takeFromState(state, 'generic', ['pageWidth']),
-  {
-    ...actions,
-    to
-  },
+  actions,
   Features
 )

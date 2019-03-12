@@ -15,12 +15,12 @@ export default connectTo(
     ...takeFromState(state, 'timeline',  ['sets'])
   }),
   { to },
-  ({ to, sets, token }) => {
+  ({ to, sets, token, history }) => {
     if (!window.navigator.onLine || (!sets.length && !token)) return null
 
     return (
       <ButtonWrap>
-        <Button onClick={() => to('features')} icon='clipboard-list' text={'What can we improve?'}/>
+        <Button onClick={() => history.push('/features')} icon='clipboard-list' text={'What can we improve?'}/>
       </ButtonWrap>
     )
   }
