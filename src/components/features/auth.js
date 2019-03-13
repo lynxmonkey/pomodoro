@@ -5,6 +5,7 @@ import { connectTo, takeFromState } from '../../utils/generic'
 
 import AuthContainer from '../auth-container'
 import Auth from '../auth'
+import LoadAuthScripts from '../load-auth-scripts';
 
 const Container = styled.div`
   margin-bottom: 20px;
@@ -21,21 +22,23 @@ const Text = styled.p`
   color: ${p => p.theme.color.mainFont};
 `
 
-const Component = ({ token }) => {
+const Component = ({ token, providerScriptLoaded }) => {
   if (token) return null
-
-  return (
-    <Container>
-      <Text>Sign in to upvote or propose a new feature.</Text>
-      <AuthContainer>
-        <Auth/>
-      </AuthContainer>
-    </Container>
-  )
+  if (Object.values(providerScriptLoaded).every(p => p)) {
+    return (
+      <Container>
+        <Text>Sign in to upvote or propose a new feature.</Text>
+        <AuthContainer>
+          <Auth/>
+        </AuthContainer>
+      </Container>
+    )
+  }
+  return <LoadAuthScripts/>
 }
 
 export default connectTo(
-  state => takeFromState(state, 'auth', ['token']),
+  state => takeFromState(state, 'auth', ['token', 'providerScriptLoaded']),
   {},
   Component
 )

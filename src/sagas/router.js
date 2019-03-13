@@ -12,7 +12,6 @@ export function* locationChange({ payload }) {
   }
   const state = yield select()
   const previousPathname = state.previousRouter.location.pathname
-  console.log(action, previousPathname, pathname)
   if (action === 'POP' && previousPathname === '/timer' && pathname === '/') {
     yield put(stop())
   }

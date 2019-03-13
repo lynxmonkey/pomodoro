@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { push } from 'connected-react-router'
+import DocumentTitle from 'react-document-title'
 
 import { connectTo, takeFromState } from '../../utils/generic'
 import * as actions from '../../actions/features'
@@ -9,6 +10,7 @@ import List from './list'
 import Form from './form'
 import Auth from './auth'
 import Exit from '../exit-button'
+
 
 const Page = styled.div`
   padding: 4% 4% 20px 4%;
@@ -93,10 +95,12 @@ const Features = ({ pageWidth, push }) => {
     paddingRight: pageWidth < EXIT_OWERLAP ? 'calc(8% + 50px)' : '4%'
   }
   return (
-    <Page style={style}>
-      <Exit onClick={() => push('/')}/>
-      <Content/>
-    </Page>
+    <DocumentTitle title='Pomodoro Features'>
+      <Page style={style}>
+          <Exit onClick={() => push('/')}/>
+          <Content/>
+      </Page>
+    </DocumentTitle>
   )
 }
 
