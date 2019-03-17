@@ -9,9 +9,10 @@ import { receiveSet } from '../actions/timeline'
 import { SET_FINISHED } from '../constants/sounds'
 import { showNotification } from '../utils/notification';
 import { synchronize } from './generic';
+import { PATH } from '../constants/routing';
 
 export function* start() {
-  yield put(push('/timer'))
+  yield put(push(PATH.TIMER))
   const { timer: { startTime, duration } } = yield select()
   while(true) {
     const { timer: { stopped } } = yield select()
@@ -41,7 +42,7 @@ function* soundNotification () {
 }
 
 export function* finish({ payload : { start, stopped } }) {
-  yield put(push('/'))
+  yield put(push(PATH.TIME_PICKER))
   const end = Date.now()
   const set = { start, end }
   // ga: start
@@ -76,7 +77,7 @@ export function* notifyAfter ({ payload }) {
   const state = yield select()
   const { pathname } = state.router.location
   const lastSetEnd = getLastSetEnd(state)
-  if (pathname !== '/timer' && lastSetEnd === lastSetEndBefore) {
+  if (pathname !== PATH.TIMER && lastSetEnd === lastSetEndBefore) {
     yield soundNotification()
     showNotification('Time to come back to work!')
   }

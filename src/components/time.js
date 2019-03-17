@@ -5,6 +5,7 @@ import { connectTo, takeFromState } from '../utils/generic'
 import { mount, unmount } from '../actions/time'
 import LastSetEnd from './last-set-end'
 import { getHumanTime } from '../utils/time';
+import { PATH } from '../constants/routing';
 
 const Container = styled.div`
   width: 320px;
@@ -31,7 +32,7 @@ class Time extends React.Component {
   render() {
     const { lastSetEnd, pathname, showLastSet, mobile } = this.props
     const time = getHumanTime()
-    const showLastEnd = pathname !== '/timer' && lastSetEnd && showLastSet
+    const showLastEnd = pathname !== PATH.TIMER && lastSetEnd && showLastSet
     return (
       <Container mobile={mobile}>
         <TimeNow large={!showLastEnd}>{time}</TimeNow>

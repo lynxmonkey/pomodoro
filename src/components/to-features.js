@@ -4,6 +4,7 @@ import { push } from 'connected-react-router'
 
 import Button from './button-with-icon'
 import { connectTo, takeFromState } from '../utils/generic'
+import { PATH } from '../constants/routing';
 
 const ButtonWrap = styled.div`
   margin: 10px 0;
@@ -20,7 +21,7 @@ export default connectTo(
 
     return (
       <ButtonWrap>
-        <Button onClick={() => push('/features')} icon='clipboard-list' text={'What can we improve?'}/>
+        <Button onClick={() => push(PATH.FEATURES)} icon='clipboard-list' text={'What can we improve?'}/>
       </ButtonWrap>
     )
   }

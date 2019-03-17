@@ -10,6 +10,7 @@ import List from './list'
 import Form from './form'
 import Auth from './auth'
 import Exit from '../exit-button'
+import { PATH } from '../../constants/routing';
 
 
 const Page = styled.div`
@@ -97,7 +98,7 @@ const Features = ({ pageWidth, push }) => {
   return (
     <DocumentTitle title='Pomodoro Features'>
       <Page style={style}>
-          <Exit onClick={() => push('/')}/>
+          <Exit onClick={() => push(PATH.TIME_PICKER)}/>
           <Content/>
       </Page>
     </DocumentTitle>
