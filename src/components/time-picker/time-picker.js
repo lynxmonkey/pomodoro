@@ -19,6 +19,7 @@ const Component = ({ duration, changeDuration, promptToAddToHomeScreen, start, p
   const onStart = () => {
     start()
     if (proposalEvent && sets.length && !window.Windows) {
+      proposalEvent.prompt()
       promptToAddToHomeScreen()
     }
   }
