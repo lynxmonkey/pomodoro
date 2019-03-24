@@ -75,6 +75,6 @@ export function* submitFeature() {
     yield put(receiveFeature(submitFeature))
     yield put(clearFeatureForm())
   } catch(errors) {
-    reportError('fail to reupvote feature', { errors })
+    reportError('fail to submit feature', { errors })
   }
 }

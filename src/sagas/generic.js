@@ -70,9 +70,9 @@ export const reportError = (message, info) => {
         } catch(err) {
           scope.setExtra('info', info)
         }
-        Sentry.captureException(message)
       })
     }
+    Sentry.captureException(message)
   } else {
     console.error(message, info)
   }
