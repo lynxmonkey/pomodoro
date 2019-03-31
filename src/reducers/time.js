@@ -20,6 +20,7 @@ export default () =>
         
         return { ...state, lastSetEnd }
       },
+      [a.receiveLastSetEnd]: (state, lastSetEnd) => ({ ...state, lastSetEnd }),
       [a.mount]: state => ({ ...state, mounted: true }),
       [a.startTicking]: state => ({ ...state, ticking: true }),
       [a.unmount]: state => ({ ...state, mounted: false, ticking: false }),

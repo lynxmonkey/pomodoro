@@ -7,6 +7,7 @@ import { post } from '../utils/api'
 import { API } from '../constants/api'
 import { setUserForReporting } from '../utils/generic'
 import { getTodaySets } from '../utils/time';
+import { receiveLastSetEnd } from '../actions/time';
 
 export function* callApi(query, variables) {
   const payload = variables ? { query, variables } : { query }
@@ -52,7 +53,13 @@ export function* synchronize() {
     `
     try {
       const { synchronize } = yield callApi(query, { input: { sets } })
-      yield put(receiveSets(getTodaySets(synchronize)))
+      const todaySets = getTodaySets(synchronize)
+      
+      yield put(receiveSets(todaySets))
+      if (todaySets.length) {
+        const { end } = todaySets[todaySets.length - 1]
+        yield put(receiveLastSetEnd(end))
+      }
     } catch(errors) {
       reportError('fail to synchronize', { errors })
     }

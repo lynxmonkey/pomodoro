@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import * as actions from '../actions/settings'
+import { unauthorizeUser } from '../actions/auth'
 import { connectTo, takeFromState } from '../utils/generic'
 import Item from './panel-item'
 import Help from './help'
@@ -12,9 +13,16 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-const Panel = ({ sound, toggleSound, setsSum }) => {
+const Panel = ({ sound, toggleSound, setsSum, token, unauthorizeUser }) => {
   return (
     <Container>
+      {token && (
+        <Item
+          onClick={unauthorizeUser}
+          icon={'sign-out-alt'}
+          hint={'sign out'}
+        />
+      )}
       <Item
         onClick={toggleSound}
         icon={sound ? 'volume-up' : 'volume-mute'}
@@ -37,8 +45,12 @@ const Panel = ({ sound, toggleSound, setsSum }) => {
 export default connectTo(
   state => ({
     ...state.settings,
+    ...takeFromState(state, 'auth', ['token']),
     ...takeFromState(state, 'timeline', ['setsSum'])
   }),
-  actions,
+  {
+    ...actions,
+    unauthorizeUser
+  },
   Panel
 )

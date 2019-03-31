@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
+import DocumentTitle from 'react-document-title'
 import { connectTo, takeFromState } from '../utils/generic'
 import { mount, unmount } from '../actions/time'
 import LastSetEnd from './last-set-end'
@@ -33,11 +34,23 @@ class Time extends React.Component {
     const { lastSetEnd, pathname, showLastSet, mobile } = this.props
     const time = getHumanTime()
     const showLastEnd = pathname !== PATH.TIMER && lastSetEnd && showLastSet
+    const TitleWrapper = ({ children }) => {
+      if (showLastEnd) return children
+
+      return (
+        <DocumentTitle title={'Pomodoro'}>
+          {children}
+        </DocumentTitle>
+      )
+    }
+    
     return (
-      <Container mobile={mobile}>
-        <TimeNow large={!showLastEnd}>{time}</TimeNow>
-        {showLastEnd && <LastSetEnd lastSetEnd={lastSetEnd} />}
-      </Container>
+      <TitleWrapper>
+        <Container mobile={mobile}>
+          <TimeNow large={!showLastEnd}>{time}</TimeNow>
+          {showLastEnd && <LastSetEnd lastSetEnd={lastSetEnd} />}
+        </Container>
+      </TitleWrapper>
     )
   }
 

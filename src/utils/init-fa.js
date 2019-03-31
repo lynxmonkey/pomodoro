@@ -8,7 +8,8 @@ import {
   faSyncAlt,
   faClipboardList,
   faSortUp,
-  faTimes
+  faTimes,
+  faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -19,5 +20,6 @@ library.add(
   faSyncAlt,
   faClipboardList,
   faSortUp,
-  faTimes
+  faTimes,
+  faSignOutAlt
 )

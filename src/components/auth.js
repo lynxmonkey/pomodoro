@@ -7,6 +7,7 @@ import { connectTo } from '../utils/generic'
 import Button from './button-with-icon'
 import { yAnimation } from './styles'
 import { PROVIDER, FACEBOOK_SCOPE } from '../constants/auth';
+import { reportError } from '../sagas/generic';
 
 const MOVE = 30
 
@@ -32,8 +33,13 @@ class Auth extends React.Component {
     )
   }
 
+  componentDidCatch(error, errorInfo) {
+    reportError({ error: `Fail in Auth component: ${error}`, errorInfo })
+  }
+
   signInWithGoogle = () => {
     const ga = window.gapi.auth2.getAuthInstance()
+    
     ga.signIn().then(
       user => {
         const { id_token } = user.getAuthResponse()

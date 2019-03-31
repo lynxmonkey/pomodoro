@@ -10,9 +10,7 @@ export const sagaMiddleware = createSagaMiddleware()
 
 const middleware = store => next => action => {
   if (action.type === unauthorizeUser.getType()) {
-    localStorage.removeItem('token')
-    localStorage.removeItem('tokenExpirationTime')
-    localStorage.removeItem('id')
+    localStorage.clear()
   }
   const prevState = store.getState()
   const result = next(action)
