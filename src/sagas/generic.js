@@ -52,7 +52,9 @@ export function* synchronize() {
       }
     `
     try {
-      const { synchronize } = yield callApi(query, { input: { sets } })
+      const lastSetTimeZone = new Date().getTimezoneOffset()
+      const input = { sets, lastSetTimeZone }
+      const { synchronize } = yield callApi(query, { input })
       const todaySets = getTodaySets(synchronize)
       
       yield put(receiveSets(todaySets))

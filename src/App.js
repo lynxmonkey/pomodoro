@@ -40,7 +40,7 @@ export default () => (
 
 sagaMiddleware.run(saga)
 
-const VERSION = '1.3.4'
+const VERSION = '1.3.5'
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
