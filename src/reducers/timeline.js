@@ -2,13 +2,13 @@ import { createReducer } from 'redux-act'
 
 import * as a from '../actions/timeline'
 import { takeIfExists } from '../utils/localStorage';
-import { getTodaySets } from '../utils/time';
+import { getWeekSets } from '../utils/time';
 
 const getDefaultState = () => {
   const setsSum = takeIfExists('setsSum', Number) || 0
   const sets = takeIfExists('sets', Array) || []
   return {
-    sets: getTodaySets(sets),
+    sets: getWeekSets(sets),
     setsSum
   }
 }
@@ -20,7 +20,7 @@ export default () => createReducer({
     return {
       ...state,
       setsSum: state.setsSum + set.end - set.start,
-      sets: getTodaySets([ ...state.sets, set ])
+      sets: getWeekSets([ ...state.sets, set ])
     }
   },
   [a.receiveSets]: (state, sets) => {

@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_KEY
   })
-  Sentry.withScope(scope => scope.setTag('version', VERSION))
+  Sentry.configureScope(scope => scope.setTag('version', VERSION))
   ReactGA.initialize(process.env.REACT_APP_GA_KEY)
   ReactGA.pageview(window.location.pathname + window.location.search)
   console.info(`start app, version ${VERSION}`)

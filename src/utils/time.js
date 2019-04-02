@@ -4,10 +4,14 @@ export const toTime = timestamp => {
   return DateTime.fromMillis(timestamp).toLocal()
 }
 
-export const getTodaySets = (sets) => {
+const getSets = period => sets => {
   const now = DateTime.local()
-  return sets.filter(({ start }) => now.hasSame(toTime(start), 'day'))
+  return sets.filter(({ start }) => now.hasSame(toTime(start), period))
 }
+
+export const getTodaySets = getSets('day')
+
+export const getWeekSets = getSets('week')
 
 export const getHours = milliseconds =>
   Math.floor(milliseconds / 1000 / 60 / 60)

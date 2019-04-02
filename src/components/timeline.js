@@ -6,7 +6,7 @@ import { RerenderWithTime } from 'increaser-components'
 import { connectTo } from '../utils/generic'
 import { THEME } from '../constants/theme'
 import Wrapper from './timeline-wrapper'
-import { secondsFormatter } from '../utils/time';
+import { secondsFormatter, getTodaySets } from '../utils/time';
 
 const Time = styled.span`
   font-weight: bold;
@@ -22,7 +22,7 @@ export default connectTo(
   state => state.timeline,
   {},
   withTheme(({ theme, sets }) => {
-    const coloredSets = sets.map(s => ({
+    const coloredSets = getTodaySets(sets).map(s => ({
       start: s.start / 1000,
       end: s.end / 1000,
       color: THEME.color.gold 
