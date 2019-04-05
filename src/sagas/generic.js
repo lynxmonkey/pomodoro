@@ -6,7 +6,7 @@ import { receiveSets } from '../actions/timeline'
 import { post } from '../utils/api'
 import { API } from '../constants/api'
 import { setUserForReporting } from '../utils/generic'
-import { getTodaySets } from '../utils/time';
+import { getWeekSets } from '../utils/time';
 import { receiveLastSetEnd } from '../actions/time';
 
 export function* callApi(query, variables) {
@@ -55,11 +55,10 @@ export function* synchronize() {
       const lastSetTimeZone = new Date().getTimezoneOffset()
       const input = { sets, lastSetTimeZone }
       const { synchronize } = yield callApi(query, { input })
-      const todaySets = getTodaySets(synchronize)
-      
-      yield put(receiveSets(todaySets))
-      if (todaySets.length) {
-        const { end } = todaySets[todaySets.length - 1]
+      const weekSets = getWeekSets(synchronize)
+      yield put(receiveSets(weekSets))
+      if (weekSets.length) {
+        const { end } = weekSets[weekSets.length - 1]
         yield put(receiveLastSetEnd(end))
       }
     } catch(errors) {

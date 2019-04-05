@@ -22,7 +22,9 @@ export default connectTo(
   state => state.timeline,
   {},
   withTheme(({ theme, sets }) => {
-    const coloredSets = getTodaySets(sets).map(s => ({
+    const todaySets = getTodaySets(sets)
+    if (!todaySets.length) return null
+    const coloredSets = todaySets.map(s => ({
       start: s.start / 1000,
       end: s.end / 1000,
       color: THEME.color.gold 

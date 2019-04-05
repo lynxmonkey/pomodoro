@@ -1,5 +1,6 @@
 export const PATH = {
   TIME_PICKER: '/',
   TIMER: '/timer',
-  FEATURES: '/features'
+  FEATURES: '/features',
+  STATISTICS: '/statistics'
 }
