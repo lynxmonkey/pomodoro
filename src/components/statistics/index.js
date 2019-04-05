@@ -2,14 +2,15 @@ import React from 'react'
 import DocumentTitle from 'react-document-title'
 import styled, { withTheme } from 'styled-components'
 import { DateTime } from 'luxon'
-import { BarChart } from 'increaser-charts'
 import Timeline from 'increaser-timeline'
 
 import { connectTo, takeFromState } from '../../utils/generic';
 import PageWithExit from '../page-with-exit'
 import Block from './block'
+import Week from './week'
 import { toTime } from '../../utils/time';
 import TimelineWrapper from '../timeline-wrapper'
+import { WEEKDAYS } from '../../constants/statistics'
 
 
 const Container = styled.div`
@@ -18,30 +19,9 @@ const Container = styled.div`
   flex-wrap: wrap;
 `
 
-const WEEKDAYS = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday'
-]
-
-const SHORT_WEEKDAYS = [
-  'Mon',
-  'Tue',
-  'Wed',
-  'Thu',
-  'Fri',
-  'Sat',
-  'Sun'
-]
-
 const setsToSeconds = sets => sets.reduce((acc, set) => acc + set.end - set.start, 0) / 1000
 
 const Statistics = ({ sets, theme }) => {
-  const total = setsToSeconds(sets)
   const weekday = DateTime.local().weekday
   const weekdaysSets = WEEKDAYS
     .map((__, index) => sets
@@ -70,13 +50,6 @@ const Statistics = ({ sets, theme }) => {
       return end + secondsGap * 1000
     })
     .sort((a, b) => a < b ? 1 : 0)
-  const bars = SHORT_WEEKDAYS.map((label, index) => ({
-    label,
-    items: [{
-      color: theme.color.primary,
-      value: setsToSeconds(weekdaysSets[index])
-    }]
-  }))
 
   const toTimelineSets = (sets) => {
     const coloredSets = sets.map(s => ({
@@ -123,15 +96,7 @@ const Statistics = ({ sets, theme }) => {
     <DocumentTitle title='statistics'>
       <PageWithExit>
         <Container>
-          <Block period='Week' time={total}>
-            <BarChart
-              bars={bars}
-              barWidth={46}
-              barSpace={4}
-              showScroll={false}
-              selectCenterBarOnScroll={false}
-            />
-          </Block>
+          <Week/>
           <Timelines/>
         </Container>
       </PageWithExit>

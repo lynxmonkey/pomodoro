@@ -3,6 +3,7 @@ import { createReducer } from 'redux-act'
 import * as a from '../actions/timeline'
 import { takeIfExists } from '../utils/localStorage';
 import { getWeekSets } from '../utils/time';
+import { getSetsSum } from '../utils/statistics';
 
 const getDefaultState = () => {
   const setsSum = takeIfExists('setsSum', Number) || 0
@@ -13,7 +14,6 @@ const getDefaultState = () => {
   }
 }
 
-const getSetsSum = sets => sets.reduce((acc, { start, end }) => acc + end - start, 0)
 
 export default () => createReducer({
   [a.receiveSet]: (state, set) => {
