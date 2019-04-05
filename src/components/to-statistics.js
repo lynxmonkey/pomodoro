@@ -21,7 +21,7 @@ const ToWeekStatistics = ({ push, sets }) => {
 
   return (
     <ButtonWrap>
-      <Button onClick={() => push(PATH.STATISTICS)} icon={'chart-bar'} text={'Week Statistics'} />
+      <Button centeredText onClick={() => push(PATH.STATISTICS)} icon={'chart-bar'} text={'Week Statistics'} />
     </ButtonWrap>
   )
 }

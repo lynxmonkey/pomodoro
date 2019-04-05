@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { push } from 'connected-react-router'
 import DocumentTitle from 'react-document-title'
 
 import { connectTo, takeFromState } from '../../utils/generic'
@@ -9,19 +8,7 @@ import * as actions from '../../actions/features'
 import List from './list'
 import Form from './form'
 import Auth from './auth'
-import Exit from '../exit-button'
-import { PATH } from '../../constants/routing';
-
-
-const Page = styled.div`
-  padding: 4% 4% 20px 4%;
-  width: 100%;
-  min-height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  background-image: ${p => p.theme.color.pageBackground};
-`
+import PageWithExit from '../page-with-exit'
 
 const Left = styled.div`
   width: 600px;
@@ -42,7 +29,6 @@ const Row = styled.div`
 
 const SMALL = 780
 const MIDDLE = 1220
-const EXIT_OWERLAP = 1220
 
 const Separation = styled.div`
   width: 20px;
@@ -54,7 +40,7 @@ const Aligned = styled.div`
   flex-direction: column;
 `
 
-const Features = ({ pageWidth, push }) => {
+const Features = ({ pageWidth }) => {
   const Content = () => {
     if (pageWidth < SMALL) {
       return (
@@ -91,25 +77,17 @@ const Features = ({ pageWidth, push }) => {
       </>
     )
   }
-  const style = {
-    flexDirection: pageWidth < MIDDLE ? 'column' : 'row',
-    paddingRight: pageWidth < EXIT_OWERLAP ? 'calc(8% + 50px)' : '4%'
-  }
   return (
     <DocumentTitle title='Pomodoro Features'>
-      <Page style={style}>
-          <Exit onClick={() => push(PATH.TIME_PICKER)}/>
-          <Content/>
-      </Page>
+      <PageWithExit>
+        <Content/>
+      </PageWithExit>
     </DocumentTitle>
   )
 }
 
 export default connectTo(
   state => takeFromState(state, 'generic', ['pageWidth']),
-  {
-    ...actions,
-    push
-  },
+  { actions },
   Features
 )

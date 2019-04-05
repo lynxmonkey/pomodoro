@@ -22,21 +22,26 @@ const IconPart = styled.div`
   justify-content: flex-end;
 `
 
-const TextPart = styled.p`
+const TextPart = styled.div`
   width: 92%;
-  padding-left: 10px;
+  padding-left: ${p => p.centeredText ? '0px' : '10px'};
+  justify-content: ${p => p.centeredText ? 'center' : 'start'};
   font-size: 16px;
   display: flex;
   flex-direction: row;
 `
 
-export default ({ icon, text, onClick }) => {
+export default ({ icon, text, onClick, centeredText = false }) => {
   return (
     <Container onClick={onClick}>
       <IconPart>
         <FontAwesomeIcon size={'lg'} icon={icon} />
       </IconPart>
-      <TextPart>{text}</TextPart>
+      <TextPart centeredText={centeredText}>
+        <p>
+          {text}
+        </p>
+      </TextPart>
     </Container>
   )
 }

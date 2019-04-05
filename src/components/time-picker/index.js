@@ -42,7 +42,7 @@ const MOBILE_WIDTH = 800
 
 class Component extends React.Component {
   render() {
-    const { pageWidth } = this.props
+    const { pageWidth, token } = this.props
 
     if (pageWidth < MOBILE_WIDTH) {
       return <Mobile/>
@@ -64,13 +64,20 @@ class Component extends React.Component {
       )
     }
 
+    const ToFeaturesButton = () => {
+      if (token) return <ToFeatures/>
+
+      return (
+        <ToFeaturesWrap>
+          <ToFeatures/>
+        </ToFeaturesWrap>
+      )
+    }
     return (
       <Page>
         <Right>
           <Panel/>
-          <ToFeaturesWrap>
-            <ToFeatures/>
-          </ToFeaturesWrap>
+          <ToFeaturesButton/>
         </Right>
         <Center/>
         <Left>
@@ -93,6 +100,7 @@ class Component extends React.Component {
 export default connectTo(
   state => ({
     ...takeFromState(state, 'generic', ['pageWidth']),
+    ...takeFromState(state, 'auth', ['token'])
   }),
   { },
   Component

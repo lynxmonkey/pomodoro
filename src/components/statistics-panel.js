@@ -6,7 +6,7 @@ import { connectTo, takeFromState } from '../utils/generic'
 import NotifyAfter from './notify-after'
 import Timeline from './timeline'
 import Sync from './sync'
-import ToWeekStatistics from './to-week-statistics'
+import ToStatistics from './to-statistics'
 import { notificationAllowed } from '../utils/notification'
 
 const Container = styled.div`
@@ -34,7 +34,7 @@ const StatisticsPanel = ({ sets, willNotifyAfter }) => {
     <Container>
       <RerenderWithTime renderComponent={renderNotify} milliseconds={2000} />
       <Timeline/>
-      <ToWeekStatistics/>
+      <ToStatistics/>
       <Sync/>
     </Container>
   )
