@@ -9,6 +9,10 @@ const Container = styled.div`
   margin: 20px;
   border-radius: 5px;
   background-color: ${p => p.theme.color.default};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
 `
 
 const Header = styled.div`
