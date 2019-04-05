@@ -34,8 +34,9 @@ class Time extends React.Component {
     const { lastSetEnd, pathname, showLastSet, mobile } = this.props
     const time = getHumanTime()
     const showLastEnd = pathname !== PATH.TIMER && lastSetEnd && showLastSet
+    console.log(showLastEnd)
     const TitleWrapper = ({ children }) => {
-      if (showLastEnd) return children
+      if (showLastEnd || pathname === PATH.TIMER) return children
 
       return (
         <DocumentTitle title={'Pomodoro'}>

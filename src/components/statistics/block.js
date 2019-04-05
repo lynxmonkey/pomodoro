@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { secondsFormatter } from '../../utils/time';
+
+import TotalTime from '../total-time'
 
 const Container = styled.div`
   width: 400px;
@@ -12,7 +13,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
 `
 
 const Header = styled.div`
@@ -24,15 +24,11 @@ const Header = styled.div`
   margin-bottom: 20px;
 `
 
-const Text = styled.p`
-  color: ${p => p.theme.color.mainFont};
-`
-
 export default ({ period, time, children }) => {
   return (
     <Container>
       <Header>
-        <Text>{period}: {secondsFormatter(time)}</Text>
+        <TotalTime seconds={time} textFirst text={period + ':'} />
       </Header>
       {children}
     </Container>

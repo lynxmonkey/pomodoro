@@ -1,21 +1,12 @@
 import React from 'react'
 import Timeline from 'increaser-timeline'
-import styled, { withTheme } from 'styled-components'
+import { withTheme } from 'styled-components'
 import { RerenderWithTime } from 'increaser-components'
 
 import { connectTo, takeFromState } from '../utils/generic'
 import Wrapper from './timeline-wrapper'
-import { secondsFormatter, getTodaySets } from '../utils/time';
-
-const Time = styled.span`
-  font-weight: bold;
-`
-
-const TotalToday = styled.p`
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: ${p => p.theme.color.mainFont};
-`
+import { getTodaySets } from '../utils/time';
+import TotalTime from './total-time'
 
 const Component = ({ theme, sets }) => {
   const todaySets = getTodaySets(sets)
@@ -36,7 +27,7 @@ const Component = ({ theme, sets }) => {
   )
   return (
     <>
-      <TotalToday><Time>{secondsFormatter(totalSeconds)}</Time> of deep work today</TotalToday>
+      <TotalTime seconds={totalSeconds} text={'of deep work today'}/>
       <RerenderWithTime renderComponent={renderTimeline} milliseconds={1000} />
     </>
   )
