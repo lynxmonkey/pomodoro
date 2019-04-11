@@ -13,7 +13,7 @@ import TimelineWrapper from '../timeline-wrapper'
 
 const toOrderedHours = timestamps => timestamps
   .map(t => toTime(t).hour)
-  .sort((a, b) => a > b ? 1 : 0)
+  .sort((a, b) => a - b)
 
 const Timelines = ({ sets, theme }) => {
   const now = DateTime.local()
