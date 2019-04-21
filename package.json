@@ -11,7 +11,7 @@
     "connected-react-router": "^6.3.2",
     "history": "^4.7.2",
     "increaser-charts": "^1.0.8",
-    "increaser-components": "^0.1.8",
+    "increaser-components": "^0.1.9",
     "increaser-timeline": "^1.0.4",
     "increaser-timepicker": "^1.0.18",
     "increaser-timer": "^1.0.8",

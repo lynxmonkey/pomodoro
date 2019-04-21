@@ -17,8 +17,10 @@ const Week = ({ sets, theme }) => {
       value: getSetsSum(getWeekdaySets(sets, index + 1))
     }]
   }))
+  const dt = new Date()
+  const weekday = ((dt.getDay() + 6) % 7) + 1
   return (
-    <Block period='Week' time={seconds}>
+    <Block period='Average' time={seconds / weekday}>
       <BarChart
         bars={bars}
         barWidth={46}
