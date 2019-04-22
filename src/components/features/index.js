@@ -9,6 +9,7 @@ import List from './list'
 import Form from './form'
 import Auth from './auth'
 import PageWithExit from '../page-with-exit'
+import Scoreboard from './scoreboard'
 
 const Left = styled.div`
   width: 600px;
@@ -50,6 +51,7 @@ const Features = ({ pageWidth }) => {
             <Form/>
           </Aligned>
           <List/>
+          <Scoreboard/>
         </>
       )
     }
@@ -62,6 +64,7 @@ const Features = ({ pageWidth }) => {
             <Form/>
           </Row>
           <List/>
+          <Scoreboard/>
         </>
       )
     }
@@ -73,6 +76,7 @@ const Features = ({ pageWidth }) => {
         <Right>
           <Form/>
           <Auth/>
+          <Scoreboard/>
         </Right>
       </>
     )

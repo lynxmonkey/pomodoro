@@ -1,7 +1,9 @@
-import { put, select } from 'redux-saga/effects'
+import { put, select, call } from 'redux-saga/effects'
 
-import { receiveFeatures, clearFeatureForm, receiveFeature } from '../actions/features'
+import { receiveFeatures, receiveWeeklyScoreboard, clearFeatureForm, receiveFeature } from '../actions/features'
 import { callApi, reportError } from './generic'
+import { get } from '../utils/api';
+import { WEEKLY_SCOREBOARD } from '../constants/api';
 
 export function* requestFeatures() {
   const query = `
@@ -76,5 +78,14 @@ export function* submitFeature() {
     yield put(clearFeatureForm())
   } catch(errors) {
     reportError('fail to submit feature', { errors })
+  }
+}
+
+export function* requestWeeklyScoreboard() {
+  try {
+    const scoreboard = yield call(get, WEEKLY_SCOREBOARD)
+    yield put(receiveWeeklyScoreboard(scoreboard))
+  } catch (err) {
+    reportError(err)
   }
 }

@@ -6,6 +6,7 @@ const getDefaultState = () => ({
   features: [],
   featureName: '',
   featureDescription: '',
+  topWeeklyUsers: []
 })
 
 export default () => createReducer({
@@ -45,5 +46,9 @@ export default () => createReducer({
   [a.receiveFeature]: (state, feature) => ({
     ...state,
     features: [ ...state.features, feature ]
+  }),
+  [a.receiveWeeklyScoreboard]: (state, { users }) => ({
+    ...state,
+    topWeeklyUsers: users
   })
 }, getDefaultState())

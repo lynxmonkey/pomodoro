@@ -19,6 +19,13 @@ export const makePostOptions = data => ({
   body: JSON.stringify(data)
 })
 
+export const getOptions = () => ({
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json'
+  }
+})
+
 const request = (url, options) =>
   fetch(url, options).then(response => {
     const { status } = response
@@ -32,3 +39,4 @@ const request = (url, options) =>
   })
 
 export const post = (url, data) => request(url, makePostOptions(data))
+export const get = url => request(url, getOptions())

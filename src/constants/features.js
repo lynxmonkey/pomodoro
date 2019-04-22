@@ -4,3 +4,5 @@ export const STATUS = {
   IN_PROGRESS: 'IN_PROGRESS',
   DONE: 'DONE'
 }
+
+export const WEEKLY_TOP_ROWS_NUMBER = 10
