@@ -6,9 +6,6 @@ import * as routerSagas from './router'
 import * as timerActions from '../actions/timer'
 import * as timerSagas from './timer'
 
-import * as timeActions from '../actions/time'
-import * as timeSagas from './time'
-
 import * as genericActions from '../actions/generic'
 import * as genericSagas from './generic'
 
@@ -21,7 +18,6 @@ import * as featuresSagas from './features'
 export default function* saga() {
   const relations = [
     [timerActions, timerSagas],
-    [timeActions, timeSagas],
     [genericActions, genericSagas],
     [authActions, authSagas],
     [featuresActions, featuresSagas],

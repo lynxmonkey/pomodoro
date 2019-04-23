@@ -1,9 +1,9 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { RerenderWithTime } from 'increaser-components'
 
 import DocumentTitle from 'react-document-title'
 import { connectTo, takeFromState } from '../utils/generic'
-import { mount, unmount } from '../actions/time'
 import LastSetEnd from './last-set-end'
 import { getHumanTime } from '../utils/time';
 import { PATH } from '../constants/routing';
@@ -29,45 +29,41 @@ const TimeNow = styled.p`
   font-size: ${props => props.large ? 40 : 34}px;
 `
 
-class Time extends React.Component {
-  render() {
-    const { lastSetEnd, pathname, showLastSet, mobile } = this.props
-    const time = getHumanTime()
-    const showLastEnd = pathname !== PATH.TIMER && lastSetEnd && showLastSet
-    const TitleWrapper = ({ children }) => {
-      if (showLastEnd || pathname === PATH.TIMER) return children
 
-      return (
-        <DocumentTitle title={'Pomodoro'}>
-          {children}
-        </DocumentTitle>
-      )
-    }
-    
+const Time = ({ lastSetEnd, pathname, showLastSet, mobile }) =>  {
+  const time = getHumanTime()
+  const showLastEnd = pathname !== PATH.TIMER && lastSetEnd && showLastSet
+  const TitleWrapper = ({ children }) => {
+    if (showLastEnd || pathname === PATH.TIMER) return children
+
     return (
-      <TitleWrapper>
-        <Container mobile={mobile}>
-          <TimeNow large={!showLastEnd}>{time}</TimeNow>
-          {showLastEnd && <LastSetEnd lastSetEnd={lastSetEnd} />}
-        </Container>
-      </TitleWrapper>
+      <DocumentTitle title={'Pomodoro'}>
+        {children}
+      </DocumentTitle>
     )
   }
+  
+  const rerenderPart = () => (
+    <>
+      <TimeNow large={!showLastEnd}>{time}</TimeNow>
+      {showLastEnd && <LastSetEnd lastSetEnd={lastSetEnd} />}
+    </>
+  )
 
-  componentDidMount() {
-    this.props.mount()
-  }
-
-  componentWillUnmount() {
-    this.props.unmount()
-  }
+  return (
+    <TitleWrapper>
+      <Container mobile={mobile}>
+        <RerenderWithTime renderComponent={rerenderPart} milliseconds={1000} />
+      </Container>
+    </TitleWrapper>
+  )
 }
 
 export default connectTo(
   state => ({
-    ...takeFromState(state, 'time', ['lastSetEnd', 'timeNow']),
+    ...takeFromState(state, 'time', ['lastSetEnd']),
     pathname: state.router.location.pathname
   }),
-  { mount, unmount },
+  {},
   Time
 )
