@@ -47,9 +47,9 @@ const TimeContainer = styled.div`
 `
 
 const TimerWrapper = connectTo(
-  state => state.generic,
+  state => takeFromState(state, 'generic', ['pageWidth', 'pageHeight']),
   { stop },
-  ({ stop, pageWidth, pageHeight }) => 
+  ({ stop, pageWidth }) => 
   {
     const stopInsideTimer = pageWidth > 800
     const mobile = pageWidth < MOBILE
@@ -106,4 +106,4 @@ const InnerTimer = withTheme(connectTo(
   }
 ))
 
-export default () => <TimerWrapper/>
+export default TimerWrapper

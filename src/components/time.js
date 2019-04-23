@@ -31,7 +31,6 @@ const TimeNow = styled.p`
 
 
 const Time = ({ lastSetEnd, pathname, showLastSet, mobile }) =>  {
-  const time = getHumanTime()
   const showLastEnd = pathname !== PATH.TIMER && lastSetEnd && showLastSet
   const TitleWrapper = ({ children }) => {
     if (showLastEnd || pathname === PATH.TIMER) return children
@@ -45,7 +44,7 @@ const Time = ({ lastSetEnd, pathname, showLastSet, mobile }) =>  {
   
   const rerenderPart = () => (
     <>
-      <TimeNow large={!showLastEnd}>{time}</TimeNow>
+      <TimeNow large={!showLastEnd}>{getHumanTime()}</TimeNow>
       {showLastEnd && <LastSetEnd lastSetEnd={lastSetEnd} />}
     </>
   )
