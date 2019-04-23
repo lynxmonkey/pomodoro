@@ -41,6 +41,11 @@ const Aligned = styled.div`
   flex-direction: column;
 `
 
+const ScoreboardContainer = styled.div`
+  margin-top: 32px;
+  margin-left: 20px;
+`
+
 const Features = ({ pageWidth }) => {
   const Content = () => {
     if (pageWidth < SMALL) {
@@ -76,8 +81,10 @@ const Features = ({ pageWidth }) => {
         <Right>
           <Form/>
           <Auth/>
-          <Scoreboard/>
         </Right>
+        <ScoreboardContainer>
+          <Scoreboard/>
+        </ScoreboardContainer>
       </>
     )
   }

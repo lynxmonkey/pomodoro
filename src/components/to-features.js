@@ -21,7 +21,7 @@ export default connectTo(
 
     return (
       <ButtonWrap>
-        <Button onClick={() => push(PATH.FEATURES)} icon='clipboard-list' text={'What can we improve?'}/>
+        <Button centeredText onClick={() => push(PATH.FEATURES)} icon='user-friends' text={'Community'}/>
       </ButtonWrap>
     )
   }

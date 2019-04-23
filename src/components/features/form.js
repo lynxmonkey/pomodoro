@@ -4,31 +4,7 @@ import styled, { css } from 'styled-components'
 import * as actions from '../../actions/features'
 import { connectTo, takeFromState } from '../../utils/generic'
 import { buttonStyle, buttonHoverStyle } from '../styles';
-import { centerContentStyle } from 'increaser-components';
-
-const Container = styled.form`
-  border-radius: 5px;
-  color: ${p => p.theme.color.mainFont};
-  display: flex;
-  flex-direction: column;
-  background: ${p => p.theme.color.default};
-  padding: 20px;
-  margin-bottom: 20px;
-  width: 100%;
-  @media (min-width: 1220px) {
-    width: 400px;
-  } 
-`
-
-const UpText = styled.div`
-  ${centerContentStyle};
-  flex-direction: column;
-  margin: 10px;
-`
-
-const Header = styled.h3`
-  text-align: center;
-`
+import Block from './block'
 
 const inputStyles = css`
   border-radius: 5px;
@@ -77,15 +53,12 @@ const Form = ({ featureName, featureDescription, changeFeatureName, changeFeatur
       submitFeature()
     }
   }
-  
+
   return (
-    <Container
-      onSubmit={handleSubmit}
+    <Block
+      mainText={'Make an Impact!'}
+      secondaryText={'Propose feature or report a bug.'}
     >
-      <UpText>
-        <Header>Make an Impact!</Header>
-        <p>Propose feature or report a bug.</p>
-      </UpText>
       <NameInput
         value={featureName}
         placeholder='Give it a name'
@@ -97,7 +70,7 @@ const Form = ({ featureName, featureDescription, changeFeatureName, changeFeatur
         onChange={({ target: { value } }) => changeFeatureDescription(value)}
       />
       <SubmitButton enabled={token && featureName.length > 0} onClick={handleSubmit}>SUBMIT</SubmitButton>
-    </Container>
+    </Block>
   )
 }
 

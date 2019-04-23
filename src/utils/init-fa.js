@@ -10,7 +10,8 @@ import {
   faSortUp,
   faTimes,
   faSignOutAlt,
-  faChartBar
+  faChartBar,
+  faUserFriends
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -23,5 +24,6 @@ library.add(
   faSortUp,
   faTimes,
   faSignOutAlt,
-  faChartBar
+  faChartBar,
+  faUserFriends
 )

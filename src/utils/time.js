@@ -40,3 +40,22 @@ export const secondsFormatter = seconds => {
 
   return `${finalHours}h ${finalMinutes}m`
 }
+
+export const getHumanDuration = (timestamp, lessThanMinuteText, finalizer, direction = 1) => {
+  const timeNow = Date.now()
+  const seconds = (direction === 1 ? timeNow - timestamp : timestamp - timeNow) / 1000
+  if (seconds < 60) {
+    return lessThanMinuteText
+  }
+  const minutes = Math.round(seconds / 60)
+  const template = (time, name) => finalizer(`${time} ${time > 1 ? `${name}s` : name}`)
+  if (minutes < 60) {
+    return template(minutes, 'minute')
+  }
+  const hours = Math.round(minutes / 60)
+  if (hours < 24) {
+    return template(hours, 'hour')
+  }
+  const days = Math.round(hours / 24)
+  return template(days, 'day')
+}
