@@ -18,16 +18,36 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
     <title>Pomodoro</title>
   </head>
   <style>
+    @font-face {
+      font-family: 'Regular';
+      font-display: swap;
+      src: url('/fonts/regular.ttf');
+    }
+    @font-face {
+      font-family: 'Logo';
+      font-display: swap;
+      src: url('/fonts/logo.ttf');
+    }
+    @font-face {
+      font-family: 'Regular';
+      font-weight: bold;
+      font-display: swap;
+      src: url('/fonts/bold.ttf');
+    }
+    @font-face {
+      font-family: 'Regular';
+      font-style: italic;
+      font-display: swap;
+      src: url('/fonts/italic.ttf');
+    }
     * {
       margin: 0;
       outline: none;
       box-sizing: border-box;
-      font-family: 'Open Sans', sans-serif;
+      font-family: 'Regular', sans-serif;
       user-select: none;
       -webkit-tap-highlight-color:  rgba(255, 255, 255, 0)
     }

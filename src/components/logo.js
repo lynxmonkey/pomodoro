@@ -5,7 +5,7 @@ import { Quote } from 'increaser-components'
 import { connectTo, takeFromState } from '../utils/generic';
 
 const Logo = styled.p`
-  font-family: 'Dancing Script', cursive;
+  font-family: 'Logo', cursive;
   color: ${props => props.theme.color.mainFont};
   text-decoration: none;
   font-size: 32px;
