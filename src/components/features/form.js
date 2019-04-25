@@ -12,7 +12,9 @@ const inputStyles = css`
   background-color: transparent;
   font-size: 16px;
   padding: 10px;
+  color: ${p => p.theme.color.mainFont};
   margin: 10px 0;
+
   &::placeholder {
     color: ${p => p.theme.color.mainFont};
   }

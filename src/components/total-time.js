@@ -5,6 +5,7 @@ import { secondsFormatter } from '../utils/time';
 const Text = styled.p`
   font-size: 20px;
   margin-bottom: 10px;
+  color: ${p => p.theme.color.mainFont};
 `
 
 const Time = styled.span`

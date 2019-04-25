@@ -4,6 +4,7 @@ import { centerContentStyle } from 'increaser-components';
 
 const Container = styled.div`
   border-radius: 5px;
+  color: ${p => p.theme.color.mainFont};
   display: flex;
   flex-direction: column;
   background: ${p => p.theme.color.default};

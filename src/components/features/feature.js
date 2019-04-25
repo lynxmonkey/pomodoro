@@ -21,6 +21,7 @@ const Container = styled.div`
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
   `}
+  color: ${p => p.theme.color.mainFont};
   background-color: ${p => p.theme.color.default};
   justify-content: space-between;
   padding: 10px;

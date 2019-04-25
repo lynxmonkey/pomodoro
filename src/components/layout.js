@@ -20,7 +20,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     outline: none;
     box-sizing: border-box;
-    color: ${p => p.theme.color.mainFont};
     font-family: 'Regular', sans-serif;
     user-select: none;
     -webkit-tap-highlight-color:  rgba(255, 255, 255, 0)
