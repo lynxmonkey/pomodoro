@@ -19,7 +19,6 @@ const Container = styled.div`
 const Text = styled.p`
   font-size: 18px;
   text-align: center;
-  color: ${p => p.theme.color.mainFont};
 `
 
 const Component = ({ token, providerScriptLoaded }) => {

@@ -19,7 +19,6 @@ export const yAnimation = (moveY) => css`
 `
 
 export const buttonStyle = css`
-  color: ${p => p.theme.color.mainFont};
   border: 2px solid #31CEFF;
   background-color: transparent;
   cursor: pointer;

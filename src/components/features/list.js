@@ -9,7 +9,6 @@ import { STATUS } from '../../constants/features';
 
 const Header = styled.h3`
   font-size: 20px;
-  color: ${p => p.theme.color.mainFont};
   margin-bottom: 5px;
 `
 

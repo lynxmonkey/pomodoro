@@ -5,7 +5,8 @@ import { push } from 'connected-react-router'
 import { connectTo, takeFromState } from '../utils/generic'
 import Exit from './exit-button'
 import { PATH } from '../constants/routing';
-
+import { ScrollablePageContainer } from './reusable/page'
+import Scrollable from './reusable/scroll/scrollable'
 
 const Page = styled.div`
   padding: 4% 4% 20px 4%;
@@ -14,7 +15,6 @@ const Page = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-image: ${p => p.theme.color.pageBackground};
 `
 
 
@@ -35,10 +35,20 @@ const Features = ({ pageWidth, push, children }) => {
   )
 }
 
-export default connectTo(
+const ConnectedFeatures = connectTo(
   state => takeFromState(state, 'generic', ['pageWidth']),
   {
     push
   },
   Features
+)
+
+export default ({ children }) => (
+  <ScrollablePageContainer>
+    <Scrollable>
+      <ConnectedFeatures>
+        {children}
+      </ConnectedFeatures>
+    </Scrollable>
+  </ScrollablePageContainer>
 )
