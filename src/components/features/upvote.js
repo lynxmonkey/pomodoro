@@ -9,8 +9,8 @@ import * as actions from '../../actions/features'
 import { buttonHoverStyle } from '../styles';
 
 const Container = styled.div`
-  height: 60px;
-  width: 60px;
+  min-height: 60px;
+  min-width: 60px;
   border-radius: 5px;
   color: ${p => p.upvoted ? p.theme.color.primary : p.theme.color.mainFont};
   border: 1px solid ${p => p.upvoted ? p.theme.color.primary : p.theme.color.mainFont};

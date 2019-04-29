@@ -16,9 +16,5 @@ export const ScrollablePageContainer = styled(General)`
 `
 
 export const PageContentTopNavigation = styled.div`
-  padding: 60px 5% 40px 5%;
-`
-
-export const PageContentTopDownNavigation = styled(PageContentTopNavigation)`
-  padding-bottom: 140px;
+  padding: 60px 4% 40px 4%;
 `

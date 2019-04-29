@@ -8,8 +8,17 @@ import * as actions from '../../actions/features'
 import List from './list'
 import Form from './form'
 import Auth from './auth'
-import PageWithExit from '../page-with-exit'
 import Scoreboard from './scoreboard'
+import Navbar from '../navbar'
+import Scrollable from '../reusable/scroll/scrollable'
+import { PageContentTopNavigation, ScrollablePageContainer } from '../reusable/page'
+
+const PageContainer = styled(PageContentTopNavigation)`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`
 
 const Left = styled.div`
   width: 600px;
@@ -23,21 +32,15 @@ const Right = styled.div`
   flex-direction: column;
 `
 
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-`
+const MIDDLE = 1020
+const MEDIUM = 1600
 
-const SMALL = 780
-const MIDDLE = 1220
-
-const Separation = styled.div`
-  width: 20px;
-`
 
 const Aligned = styled.div`
+  width: 600px;
   align-self: center;
   display: flex;
+  align-items: center;
   flex-direction: column;
 `
 
@@ -46,30 +49,30 @@ const ScoreboardContainer = styled.div`
   margin-left: 20px;
 `
 
+
 const Features = ({ pageWidth }) => {
   const Content = () => {
-    if (pageWidth < SMALL) {
-      return (
-        <>
-          <Aligned>
-            <Auth/>
-            <Form/>
-          </Aligned>
-          <List/>
-          <Scoreboard/>
-        </>
-      )
-    }
     if (pageWidth < MIDDLE) {
       return (
-        <>
-          <Row>
-            <Auth/>
-            <Separation/>
-            <Form/>
-          </Row>
+        <Aligned>
           <List/>
+          <Auth/>
+          <Form/>
           <Scoreboard/>
+        </Aligned>
+      )
+    }
+    if (pageWidth < MEDIUM) {
+      return (
+        <>
+          <Left>
+            <List/>
+          </Left>
+          <Right>
+            <Auth/>
+            <Form/>
+            <Scoreboard/>
+          </Right>
         </>
       )
     }
@@ -90,9 +93,14 @@ const Features = ({ pageWidth }) => {
   }
   return (
     <DocumentTitle title='Pomodoro Features'>
-      <PageWithExit>
-        <Content/>
-      </PageWithExit>
+      <ScrollablePageContainer>
+        <Navbar/>
+        <Scrollable>
+          <PageContainer>
+            <Content/>
+          </PageContainer>
+        </Scrollable>
+      </ScrollablePageContainer>
     </DocumentTitle>
   )
 }

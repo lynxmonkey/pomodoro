@@ -10,10 +10,10 @@ const Container = styled.div`
   background: ${p => p.theme.color.default};
   padding: 20px;
   margin-bottom: 20px;
-  width: 100%;
-  @media (min-width: 1220px) {
-    width: 400px;
-  } 
+  width: 400px;
+  @media (max-width: 420px) {
+    width: 100%;
+  }
 `
 
 const UpText = styled.div`

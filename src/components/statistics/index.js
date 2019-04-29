@@ -2,28 +2,33 @@ import React from 'react'
 import DocumentTitle from 'react-document-title'
 import styled from 'styled-components'
 
-import PageWithExit from '../page-with-exit'
 import Week from './week'
 import Timelines from './timelines'
+import Navbar from '../navbar'
+import Scrollable from '../reusable/scroll/scrollable'
+import { PageContentTopNavigation, ScrollablePageContainer } from '../reusable/page'
 
 
-const Container = styled.div`
+const PageContainer = styled(PageContentTopNavigation)`
+  width: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   flex-wrap: wrap;
 `
 
 export default () => {
   return (
     <DocumentTitle title='statistics'>
-      <PageWithExit>
-        <div>
-          <Container>
-            <Week/>
-            <Timelines/>
-          </Container>
-        </div>
-      </PageWithExit>
+      <ScrollablePageContainer>
+        <Navbar/>
+        <Scrollable>
+          <PageContainer>
+          <Week/>
+          <Timelines/>
+          </PageContainer>
+        </Scrollable>
+      </ScrollablePageContainer>
     </DocumentTitle>
   )
 }
