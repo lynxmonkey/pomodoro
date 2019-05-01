@@ -25,7 +25,8 @@ const Timelines = ({ sets, theme }) => {
   const ends = notEmptyWeekdaysSets.map(sets => sets[sets.length - 1].end)
   const [startHour] = toOrderedHours(starts)
   const endHour = toOrderedHours(ends)[ends.length - 1] + 1
-  const weekStart = DateTime.local(now.year, now.month, now.day - weekday + 1, 0, 0, 0, 0).valueOf() / 1000
+  const date = DateTime.local(now.year, now.month, now.day, 0, 0, 0, 0).minus({ days: weekday - 1 })
+  const weekStart = date.valueOf() / 1000
 
   return days.map((day, index) => {
     const weekdaySets = weekdaysSets[index]
