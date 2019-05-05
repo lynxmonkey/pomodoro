@@ -8,6 +8,7 @@ import Timeline from './timeline'
 import Sync from './sync'
 import ToStatistics from './to-statistics'
 import { notificationAllowed } from '../utils/notification'
+import RestTime from './rest-time'
 
 const Container = styled.div`
   width: 320px;
@@ -23,16 +24,18 @@ const StatisticsPanel = ({ sets, willNotifyAfter }) => {
     </Container>
   )
   const renderNotify = () => {
-    if (willNotifyAfter || !notificationAllowed()) return null
+    if (!notificationAllowed()) return null
     const lastSetEnd = sets[sets.length - 1].end
     const secondsPassed = (Date.now() - lastSetEnd) / 1000
-    if (secondsPassed > 60) return null
-
+    if (!willNotifyAfter && secondsPassed > 60) return null
+    if (willNotifyAfter) {
+      return <RestTime secondsPassed={secondsPassed}/>
+    }
     return <NotifyAfter/>
   }
   return (
     <Container>
-      <RerenderWithTime renderComponent={renderNotify} milliseconds={2000} />
+      <RerenderWithTime renderComponent={renderNotify} milliseconds={500} />
       <Timeline/>
       <ToStatistics/>
       <Sync/>

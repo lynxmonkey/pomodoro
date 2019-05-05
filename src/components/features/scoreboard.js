@@ -64,7 +64,7 @@ class Scoreboard extends React.Component {
     
     const users = topWeeklyUsers.slice(0, WEEKLY_TOP_ROWS_NUMBER)
     const Users = () => users.map((u, index) => {
-      const percent = Math.floor((u.total / users[0].total) * 100)
+      const percent = (u.total / users[0].total) * 100
       const background = `linear-gradient(to right, ${theme.color.primary} ${percent}%, ${theme.color.default} ${percent}%`
       const time = secondsFormatter(u.total / 7)
       return (

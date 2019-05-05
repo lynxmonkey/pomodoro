@@ -41,6 +41,18 @@ export const secondsFormatter = seconds => {
   return `${finalHours}h ${finalMinutes}m`
 }
 
+
+export const secondsFormatterMinAndSecs = seconds => {
+  const duration = Duration.fromObject({ seconds })
+  const minutes = duration.as('minutes')
+  const format = time => time.toString().padStart(2, '0')
+  if (minutes < 1) return `00:${format(Math.round(duration.as('seconds')))}`
+
+  const finalMinutes = Math.floor(minutes)
+  const finalSeconds = Math.round((minutes - Math.floor(minutes)) * 60)
+  return  `${format(finalMinutes)}:${format(finalSeconds)}`
+}
+
 export const getHumanDuration = (timestamp, lessThanMinuteText, finalizer, direction = 1) => {
   const timeNow = Date.now()
   const seconds = (direction === 1 ? timeNow - timestamp : timestamp - timeNow) / 1000

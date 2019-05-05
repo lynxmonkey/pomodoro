@@ -15,7 +15,8 @@ const getDefaultState = () => {
     startTime: undefined,
     timeNow: undefined,
     stopped: false,
-    willNotifyAfter: false
+    willNotifyAfter: false,
+    notifyAfterMinutes: undefined
   }
 }
 
@@ -29,8 +30,8 @@ export default () =>
         duration: state.duration
       }),
       [a.stop]: state => ({ ...state, stopped: true }),
-      [a.notifyAfter]: state => ({ ...state, willNotifyAfter: true }),
-      [a.doNotNotifyAfter]: state => ({ ...state, notifyAfter: false }),
+      [a.notifyAfter]: (state, notifyAfterMinutes) => ({ ...state, notifyAfterMinutes, willNotifyAfter: true }),
+      [a.doNotNotifyAfter]: state => ({ ...state, notifyAfter: false, notifyAfterMinutes: undefined }),
       [a.start]: state => {
         return {
           ...state,
