@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { withTheme } from 'styled-components'
 
 import { connectTo, takeFromState } from '../../utils/generic'
 import { WEEKLY_TOP_ROWS_NUMBER } from '../../constants/features'
@@ -13,11 +13,23 @@ const UsersContainer = styled.div`
   width: 100%;
 `
 
+const UsersHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  color: ${p => p.theme.color.moreSecondaryFont};
+`
+
+const UserContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
 const UserRow = styled.div`
   display: flex;
   flex-direction: row;
-  border-bottom: 1px solid ${p => p.highlight ? p.theme.color.primary : p.theme.color.mainFont};
-  margin-top: 4px;
+  margin-top: 12px;
   color: ${p => p.highlight ? p.theme.color.primary : p.theme.color.mainFont};
 `
 
@@ -30,24 +42,42 @@ const Name = styled.div`
 `
 
 const Average = styled.div`
-  width: 80px;
+  min-width: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`
+
+const Line = styled.div`
+  margin-top: 2px;
+  height: 4px;
+  border-radius: 2px;
+  width: 100%;
 `
 
 const MS_IN_WEEK = 604800000
 
 class Scoreboard extends React.Component {
   render() {
-    const { topWeeklyUsers, token, lastScoreboardUpdate, id } = this.props
+    const { topWeeklyUsers, theme, token, lastScoreboardUpdate, id } = this.props
     if (!topWeeklyUsers || !topWeeklyUsers.length) return null
     
     const users = topWeeklyUsers.slice(0, WEEKLY_TOP_ROWS_NUMBER)
-    const Users = () => users.map((u, index) => (
-      <UserRow key={index} highlight={u.id === id}>
-        <Place>{index + 1}.</Place>
-        <Name>{u.name}</Name>
-        <Average>{secondsFormatter(u.total / 7)}</Average>
-      </UserRow>
-    ))
+    const Users = () => users.map((u, index) => {
+      const percent = Math.floor((u.total / users[0].total) * 100)
+      const background = `linear-gradient(to right, ${theme.color.primary} ${percent}%, ${theme.color.default} ${percent}%`
+      const time = secondsFormatter(u.total / 7)
+      return (
+        <UserContainer key={index}>
+          <UserRow highlight={u.id === id}>
+            <Place>{index + 1}</Place>
+            <Name>{u.name}</Name>
+            <Average><p>{time}</p></Average>
+          </UserRow>
+          <Line style={{ background }}/>
+        </UserContainer>
+      )
+    })
 
     const getSecondaryText = () => {
       if (!token) return 'Sign in and inspire others.'
@@ -58,12 +88,18 @@ class Scoreboard extends React.Component {
         0
       )
     }
+
     return (
       <Block
         mainText={'Last Week Top Performers'}
         secondaryText={getSecondaryText()}
       >
         <UsersContainer>
+        <UsersHeader>
+          <Place>#</Place>
+          <Name>NAME</Name>
+          <Average>AVERAGE</Average>
+        </UsersHeader>
           <Users/>
         </UsersContainer>
       </Block>
@@ -81,5 +117,5 @@ export default connectTo(
     ...takeFromState(state, 'auth', ['token', 'id']),
   }),
   actions,
-  Scoreboard
+  withTheme(Scoreboard)
 )

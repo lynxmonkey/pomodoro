@@ -5,6 +5,7 @@ import TimePicker from './time-picker'
 import Time from '../time'
 import Logo from '../logo'
 import StatisticsPanel from '../statistics-panel'
+import ToFeatures from '../to-features'
 
 const Page = styled.div`
   padding: 20px;
@@ -28,6 +29,10 @@ const TimePickerWrapper = styled.div`
 
 const StatisticsPanelWrapper = styled.div`
   padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 export default () => {
@@ -39,6 +44,7 @@ export default () => {
       </TimePickerWrapper>
       <StatisticsPanelWrapper>
         <StatisticsPanel/>
+        <ToFeatures/>
       </StatisticsPanelWrapper>
       <Logo/>
     </Page>

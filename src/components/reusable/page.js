@@ -17,4 +17,7 @@ export const ScrollablePageContainer = styled(General)`
 
 export const PageContentTopNavigation = styled.div`
   padding: 60px 4% 40px 4%;
+  @media (max-width: 400px) {
+    padding: 60px 4px 40px 4px;
+  } 
 `

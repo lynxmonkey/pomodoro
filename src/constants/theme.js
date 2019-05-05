@@ -1,5 +1,6 @@
 export const THEME = {
   color: {
-    gold: 'rgb(249, 168, 37)'
+    gold: 'rgb(249, 168, 37)',
+    moreSecondaryFont: '#bdbdbd'
   }
 }

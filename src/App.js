@@ -16,12 +16,12 @@ const MERGED_THEME = {
   ...THEME,
   ...ICTHEME,
   color: {
+    ...ICTHEME.color,
     ...THEME.color,
-    ...ICTHEME.color
   },
   shadow: {
+    ...ICTHEME.shadow,
     ...THEME.shadow,
-    ...ICTHEME.shadow
   },
   transition: {
     ...THEME.transition,
@@ -40,7 +40,7 @@ export default () => (
 
 sagaMiddleware.run(saga)
 
-const VERSION = '1.4.10'
+const VERSION = '1.4.11'
 
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
